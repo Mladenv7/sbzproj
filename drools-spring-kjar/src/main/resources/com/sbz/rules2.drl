@@ -1,0 +1,10 @@
+package com.sbz;
+
+import com.sbz.proj.model.Card;
+
+rule "Dobio sam rucne keceve bato"
+    when
+        $kec: Player(card1.rank == 1 && card2.rank == 1)
+    then
+        System.out.println("dobio sam rucne keceve bato")
+end

@@ -56,12 +56,24 @@
             <scope>test</scope>
         </dependency>
         <dependency>
-	  		<groupId>sbnz.integracija</groupId>
+	  		<groupId>com.sbz</groupId>
 	  		<artifactId>drools-spring-kjar</artifactId>
 	  		<type>jar</type>
 	  		<version>0.0.1-SNAPSHOT</version>
   		</dependency>
-        
+
+		<dependency>
+			<groupId>org.projectlombok</groupId>
+			<artifactId>lombok</artifactId>
+			<version>1.18.24</version>
+			<scope>provided</scope>
+		</dependency>
+
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
     </dependencies>
 
 	<build>
