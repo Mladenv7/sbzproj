@@ -1,10 +1,13 @@
-package sbnz.integracija;
+package com.sbz;
 
+import com.sbz.proj.model.Player;
 import com.sbz.proj.model.Card;
 
 rule "Dobio sam rucne keceve bato"
     when
         $kec: Player(card1.rank == 1 && card2.rank == 1)
     then
-        System.out.println("dobio sam rucne keceve bato")
+        System.out.println("dobio sam rucne keceve bato");
+        $kec.setMoney(10000);
+        update($kec);
 end

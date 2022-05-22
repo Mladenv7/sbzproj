@@ -20,11 +20,13 @@ public class TestService {
 
     @Autowired
     public TestService(KieContainer kieContainer) {
+        log.info("Initialising a new example session.");
         this.kieContainer = kieContainer;
     }
 
     public void nistaSeTiNeSekeraj(){
-        KieSession kieSession = kieContainer.newKieSession("ExampleSession");
+        System.out.println("Pravimo novi kieSession");
+        KieSession kieSession = kieContainer.newKieSession();
         Player p1 = new Player();
 
         System.out.println(this.kieContainer);
@@ -35,6 +37,9 @@ public class TestService {
         kieSession.insert(p1);
         kieSession.fireAllRules();
         kieSession.dispose();
+
+        System.out.println("Gasimo kieSession");
+        System.out.println(p1.getMoney());
 
     }
 }
