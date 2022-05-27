@@ -8,9 +8,10 @@ public enum PokerHand {
     FLUSH(6),
     STRAIGHT(5),
     THREE_OF_A_KIND(4),
-    TWO_PAIRS(2),
-    PAIR(1),
-    HIGH_CARD(0);
+    TWO_PAIRS(3),
+    PAIR(2),
+    HIGH_CARD(1),
+    NOTHING(0);
 
     public Integer strength;
 

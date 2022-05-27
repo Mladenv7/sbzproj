@@ -1,5 +1,8 @@
 package com.sbz.proj.model;
 
+import lombok.Getter;
+
+@Getter
 public enum Rank {
     ACE(15),
     KING(14),

@@ -43,8 +43,8 @@ public class CurrentStateService {
 
         System.out.println(this.kieContainer);
 
-        p1.setCard1(new Card(1, Suit.SPADES));
-        p1.setCard2(new Card(1, Suit.HEARTS));
+        //p1.setCard1(new Card(1, Suit.SPADES));
+        //p1.setCard2(new Card(1, Suit.HEARTS));
 
         // insert data for rules
         kieSession.insert(p1);
