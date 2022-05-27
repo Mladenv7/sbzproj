@@ -1,13 +1,21 @@
 package com.sbz;
 
-import com.sbz.proj.model.Player;
-import com.sbz.proj.model.Card;
+import com.sbz.proj.model.*;
 
-rule "Dobio sam rucne keceve bato"
+rule "Dobio sam rucne keceve"
     when
         $kec: Player(card1.rank == 1 && card2.rank == 1)
     then
-        System.out.println("dobio sam rucne keceve bato");
-        $kec.setMoney(10000);
-        update($kec);
+        System.out.println("dobio sam rucne keceve");
+        TableState state = new TableState();
+        state.setCurrentStage(StageName.FLOP);
+        insert(state);
+end
+
+
+rule "THE FLOP"
+    when
+        $state: TableState(currentStage == StageName.FLOP)
+    then
+        System.out.println("THE FLOP");
 end

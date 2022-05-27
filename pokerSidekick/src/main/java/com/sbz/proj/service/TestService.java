@@ -1,9 +1,7 @@
 package com.sbz.proj.service;
 
 
-import com.sbz.proj.model.Card;
-import com.sbz.proj.model.Player;
-import com.sbz.proj.model.Suit;
+import com.sbz.proj.model.*;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
 import org.slf4j.Logger;
@@ -25,7 +23,6 @@ public class TestService {
     }
 
     public void nistaSeTiNeSekeraj(){
-        System.out.println("Pravimo novi kieSession");
         KieSession kieSession = kieContainer.newKieSession();
         Player p1 = new Player();
 
@@ -34,12 +31,12 @@ public class TestService {
         p1.setCard1(new Card(1, Suit.SPADES));
         p1.setCard2(new Card(1, Suit.HEARTS));
 
-        kieSession.insert(p1);
+        TableState ts1 = new TableState();
+        ts1.setCurrentStage(StageName.PRE_FLOP);
+
+        kieSession.insert(ts1);
         kieSession.fireAllRules();
         kieSession.dispose();
-
-        System.out.println("Gasimo kieSession");
-        System.out.println(p1.getMoney());
 
     }
 }
