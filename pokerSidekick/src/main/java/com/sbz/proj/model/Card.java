@@ -10,6 +10,6 @@ import lombok.Setter;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Card {
-    private Integer rank;
+    private Rank rank;
     private Suit suit;
 }
