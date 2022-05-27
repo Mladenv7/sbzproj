@@ -2,11 +2,14 @@ package com.sbz;
 
 import com.sbz.proj.model.*;
 
+global java.util.logging.Logger LOGGER
+
 rule "Dobio sam rucne keceve"
     when
         $kec: Player(card1.rank == 1 && card2.rank == 1)
     then
-        System.out.println("dobio sam rucne keceve");
+        //System.out.println("dobio sam rucne keceve");
+        LOGGER.info("AAAAAAAALLLLLLLLLLLOOOOOOOOOOO");
         TableState state = new TableState();
         state.setCurrentStage(StageName.FLOP);
         insert(state);
@@ -17,5 +20,6 @@ rule "THE FLOP"
     when
         $state: TableState(currentStage == StageName.FLOP)
     then
-        System.out.println("THE FLOP");
+        //System.out.println("THE FLOP");
+        LOGGER.info("AAAAAAAALLLLLLLLLLLOOOOOOOOOOO iz flopa");
 end
