@@ -1,0 +1,47 @@
+package com.sbz;
+
+import com.sbz.proj.model.*;
+
+global java.util.logging.Logger LOGGER
+
+rule "THREE_OF_A_KIND_1_2_3"
+    no-loop
+    when
+        $possibility: Possibility(
+            !weKnow,
+            card1.rank == card2.rank,
+            card2.rank == card3.rank,
+            sameSuit() == false,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.THREE_OF_A_KIND, weKnow = true}
+end
+
+rule "THREE_OF_A_KIND_2_3_4"
+    no-loop
+    when
+        $possibility: Possibility(
+            !weKnow,
+            card2.rank == card3.rank,
+            card3.rank == card4.rank,
+            sameSuit() == false,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.THREE_OF_A_KIND, weKnow = true}
+end
+
+rule "THREE_OF_A_KIND_3_4_5"
+    no-loop
+    when
+        $possibility: Possibility(
+            !weKnow,
+            card3.rank == card4.rank,
+            card4.rank == card5.rank,
+            sameSuit() == false,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.THREE_OF_A_KIND, weKnow = true}
+end

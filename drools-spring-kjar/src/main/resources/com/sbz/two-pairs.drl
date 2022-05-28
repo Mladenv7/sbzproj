@@ -1,0 +1,53 @@
+package com.sbz;
+
+import com.sbz.proj.model.*;
+
+global java.util.logging.Logger LOGGER
+
+rule "TWO_PAIRS_1_3"
+    no-loop
+    when
+        $possibility: Possibility(
+            !weKnow,
+            card1.rank == card2.rank,
+            card3.rank == card4.rank,
+            sameSuit() == false,
+            $pokerHand: pokerHand,
+            $pokerHand != PokerHand.THREE_OF_A_KIND,
+            $pokerHand != PokerHand.FOUR_OF_A_KIND
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.TWO_PAIRS, weKnow = true}
+end
+
+rule "TWO_PAIRS_1_4"
+    no-loop
+    when
+        $possibility: Possibility(
+            !weKnow,
+            card1.rank == card2.rank,
+            card4.rank == card5.rank,
+            sameSuit() == false,
+            $pokerHand: pokerHand,
+            $pokerHand != PokerHand.THREE_OF_A_KIND,
+            $pokerHand != PokerHand.FOUR_OF_A_KIND
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.TWO_PAIRS, weKnow = true}
+end
+
+rule "TWO_PAIRS_2_4"
+    no-loop
+    when
+        $possibility: Possibility(
+            !weKnow,
+            card2.rank == card3.rank,
+            card4.rank == card5.rank,
+            sameSuit() == false,
+            $pokerHand: pokerHand,
+            $pokerHand != PokerHand.THREE_OF_A_KIND,
+            $pokerHand != PokerHand.FOUR_OF_A_KIND
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.TWO_PAIRS, weKnow = true}
+end

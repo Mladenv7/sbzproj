@@ -6,7 +6,7 @@ import lombok.Getter;
 public enum Suit {
     SPADES(3),
     HEARTS(2),
-    DIMAONDS(1),
+    DIAMONDS(1),
     CLUBS(0);
 
     private Integer rank;
