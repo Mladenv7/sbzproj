@@ -1,0 +1,325 @@
+package com.sbz;
+import com.sbz.proj.model.*;
+global java.util.logging.Logger LOGGER
+
+rule "Categorize STRAIGHT_19"
+no-loop
+    when
+        $possibility: Possibility(
+            $card1: card1.rank == Rank.R10,
+            $card2: card2.rank == Rank.JACK,
+            $card3: card3.rank == Rank.QUEEN,
+            $card4: card4.rank == Rank.KING,
+            $card5: card5.rank == Rank.ACE,
+            sameSuit() == false,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.STRAIGHT, weKnow = true}
+end
+
+rule "Categorize STRAIGHT_18"
+no-loop
+    when
+        $possibility: Possibility(
+            $card1: card1.rank == Rank.R9,
+            $card2: card2.rank == Rank.R10,
+            $card3: card3.rank == Rank.JACK,
+            $card4: card4.rank == Rank.QUEEN,
+            $card5: card5.rank == Rank.KING,
+            sameSuit() == false,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.STRAIGHT}
+end
+
+rule "Categorize STRAIGHT_17"
+no-loop
+    when
+        $possibility: Possibility(
+            $card1: card1.rank == Rank.R8,
+            $card2: card2.rank == Rank.R9,
+            $card3: card3.rank == Rank.R10,
+            $card4: card4.rank == Rank.JACK,
+            $card5: card5.rank == Rank.QUEEN,
+            sameSuit() == false,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.STRAIGHT}
+end
+
+rule "Categorize STRAIGHT_16"
+no-loop
+    when
+        $possibility: Possibility(
+            $card1: card1.rank == Rank.R7,
+            $card2: card2.rank == Rank.R8,
+            $card3: card3.rank == Rank.R9,
+            $card4: card4.rank == Rank.R10,
+            $card5: card5.rank == Rank.JACK,
+            sameSuit() == false,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.STRAIGHT}
+end
+
+rule "Categorize STRAIGHT_15"
+no-loop
+    when
+        $possibility: Possibility(
+            $card1: card1.rank == Rank.R6,
+            $card2: card2.rank == Rank.R7,
+            $card3: card3.rank == Rank.R8,
+            $card4: card4.rank == Rank.R9,
+            $card5: card5.rank == Rank.R10,
+            sameSuit() == false,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.STRAIGHT}
+end
+
+rule "Categorize STRAIGHT_14"
+no-loop
+    when
+        $possibility: Possibility(
+            $card1: card1.rank == Rank.R5,
+            $card2: card2.rank == Rank.R6,
+            $card3: card3.rank == Rank.R7,
+            $card4: card4.rank == Rank.R8,
+            $card5: card5.rank == Rank.R9,
+            sameSuit() == false,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.STRAIGHT}
+end
+
+rule "Categorize STRAIGHT_13"
+no-loop
+    when
+        $possibility: Possibility(
+            $card1: card1.rank == Rank.R4,
+            $card2: card2.rank == Rank.R5,
+            $card3: card3.rank == Rank.R6,
+            $card4: card4.rank == Rank.R7,
+            $card5: card5.rank == Rank.R8,
+            sameSuit() == false,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.STRAIGHT}
+end
+
+rule "Categorize STRAIGHT_12"
+no-loop
+    when
+        $possibility: Possibility(
+            $card1: card1.rank == Rank.R3,
+            $card2: card2.rank == Rank.R4,
+            $card3: card3.rank == Rank.R5,
+            $card4: card4.rank == Rank.R6,
+            $card5: card5.rank == Rank.R7,
+            sameSuit() == false,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.STRAIGHT}
+end
+
+rule "Categorize STRAIGHT_11"
+no-loop
+    when
+        $possibility: Possibility(
+            $card1: card1.rank == Rank.R2,
+            $card2: card2.rank == Rank.R3,
+            $card3: card3.rank == Rank.R4,
+            $card4: card4.rank == Rank.R5,
+            $card5: card5.rank == Rank.R6,
+            sameSuit() == false,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.STRAIGHT}
+end
+
+rule "Categorize STRAIGHT_10"
+no-loop
+    when
+        $possibility: Possibility(
+            $card1: card1.rank == Rank.R2,
+            $card2: card2.rank == Rank.R3,
+            $card3: card3.rank == Rank.R4,
+            $card4: card4.rank == Rank.R5,
+            $card5: card5.rank == Rank.ACE,
+            sameSuit() == false,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.STRAIGHT}
+end
+
+rule "Categorize STRAIGHT_FLUSH_9"
+no-loop
+    when
+        $possibility: Possibility(
+            $card1: card1.rank == Rank.R9,
+            $card2: card2.rank == Rank.R10,
+            $card3: card3.rank == Rank.JACK,
+            $card4: card4.rank == Rank.QUEEN,
+            $card5: card5.rank == Rank.KING,
+            sameSuit() == true,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+end
+
+rule "Categorize STRAIGHT_FLUSH_8"
+no-loop
+    when
+        $possibility: Possibility(
+            $card1: card1.rank == Rank.R8,
+            $card2: card2.rank == Rank.R9,
+            $card3: card3.rank == Rank.R10,
+            $card4: card4.rank == Rank.JACK,
+            $card5: card5.rank == Rank.QUEEN,
+            sameSuit() == true,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+end
+
+rule "Categorize STRAIGHT_FLUSH_7"
+no-loop
+    when
+        $possibility: Possibility(
+            $card1: card1.rank == Rank.R7,
+            $card2: card2.rank == Rank.R8,
+            $card3: card3.rank == Rank.R9,
+            $card4: card4.rank == Rank.R10,
+            $card5: card5.rank == Rank.JACK,
+            sameSuit() == true,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+end
+
+rule "Categorize STRAIGHT_FLUSH_6"
+no-loop
+    when
+        $possibility: Possibility(
+            $card1: card1.rank == Rank.R6,
+            $card2: card2.rank == Rank.R7,
+            $card3: card3.rank == Rank.R8,
+            $card4: card4.rank == Rank.R9,
+            $card5: card5.rank == Rank.R10,
+            sameSuit() == true,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+end
+
+rule "Categorize STRAIGHT_FLUSH_5"
+no-loop
+    when
+        $possibility: Possibility(
+            $card1: card1.rank == Rank.R5,
+            $card2: card2.rank == Rank.R6,
+            $card3: card3.rank == Rank.R7,
+            $card4: card4.rank == Rank.R8,
+            $card5: card5.rank == Rank.R9,
+            sameSuit() == true,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+end
+
+rule "Categorize STRAIGHT_FLUSH_4"
+no-loop
+    when
+        $possibility: Possibility(
+            $card1: card1.rank == Rank.R4,
+            $card2: card2.rank == Rank.R5,
+            $card3: card3.rank == Rank.R6,
+            $card4: card4.rank == Rank.R7,
+            $card5: card5.rank == Rank.R8,
+            sameSuit() == true,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+end
+
+rule "Categorize STRAIGHT_FLUSH_3"
+no-loop
+    when
+        $possibility: Possibility(
+            $card1: card1.rank == Rank.R3,
+            $card2: card2.rank == Rank.R4,
+            $card3: card3.rank == Rank.R5,
+            $card4: card4.rank == Rank.R6,
+            $card5: card5.rank == Rank.R7,
+            sameSuit() == true,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+end
+
+rule "Categorize STRAIGHT_FLUSH_2"
+no-loop
+    when
+        $possibility: Possibility(
+            $card1: card1.rank == Rank.R2,
+            $card2: card2.rank == Rank.R3,
+            $card3: card3.rank == Rank.R4,
+            $card4: card4.rank == Rank.R5,
+            $card5: card5.rank == Rank.R6,
+            sameSuit() == true,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+end
+
+rule "Categorize STRAIGHT_FLUSH_1"
+no-loop
+    when
+        $possibility: Possibility(
+            $card1: card1.rank == Rank.R2,
+            $card2: card2.rank == Rank.R3,
+            $card3: card3.rank == Rank.R4,
+            $card4: card4.rank == Rank.R5,
+            $card5: card5.rank == Rank.ACE,
+            sameSuit() == true,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+end
+
+rule "Categorize ROYAL_FLUSH_0"
+no-loop
+    when
+        $possibility: Possibility(
+            $card1: card1.rank == Rank.R10,
+            $card2: card2.rank == Rank.JACK,
+            $card3: card3.rank == Rank.QUEEN,
+            $card4: card4.rank == Rank.KING,
+            $card5: card5.rank == Rank.ACE,
+            sameSuit() == true,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.ROYAL_FLUSH}
+end
+
+
