@@ -16,7 +16,7 @@ global java.util.logging.Logger LOGGER
 template "straight-royal-rules"
 
 rule "@{hand}_@{row.rowNumber}"
-no-loop
+    lock-on-active true
     when
         $possibility: Possibility(
             $card1: card1.rank == Rank.@{card_1_rank},

@@ -1,0 +1,18 @@
+package com.sbz;
+
+import com.sbz.proj.model.*;
+
+global java.util.logging.Logger LOGGER
+
+rule "Raise because you have royal flush"
+    no-loop
+    when
+        $state: TableState($currentStage: currentStage)
+        $possibility: Possibility(
+            $pokerHand: pokerHand == PokerHand.ROYAL_FLUSH
+        )
+    then
+        modify($state){
+            getPlayers().get(0).getAction().add(Action.RAISE);
+        }
+end

@@ -96,5 +96,9 @@ public class CurrentStateController {
         return new ResponseEntity<List<Possibility>>(possibilities.stream().sorted(Possibility::compareTo).collect(Collectors.toList()), HttpStatus.OK);
     }
 
+    @PostMapping("/flop")
+    public ResponseEntity<Action> sendCurrentStateFlop(@RequestBody TableState currentState){
+        return new ResponseEntity<Action>(currentStateService.flopConslut(currentState), HttpStatus.OK);
+    }
 
 }

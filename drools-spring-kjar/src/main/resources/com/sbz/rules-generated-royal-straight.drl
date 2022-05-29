@@ -3,7 +3,7 @@ import com.sbz.proj.model.*;
 global java.util.logging.Logger LOGGER
 
 rule "STRAIGHT_19"
-no-loop
+    lock-on-active true
     when
         $possibility: Possibility(
             $card1: card1.rank == Rank.R10,
@@ -19,7 +19,7 @@ no-loop
 end
 
 rule "STRAIGHT_18"
-no-loop
+    lock-on-active true
     when
         $possibility: Possibility(
             $card1: card1.rank == Rank.R9,
@@ -35,7 +35,7 @@ no-loop
 end
 
 rule "STRAIGHT_17"
-no-loop
+    lock-on-active true
     when
         $possibility: Possibility(
             $card1: card1.rank == Rank.R8,
@@ -51,7 +51,7 @@ no-loop
 end
 
 rule "STRAIGHT_16"
-no-loop
+    lock-on-active true
     when
         $possibility: Possibility(
             $card1: card1.rank == Rank.R7,
@@ -67,7 +67,7 @@ no-loop
 end
 
 rule "STRAIGHT_15"
-no-loop
+    lock-on-active true
     when
         $possibility: Possibility(
             $card1: card1.rank == Rank.R6,
@@ -83,7 +83,7 @@ no-loop
 end
 
 rule "STRAIGHT_14"
-no-loop
+    lock-on-active true
     when
         $possibility: Possibility(
             $card1: card1.rank == Rank.R5,
@@ -99,7 +99,7 @@ no-loop
 end
 
 rule "STRAIGHT_13"
-no-loop
+    lock-on-active true
     when
         $possibility: Possibility(
             $card1: card1.rank == Rank.R4,
@@ -115,7 +115,7 @@ no-loop
 end
 
 rule "STRAIGHT_12"
-no-loop
+    lock-on-active true
     when
         $possibility: Possibility(
             $card1: card1.rank == Rank.R3,
@@ -131,7 +131,7 @@ no-loop
 end
 
 rule "STRAIGHT_11"
-no-loop
+    lock-on-active true
     when
         $possibility: Possibility(
             $card1: card1.rank == Rank.R2,
@@ -147,7 +147,7 @@ no-loop
 end
 
 rule "STRAIGHT_10"
-no-loop
+    lock-on-active true
     when
         $possibility: Possibility(
             $card1: card1.rank == Rank.R2,
@@ -163,7 +163,7 @@ no-loop
 end
 
 rule "STRAIGHT_FLUSH_9"
-no-loop
+    lock-on-active true
     when
         $possibility: Possibility(
             $card1: card1.rank == Rank.R9,
@@ -179,7 +179,7 @@ no-loop
 end
 
 rule "STRAIGHT_FLUSH_8"
-no-loop
+    lock-on-active true
     when
         $possibility: Possibility(
             $card1: card1.rank == Rank.R8,
@@ -195,7 +195,7 @@ no-loop
 end
 
 rule "STRAIGHT_FLUSH_7"
-no-loop
+    lock-on-active true
     when
         $possibility: Possibility(
             $card1: card1.rank == Rank.R7,
@@ -211,7 +211,7 @@ no-loop
 end
 
 rule "STRAIGHT_FLUSH_6"
-no-loop
+    lock-on-active true
     when
         $possibility: Possibility(
             $card1: card1.rank == Rank.R6,
@@ -227,7 +227,7 @@ no-loop
 end
 
 rule "STRAIGHT_FLUSH_5"
-no-loop
+    lock-on-active true
     when
         $possibility: Possibility(
             $card1: card1.rank == Rank.R5,
@@ -243,7 +243,7 @@ no-loop
 end
 
 rule "STRAIGHT_FLUSH_4"
-no-loop
+    lock-on-active true
     when
         $possibility: Possibility(
             $card1: card1.rank == Rank.R4,
@@ -259,7 +259,7 @@ no-loop
 end
 
 rule "STRAIGHT_FLUSH_3"
-no-loop
+    lock-on-active true
     when
         $possibility: Possibility(
             $card1: card1.rank == Rank.R3,
@@ -275,7 +275,7 @@ no-loop
 end
 
 rule "STRAIGHT_FLUSH_2"
-no-loop
+    lock-on-active true
     when
         $possibility: Possibility(
             $card1: card1.rank == Rank.R2,
@@ -291,7 +291,7 @@ no-loop
 end
 
 rule "STRAIGHT_FLUSH_1"
-no-loop
+    lock-on-active true
     when
         $possibility: Possibility(
             $card1: card1.rank == Rank.R2,
@@ -307,7 +307,7 @@ no-loop
 end
 
 rule "ROYAL_FLUSH_0"
-no-loop
+    lock-on-active true
     when
         $possibility: Possibility(
             $card1: card1.rank == Rank.R10,
@@ -323,3 +323,14 @@ no-loop
 end
 
 
+rule "FLUSH"
+    lock-on-active true
+    when
+        $possibility: Possibility(
+            !weKnow,
+            sameSuit() == true,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.FLUSH, weKnow = true}
+end

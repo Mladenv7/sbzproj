@@ -26,37 +26,6 @@ end
 
 
 
-
-
-rule "ROYAL_FLUSH"
-    no-loop
-    when
-        $possibility: Possibility(
-            $card1: card1.rank == Rank.R10,
-            $card2: card2.rank == Rank.JACK,
-            $card3: card3.rank == Rank.QUEEN,
-            $card4: card4.rank == Rank.KING,
-            $card5: card5.rank == Rank.ACE,
-            sameSuit() == true,
-            $pokerHand: pokerHand
-        )
-    then
-        modify($possibility){pokerHand = PokerHand.ROYAL_FLUSH}
-        LOGGER.info("Imas royal flush");
-end
-
-rule "FLUSH"
-    no-loop
-    when
-        $possibility: Possibility(
-            sameSuit() == true,
-            $pokerHand: pokerHand
-        )
-    then
-        modify($possibility){pokerHand = PokerHand.FLUSH}
-        //LOGGER.info("Imas royal flush");
-end
-
 rule "FOUR_OF_A_KIND_1_2_3_4"
     no-loop
     when

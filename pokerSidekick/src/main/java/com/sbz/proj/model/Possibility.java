@@ -66,7 +66,6 @@ public class Possibility implements Comparable<Possibility>{
             return this.cards.get(4).compareTo(o.cards.get(4));
     }
 
-
     
     public int compareToComplicated(Possibility o) {
         boolean sameCards = true; // a moze i rucno da poredim 5 karata

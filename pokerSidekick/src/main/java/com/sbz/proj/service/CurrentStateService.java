@@ -57,31 +57,25 @@ public class CurrentStateService {
     }
 
 
+    public Action flopConslut(TableState ts) {
+        KieSession kieSession = KnowledgeSessionHelper.getStatefulKnowledgeSession(kieContainer, "test-session");
 
-    public void parseCurrentState(HashMap<String, String> currentStateMap){
-        // boilerpalte
-        System.out.println("Pravimo novi kieSession");
-        KieSession kieSession = kieContainer.newKieSession();
+        Possibility p = new Possibility();
+        p.cards = new ArrayList<>();
+        p.cards.add(ts.getPlayers().get(0).getCard1());
+        p.cards.add(ts.getPlayers().get(0).getCard2());
+        p.cards.addAll(ts.getBoard());
 
-        // actual code
-        StageName.valueOf(currentStateMap.get("stageName"));
+        p.additionalInfo = new HashMap<>();
 
-        Player p1 = new Player();
+        p.setupCards();
 
-        System.out.println(this.kieContainer);
+        kieSession.insert(ts);
+        kieSession.insert(p);
 
-        //p1.setCard1(new Card(1, Suit.SPADES));
-        //p1.setCard2(new Card(1, Suit.HEARTS));
+        int fired = kieSession.fireAllRules();
+        LOGGER.info("Number of fired rules: " + fired);
 
-        // insert data for rules
-        kieSession.insert(p1);
-
-        // boilerpalte
-        kieSession.fireAllRules();
-        kieSession.dispose();
-
-        System.out.println("Gasimo kieSession");
-        System.out.println(p1.getMoney());
-
+        return ts.getPlayers().get(0).getAction().get(ts.getPlayers().get(0).getAction().size() - 1); // vraca poslednju akciju koju smo ubacili u pravilu
     }
 }
