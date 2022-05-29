@@ -178,6 +178,17 @@ public class TestService {
         return kieHelper.build().newKieSession();
     }
 
+    public void checkWhatWeHaveList(List<Possibility> possibilities) {
+        KieSession kieSession = KnowledgeSessionHelper.getStatefulKnowledgeSession(kieContainer, "test-session");
+
+        for (Possibility p : possibilities) {
+            kieSession.insert(p);
+        }
+
+        int fired = kieSession.fireAllRules();
+        LOGGER.info("Number of fired rules: " + fired);
+    }
+
     public void checkWhatWeHave(FiveCardsDTO fiveCardsDTO) {
         KieSession kieSession = KnowledgeSessionHelper.getStatefulKnowledgeSession(kieContainer, "test-session");
         Card card1 = fiveCardsDTO.card1;

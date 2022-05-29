@@ -13,9 +13,9 @@ import com.sbz.proj.model.*;
 
 global java.util.logging.Logger LOGGER
 
-template "classification-rules"
+template "straight-royal-rules"
 
-rule "Categorize @{hand}_@{row.rowNumber}"
+rule "@{hand}_@{row.rowNumber}"
 no-loop
     when
         $possibility: Possibility(
@@ -28,7 +28,7 @@ no-loop
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.@{hand}}
+        modify($possibility){pokerHand = PokerHand.@{hand}, weKnow = true}
 end
 
 end template

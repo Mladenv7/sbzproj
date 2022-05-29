@@ -15,7 +15,11 @@ rule "THREE_OF_A_KIND_1_2_3"
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.THREE_OF_A_KIND, weKnow = true}
+        modify($possibility){
+            pokerHand = PokerHand.THREE_OF_A_KIND,
+            additionalInfo.put("trips-index", 0),
+            weKnow = true
+        }
 end
 
 rule "THREE_OF_A_KIND_2_3_4"
@@ -29,7 +33,11 @@ rule "THREE_OF_A_KIND_2_3_4"
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.THREE_OF_A_KIND, weKnow = true}
+        modify($possibility){
+            pokerHand = PokerHand.THREE_OF_A_KIND,
+            additionalInfo.put("trips-index", 1),
+            weKnow = true
+        }
 end
 
 rule "THREE_OF_A_KIND_3_4_5"
@@ -43,5 +51,9 @@ rule "THREE_OF_A_KIND_3_4_5"
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.THREE_OF_A_KIND, weKnow = true}
+        modify($possibility){
+            pokerHand = PokerHand.THREE_OF_A_KIND,
+            additionalInfo.put("trips-index", 2),
+            weKnow = true
+        }
 end

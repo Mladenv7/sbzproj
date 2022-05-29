@@ -11,11 +11,15 @@ rule "PAIR_1_2"
             !weKnow,
             card1.rank == card2.rank,
             howManyWithRank(card1.rank) == 2,
-            sameSuit() == false,
+            !sameSuit(),
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.PAIR}
+        modify($possibility){
+            pokerHand = PokerHand.PAIR,
+            additionalInfo.put("pair-index", 0),
+            weKnow = true
+        }
         //LOGGER.info("Imas royal flush");
 end
 
@@ -26,11 +30,15 @@ rule "PAIR_2_3"
             !weKnow,
             card2.rank == card3.rank,
             howManyWithRank(card2.rank) == 2,
-            sameSuit() == false,
+            !sameSuit(),
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.PAIR, weKnow = true}
+        modify($possibility){
+            pokerHand = PokerHand.PAIR,
+            additionalInfo.put("pair-index", 1),
+            weKnow = true
+        }
 end
 
 rule "PAIR_3_4"
@@ -40,11 +48,15 @@ rule "PAIR_3_4"
             !weKnow,
             card3.rank == card4.rank,
             howManyWithRank(card3.rank) == 2,
-            sameSuit() == false,
+            !sameSuit(),
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.PAIR, weKnow = true}
+        modify($possibility){
+            pokerHand = PokerHand.PAIR,
+            additionalInfo.put("pair-index", 2),
+            weKnow = true
+        }
 end
 
 rule "PAIR_4_5"
@@ -54,9 +66,13 @@ rule "PAIR_4_5"
             !weKnow,
             card4.rank == card5.rank,
             howManyWithRank(card4.rank) == 2,
-            sameSuit() == false,
+            !sameSuit(),
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.PAIR, weKnow = true}
+        modify($possibility){
+            pokerHand = PokerHand.PAIR,
+            additionalInfo.put("pair-index", 3),
+            weKnow = true
+        }
 end

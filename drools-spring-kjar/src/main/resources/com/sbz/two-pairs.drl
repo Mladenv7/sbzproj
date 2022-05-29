@@ -17,7 +17,13 @@ rule "TWO_PAIRS_1_3"
             $pokerHand != PokerHand.FOUR_OF_A_KIND
         )
     then
-        modify($possibility){pokerHand = PokerHand.TWO_PAIRS, weKnow = true}
+        modify($possibility){
+            pokerHand = PokerHand.TWO_PAIRS,
+            additionalInfo.put("pair1-index", 0),
+            additionalInfo.put("pair2-index", 2),
+            additionalInfo.put("kicker-index", 4),
+            weKnow = true
+        }
 end
 
 rule "TWO_PAIRS_1_4"
@@ -33,7 +39,13 @@ rule "TWO_PAIRS_1_4"
             $pokerHand != PokerHand.FOUR_OF_A_KIND
         )
     then
-        modify($possibility){pokerHand = PokerHand.TWO_PAIRS, weKnow = true}
+        modify($possibility){
+            pokerHand = PokerHand.TWO_PAIRS,
+            additionalInfo.put("pair1-index", 0),
+            additionalInfo.put("kicker-index", 2),
+            additionalInfo.put("pair2-index", 3),
+            weKnow = true
+        }
 end
 
 rule "TWO_PAIRS_2_4"
@@ -49,5 +61,11 @@ rule "TWO_PAIRS_2_4"
             $pokerHand != PokerHand.FOUR_OF_A_KIND
         )
     then
-        modify($possibility){pokerHand = PokerHand.TWO_PAIRS, weKnow = true}
+        modify($possibility){
+            pokerHand = PokerHand.TWO_PAIRS,
+            additionalInfo.put("kicker-index", 0),
+            additionalInfo.put("pair1-index", 1),
+            additionalInfo.put("pair2-index", 3),
+            weKnow = true
+        }
 end

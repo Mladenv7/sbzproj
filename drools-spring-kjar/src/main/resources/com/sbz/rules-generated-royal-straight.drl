@@ -2,7 +2,7 @@ package com.sbz;
 import com.sbz.proj.model.*;
 global java.util.logging.Logger LOGGER
 
-rule "Categorize STRAIGHT_19"
+rule "STRAIGHT_19"
 no-loop
     when
         $possibility: Possibility(
@@ -18,7 +18,7 @@ no-loop
         modify($possibility){pokerHand = PokerHand.STRAIGHT, weKnow = true}
 end
 
-rule "Categorize STRAIGHT_18"
+rule "STRAIGHT_18"
 no-loop
     when
         $possibility: Possibility(
@@ -31,10 +31,10 @@ no-loop
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.STRAIGHT}
+        modify($possibility){pokerHand = PokerHand.STRAIGHT, weKnow = true}
 end
 
-rule "Categorize STRAIGHT_17"
+rule "STRAIGHT_17"
 no-loop
     when
         $possibility: Possibility(
@@ -47,10 +47,10 @@ no-loop
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.STRAIGHT}
+        modify($possibility){pokerHand = PokerHand.STRAIGHT, weKnow = true}
 end
 
-rule "Categorize STRAIGHT_16"
+rule "STRAIGHT_16"
 no-loop
     when
         $possibility: Possibility(
@@ -63,10 +63,10 @@ no-loop
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.STRAIGHT}
+        modify($possibility){pokerHand = PokerHand.STRAIGHT, weKnow = true}
 end
 
-rule "Categorize STRAIGHT_15"
+rule "STRAIGHT_15"
 no-loop
     when
         $possibility: Possibility(
@@ -79,10 +79,10 @@ no-loop
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.STRAIGHT}
+        modify($possibility){pokerHand = PokerHand.STRAIGHT, weKnow = true}
 end
 
-rule "Categorize STRAIGHT_14"
+rule "STRAIGHT_14"
 no-loop
     when
         $possibility: Possibility(
@@ -95,10 +95,10 @@ no-loop
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.STRAIGHT}
+        modify($possibility){pokerHand = PokerHand.STRAIGHT, weKnow = true}
 end
 
-rule "Categorize STRAIGHT_13"
+rule "STRAIGHT_13"
 no-loop
     when
         $possibility: Possibility(
@@ -111,10 +111,10 @@ no-loop
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.STRAIGHT}
+        modify($possibility){pokerHand = PokerHand.STRAIGHT, weKnow = true}
 end
 
-rule "Categorize STRAIGHT_12"
+rule "STRAIGHT_12"
 no-loop
     when
         $possibility: Possibility(
@@ -127,10 +127,10 @@ no-loop
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.STRAIGHT}
+        modify($possibility){pokerHand = PokerHand.STRAIGHT, weKnow = true}
 end
 
-rule "Categorize STRAIGHT_11"
+rule "STRAIGHT_11"
 no-loop
     when
         $possibility: Possibility(
@@ -143,10 +143,10 @@ no-loop
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.STRAIGHT}
+        modify($possibility){pokerHand = PokerHand.STRAIGHT, weKnow = true}
 end
 
-rule "Categorize STRAIGHT_10"
+rule "STRAIGHT_10"
 no-loop
     when
         $possibility: Possibility(
@@ -159,10 +159,10 @@ no-loop
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.STRAIGHT}
+        modify($possibility){pokerHand = PokerHand.STRAIGHT, weKnow = true}
 end
 
-rule "Categorize STRAIGHT_FLUSH_9"
+rule "STRAIGHT_FLUSH_9"
 no-loop
     when
         $possibility: Possibility(
@@ -175,10 +175,10 @@ no-loop
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH, weKnow = true}
 end
 
-rule "Categorize STRAIGHT_FLUSH_8"
+rule "STRAIGHT_FLUSH_8"
 no-loop
     when
         $possibility: Possibility(
@@ -191,10 +191,10 @@ no-loop
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH, weKnow = true}
 end
 
-rule "Categorize STRAIGHT_FLUSH_7"
+rule "STRAIGHT_FLUSH_7"
 no-loop
     when
         $possibility: Possibility(
@@ -207,10 +207,10 @@ no-loop
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH, weKnow = true}
 end
 
-rule "Categorize STRAIGHT_FLUSH_6"
+rule "STRAIGHT_FLUSH_6"
 no-loop
     when
         $possibility: Possibility(
@@ -223,10 +223,10 @@ no-loop
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH, weKnow = true}
 end
 
-rule "Categorize STRAIGHT_FLUSH_5"
+rule "STRAIGHT_FLUSH_5"
 no-loop
     when
         $possibility: Possibility(
@@ -239,10 +239,10 @@ no-loop
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH, weKnow = true}
 end
 
-rule "Categorize STRAIGHT_FLUSH_4"
+rule "STRAIGHT_FLUSH_4"
 no-loop
     when
         $possibility: Possibility(
@@ -255,10 +255,10 @@ no-loop
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH, weKnow = true}
 end
 
-rule "Categorize STRAIGHT_FLUSH_3"
+rule "STRAIGHT_FLUSH_3"
 no-loop
     when
         $possibility: Possibility(
@@ -271,10 +271,10 @@ no-loop
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH, weKnow = true}
 end
 
-rule "Categorize STRAIGHT_FLUSH_2"
+rule "STRAIGHT_FLUSH_2"
 no-loop
     when
         $possibility: Possibility(
@@ -287,10 +287,10 @@ no-loop
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH, weKnow = true}
 end
 
-rule "Categorize STRAIGHT_FLUSH_1"
+rule "STRAIGHT_FLUSH_1"
 no-loop
     when
         $possibility: Possibility(
@@ -303,10 +303,10 @@ no-loop
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH, weKnow = true}
 end
 
-rule "Categorize ROYAL_FLUSH_0"
+rule "ROYAL_FLUSH_0"
 no-loop
     when
         $possibility: Possibility(
@@ -319,7 +319,7 @@ no-loop
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.ROYAL_FLUSH}
+        modify($possibility){pokerHand = PokerHand.ROYAL_FLUSH, weKnow = true}
 end
 
 
