@@ -2,6 +2,9 @@ package com.sbz.proj.model;
 
 import lombok.*;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.List;
 
 @Getter
@@ -16,4 +19,10 @@ public class Player {
     private Integer money;
     private Blind blind;
 
+
+    public Double moneyRatio(Double otherPot){
+        BigDecimal bd = new BigDecimal(Double.toString(otherPot/this.money));
+        bd = bd.setScale(1, RoundingMode.HALF_UP);
+        return bd.doubleValue();
+    }
 }

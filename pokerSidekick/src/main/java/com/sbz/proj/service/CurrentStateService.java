@@ -31,7 +31,20 @@ public class CurrentStateService {
                 kieSession.getAgenda().getAgendaGroup("pre-flop").setFocus();
                 break;
             case FLOP:
-                kieSession.getAgenda().getAgendaGroup("flop").setFocus();
+                Possibility p = new Possibility();
+                p.cards.add(ts.getPlayers().get(0).getCard1());
+                p.cards.add(ts.getPlayers().get(0).getCard2());
+                p.cards.addAll(ts.getBoard());
+
+                p.setupCards();
+
+                LOGGER.info("-  -   -   -   -   -   -   -   -   -   -");
+                LOGGER.info("CARDS: " + p.getCards().toString());
+                LOGGER.info("-  -   -   -   -   -   -   -   -   -   -");
+
+                kieSession.insert(p);
+
+                kieSession.getAgenda().getAgendaGroup("possibility").setFocus();
                 break;
         }
 
