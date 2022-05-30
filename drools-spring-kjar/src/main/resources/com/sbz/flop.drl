@@ -14,7 +14,7 @@ rule "Raise because you have royal flush"
         )
     then
         modify($state){
-            getPlayers().get(0).getAction().add(Action.RAISE);
+            getPlayers().get(0).getAction().set(0, Action.RAISE);
         }
 end
 
@@ -24,12 +24,13 @@ rule "Raise because you have good combination"
 	when
         $state: TableState($currentStage: currentStage == StageName.FLOP)
         $possibility: Possibility(
+            pokerHand != PokerHand.ROYAL_FLUSH,
             $pokerHand: pokerHand,
             pokerHand.strength >= 5
         )
     then
         modify($state){
-            getPlayers().get(0).getAction().add(Action.RAISE);
+            getPlayers().get(0).getAction().set(0, Action.RAISE);
         }
         LOGGER.info("You have " + $pokerHand.name());
 end
@@ -41,11 +42,11 @@ rule "Call because you have somewhat combination"
         $state: TableState($currentStage: currentStage == StageName.FLOP)
         $possibility: Possibility(
             $pokerHand: pokerHand,
-            pokerHand.strength >= 5
+            pokerHand.strength < 5
         )
     then
         modify($state){
-            getPlayers().get(0).getAction().add(Action.RAISE);
+            getPlayers().get(0).getAction().set(0, Action.CALL);
         }
         LOGGER.info("You have " + $pokerHand.name());
 end

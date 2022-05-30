@@ -59,13 +59,18 @@ public class CurrentStateService {
 
         p.setupCards();
 
+        LOGGER.info("-  -   -   -   -   -   -   -   -   -   -");
         LOGGER.info("CARDS: " + p.getCards().toString());
+        LOGGER.info("-  -   -   -   -   -   -   -   -   -   -");
 
         kieSession.insert(ts);
         kieSession.insert(p);
 
+        kieSession.getAgenda().getAgendaGroup("possibility").setFocus();
+
         int fired = kieSession.fireAllRules();
         LOGGER.info("Number of fired rules: " + fired);
+        LOGGER.info("-  -   -   -   -   -   -   -   -   -   -");
 
         return ts.getPlayers().get(0).getAction().get(ts.getPlayers().get(0).getAction().size() - 1); // vraca poslednju akciju koju smo ubacili u pravilu
     }

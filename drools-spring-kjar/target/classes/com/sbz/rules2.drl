@@ -4,7 +4,6 @@ import com.sbz.proj.model.*;
 
 global java.util.logging.Logger LOGGER
 
-
 rule "HIGH_CARD"
     lock-on-active true
     agenda-group "possibility"
@@ -21,4 +20,5 @@ rule "HIGH_CARD"
         )
     then
         modify($possibility){pokerHand = PokerHand.HIGH_CARD}
+		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
 end

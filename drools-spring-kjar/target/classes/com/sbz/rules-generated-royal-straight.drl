@@ -5,8 +5,9 @@ global java.util.logging.Logger LOGGER
 rule "STRAIGHT_19"
     lock-on-active true
     agenda-group "possibility"
-	when
+    when
         $possibility: Possibility(
+            pokerHand != PokerHand.UNKNOWN,
             $card1: card1.rank == Rank.R10,
             $card2: card2.rank == Rank.JACK,
             $card3: card3.rank == Rank.QUEEN,
@@ -22,8 +23,9 @@ end
 rule "STRAIGHT_18"
     lock-on-active true
     agenda-group "possibility"
-	when
+    when
         $possibility: Possibility(
+            pokerHand != PokerHand.UNKNOWN,
             $card1: card1.rank == Rank.R9,
             $card2: card2.rank == Rank.R10,
             $card3: card3.rank == Rank.JACK,
@@ -39,8 +41,9 @@ end
 rule "STRAIGHT_17"
     lock-on-active true
     agenda-group "possibility"
-	when
+    when
         $possibility: Possibility(
+            pokerHand != PokerHand.UNKNOWN,
             $card1: card1.rank == Rank.R8,
             $card2: card2.rank == Rank.R9,
             $card3: card3.rank == Rank.R10,
@@ -56,8 +59,9 @@ end
 rule "STRAIGHT_16"
     lock-on-active true
     agenda-group "possibility"
-	when
+    when
         $possibility: Possibility(
+            pokerHand != PokerHand.UNKNOWN,
             $card1: card1.rank == Rank.R7,
             $card2: card2.rank == Rank.R8,
             $card3: card3.rank == Rank.R9,
@@ -73,8 +77,9 @@ end
 rule "STRAIGHT_15"
     lock-on-active true
     agenda-group "possibility"
-	when
+    when
         $possibility: Possibility(
+            pokerHand != PokerHand.UNKNOWN,
             $card1: card1.rank == Rank.R6,
             $card2: card2.rank == Rank.R7,
             $card3: card3.rank == Rank.R8,
@@ -90,8 +95,9 @@ end
 rule "STRAIGHT_14"
     lock-on-active true
     agenda-group "possibility"
-	when
+    when
         $possibility: Possibility(
+            pokerHand != PokerHand.UNKNOWN,
             $card1: card1.rank == Rank.R5,
             $card2: card2.rank == Rank.R6,
             $card3: card3.rank == Rank.R7,
@@ -107,8 +113,9 @@ end
 rule "STRAIGHT_13"
     lock-on-active true
     agenda-group "possibility"
-	when
+    when
         $possibility: Possibility(
+            pokerHand != PokerHand.UNKNOWN,
             $card1: card1.rank == Rank.R4,
             $card2: card2.rank == Rank.R5,
             $card3: card3.rank == Rank.R6,
@@ -124,8 +131,9 @@ end
 rule "STRAIGHT_12"
     lock-on-active true
     agenda-group "possibility"
-	when
+    when
         $possibility: Possibility(
+            pokerHand != PokerHand.UNKNOWN,
             $card1: card1.rank == Rank.R3,
             $card2: card2.rank == Rank.R4,
             $card3: card3.rank == Rank.R5,
@@ -141,8 +149,9 @@ end
 rule "STRAIGHT_11"
     lock-on-active true
     agenda-group "possibility"
-	when
+    when
         $possibility: Possibility(
+            pokerHand != PokerHand.UNKNOWN,
             $card1: card1.rank == Rank.R2,
             $card2: card2.rank == Rank.R3,
             $card3: card3.rank == Rank.R4,
@@ -158,8 +167,9 @@ end
 rule "STRAIGHT_10"
     lock-on-active true
     agenda-group "possibility"
-	when
+    when
         $possibility: Possibility(
+            pokerHand != PokerHand.UNKNOWN,
             $card1: card1.rank == Rank.R2,
             $card2: card2.rank == Rank.R3,
             $card3: card3.rank == Rank.R4,
@@ -175,8 +185,9 @@ end
 rule "STRAIGHT_FLUSH_9"
     lock-on-active true
     agenda-group "possibility"
-	when
+    when
         $possibility: Possibility(
+            pokerHand != PokerHand.UNKNOWN,
             $card1: card1.rank == Rank.R9,
             $card2: card2.rank == Rank.R10,
             $card3: card3.rank == Rank.JACK,
@@ -192,8 +203,9 @@ end
 rule "STRAIGHT_FLUSH_8"
     lock-on-active true
     agenda-group "possibility"
-	when
+    when
         $possibility: Possibility(
+            pokerHand != PokerHand.UNKNOWN,
             $card1: card1.rank == Rank.R8,
             $card2: card2.rank == Rank.R9,
             $card3: card3.rank == Rank.R10,
@@ -209,8 +221,9 @@ end
 rule "STRAIGHT_FLUSH_7"
     lock-on-active true
     agenda-group "possibility"
-	when
+    when
         $possibility: Possibility(
+            pokerHand != PokerHand.UNKNOWN,
             $card1: card1.rank == Rank.R7,
             $card2: card2.rank == Rank.R8,
             $card3: card3.rank == Rank.R9,
@@ -226,8 +239,9 @@ end
 rule "STRAIGHT_FLUSH_6"
     lock-on-active true
     agenda-group "possibility"
-	when
+    when
         $possibility: Possibility(
+            pokerHand != PokerHand.UNKNOWN,
             $card1: card1.rank == Rank.R6,
             $card2: card2.rank == Rank.R7,
             $card3: card3.rank == Rank.R8,
@@ -243,8 +257,9 @@ end
 rule "STRAIGHT_FLUSH_5"
     lock-on-active true
     agenda-group "possibility"
-	when
+    when
         $possibility: Possibility(
+            pokerHand != PokerHand.UNKNOWN,
             $card1: card1.rank == Rank.R5,
             $card2: card2.rank == Rank.R6,
             $card3: card3.rank == Rank.R7,
@@ -260,8 +275,9 @@ end
 rule "STRAIGHT_FLUSH_4"
     lock-on-active true
     agenda-group "possibility"
-	when
+    when
         $possibility: Possibility(
+            pokerHand != PokerHand.UNKNOWN,
             $card1: card1.rank == Rank.R4,
             $card2: card2.rank == Rank.R5,
             $card3: card3.rank == Rank.R6,
@@ -277,8 +293,9 @@ end
 rule "STRAIGHT_FLUSH_3"
     lock-on-active true
     agenda-group "possibility"
-	when
+    when
         $possibility: Possibility(
+            pokerHand != PokerHand.UNKNOWN,
             $card1: card1.rank == Rank.R3,
             $card2: card2.rank == Rank.R4,
             $card3: card3.rank == Rank.R5,
@@ -294,8 +311,9 @@ end
 rule "STRAIGHT_FLUSH_2"
     lock-on-active true
     agenda-group "possibility"
-	when
+    when
         $possibility: Possibility(
+            pokerHand != PokerHand.UNKNOWN,
             $card1: card1.rank == Rank.R2,
             $card2: card2.rank == Rank.R3,
             $card3: card3.rank == Rank.R4,
@@ -311,8 +329,9 @@ end
 rule "STRAIGHT_FLUSH_1"
     lock-on-active true
     agenda-group "possibility"
-	when
+    when
         $possibility: Possibility(
+            pokerHand != PokerHand.UNKNOWN,
             $card1: card1.rank == Rank.R2,
             $card2: card2.rank == Rank.R3,
             $card3: card3.rank == Rank.R4,
@@ -328,8 +347,9 @@ end
 rule "ROYAL_FLUSH_0"
     lock-on-active true
     agenda-group "possibility"
-	when
+    when
         $possibility: Possibility(
+            pokerHand != PokerHand.UNKNOWN,
             $card1: card1.rank == Rank.R10,
             $card2: card2.rank == Rank.JACK,
             $card3: card3.rank == Rank.QUEEN,
@@ -343,15 +363,3 @@ rule "ROYAL_FLUSH_0"
 end
 
 
-rule "FLUSH"
-    lock-on-active true
-    agenda-group "possibility"
-	when
-        $possibility: Possibility(
-            pokerHand == PokerHand.UNKNOWN,
-            sameSuit() == true,
-            $pokerHand: pokerHand
-        )
-    then
-        modify($possibility){pokerHand = PokerHand.FLUSH}
-end

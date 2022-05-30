@@ -9,6 +9,7 @@ rule "FULL_HOUSE_1_4"
     agenda-group "possibility"
 	when
         $possibility: Possibility(
+            pokerHand == PokerHand.UNKNOWN,
             card1.rank == card2.rank,
             card2.rank == card3.rank,
 
@@ -21,7 +22,8 @@ rule "FULL_HOUSE_1_4"
             pokerHand = PokerHand.FULL_HOUSE,
             additionalInfo.put("trips-index", 0),
             additionalInfo.put("pair-index", 3)
-        }		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
+        }
+		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
 end
 
 rule "FULL_HOUSE_1_3"
@@ -29,6 +31,7 @@ rule "FULL_HOUSE_1_3"
     agenda-group "possibility"
 	when
         $possibility: Possibility(
+            pokerHand == PokerHand.UNKNOWN,
             card1.rank == card2.rank,
 
             card3.rank == card4.rank,
@@ -41,5 +44,6 @@ rule "FULL_HOUSE_1_3"
             pokerHand = PokerHand.FULL_HOUSE,
             additionalInfo.put("trips-index", 2),
             additionalInfo.put("pair-index", 0)
-        }		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
+        }
+		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
 end
