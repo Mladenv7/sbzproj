@@ -27,6 +27,24 @@ rule "Call with high cards"
 end
 
 
+rule "Backing off from raise with high cards"
+	lock-on-active true
+	agenda-group "pre-flop"
+	when
+		$state : TableState(
+							$player : players.get(0),
+							$player.getCard1().rank.rank != $player.getCard2().rank.rank,
+							$player.getCard1().rank.rank + $player.getCard2().rank.rank >= 25,
+							$players : players
+							)
+		Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players
+		accumulate( Player($pot : getMoney()) from $players, $maxMoney : max($pot))
+		Player(moneyRatio($maxMoney) > 2) from $player		
+	then
+		modify($state) { getPlayers().get(0).getAction().set(0, Action.FOLD) }
+        System.out.println("You should fold");
+end
+
 
 rule "Raise with high cards"
     lock-on-active true
@@ -45,6 +63,23 @@ rule "Raise with high cards"
 end
 
 
+rule "Backing off from raise with low cards"
+	lock-on-active true
+	agenda-group "pre-flop"
+	when
+		$state : TableState(
+							$player : players.get(0),
+							$player.getCard1().rank.rank != $player.getCard2().rank.rank,
+							$player.getCard1().rank.rank + 5 < $player.getCard2().rank.rank,
+							$player.getCard1().suit.rank != $player.getCard2().suit.rank,
+							$player.getCard1().rank.rank + $player.getCard2().rank.rank < 11,
+							$players : players
+							)
+		Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players		
+	then
+		modify($state) { getPlayers().get(0).getAction().set(0, Action.FOLD) }
+        System.out.println("You should fold");
+end
 
 
 rule "Raising with good pocket pair"
@@ -78,4 +113,18 @@ rule "Raising with lower pocket pair"
         System.out.println("You should raise");
 end
 
-
+rule "Call with mediocre cards"
+	lock-on-active true
+	agenda-group "pre-flop"
+	when
+		$state : TableState(
+							$player : players.get(0),
+							$player.getCard1().rank.rank != $player.getCard2().rank.rank,
+							$player.getCard1().rank.rank + $player.getCard2().rank.rank < 12,
+							$players : players
+							)
+		not(Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players)
+	then
+		modify($state) { getPlayers().get(0).getAction().set(0, Action.CALL) }
+        System.out.println("You should call to big blind");
+end
