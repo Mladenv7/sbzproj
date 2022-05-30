@@ -40,7 +40,7 @@ rule "Raise with high cards"
 							)
 		not(Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players)
     then
-        modify($state) { getPlayers().get(0).getAction().set(0, Action.RAISE) }
+        modify($state) { getPlayers().get(0).getAction().add(Action.RAISE) }
         System.out.println("You should raise");
 end
 
@@ -57,7 +57,7 @@ rule "Raising with good pocket pair"
 							$player.getCard1().rank.rank + $player.getCard2().rank.rank >= 18
 							)
 	then
-		modify($state) { getPlayers().get(0).getAction().set(0, Action.RAISE) }
+		modify($state) { getPlayers().get(0).getAction().add(Action.RAISE) }
         System.out.println("You should raise");
 end
 
@@ -74,7 +74,7 @@ rule "Raising with lower pocket pair"
 							)
 		not(Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players)
 	then
-		modify($state) { getPlayers().get(0).getAction().set(0, Action.RAISE) }
+		modify($state) { getPlayers().get(0).getAction().add(Action.RAISE) }
         System.out.println("You should raise");
 end
 

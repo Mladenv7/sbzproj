@@ -26,17 +26,16 @@ public class CurrentStateService {
         KieSession kieSession = KnowledgeSessionHelper.getStatefulKnowledgeSession(kieContainer, "test-session");
         kieSession.insert(ts);
 
-        Possibility p = new Possibility();
-        p.cards = new ArrayList<>();
-        p.cards.add(ts.getPlayers().get(0).getCard1());
-        p.cards.add(ts.getPlayers().get(0).getCard2());
-        p.cards.addAll(ts.getBoard());
+        switch(ts.getCurrentStage()){
+            case PRE_FLOP:
+                kieSession.getAgenda().getAgendaGroup("pre-flop").setFocus();
+                break;
+            case FLOP:
+                kieSession.getAgenda().getAgendaGroup("flop").setFocus();
+                break;
+        }
 
-        p.setupCards();
 
-        kieSession.insert(p);
-
-        kieSession.getAgenda().getAgendaGroup("pre-flop").setFocus();
 
         int fired = kieSession.fireAllRules();
         LOGGER.info("Number of fired rules: " + fired);

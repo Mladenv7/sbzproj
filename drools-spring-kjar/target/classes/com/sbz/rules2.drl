@@ -1,0 +1,24 @@
+package com.sbz;
+
+import com.sbz.proj.model.*;
+
+global java.util.logging.Logger LOGGER
+
+
+rule "HIGH_CARD"
+    lock-on-active true
+    agenda-group "possibility"
+	when
+        $possibility: Possibility(
+            pokerHand == PokerHand.UNKNOWN,
+            howManyWithRank(card1.rank) == 1,
+            howManyWithRank(card2.rank) == 1,
+            howManyWithRank(card3.rank) == 1,
+            howManyWithRank(card4.rank) == 1,
+            howManyWithRank(card5.rank) == 1,
+            sameSuit() == false,
+            $pokerHand: pokerHand != PokerHand.STRAIGHT
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.HIGH_CARD}
+end

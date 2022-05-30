@@ -1,0 +1,357 @@
+package com.sbz;
+import com.sbz.proj.model.*;
+global java.util.logging.Logger LOGGER
+
+rule "STRAIGHT_19"
+    lock-on-active true
+    agenda-group "possibility"
+	when
+        $possibility: Possibility(
+            $card1: card1.rank == Rank.R10,
+            $card2: card2.rank == Rank.JACK,
+            $card3: card3.rank == Rank.QUEEN,
+            $card4: card4.rank == Rank.KING,
+            $card5: card5.rank == Rank.ACE,
+            sameSuit() == false,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.STRAIGHT}
+end
+
+rule "STRAIGHT_18"
+    lock-on-active true
+    agenda-group "possibility"
+	when
+        $possibility: Possibility(
+            $card1: card1.rank == Rank.R9,
+            $card2: card2.rank == Rank.R10,
+            $card3: card3.rank == Rank.JACK,
+            $card4: card4.rank == Rank.QUEEN,
+            $card5: card5.rank == Rank.KING,
+            sameSuit() == false,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.STRAIGHT}
+end
+
+rule "STRAIGHT_17"
+    lock-on-active true
+    agenda-group "possibility"
+	when
+        $possibility: Possibility(
+            $card1: card1.rank == Rank.R8,
+            $card2: card2.rank == Rank.R9,
+            $card3: card3.rank == Rank.R10,
+            $card4: card4.rank == Rank.JACK,
+            $card5: card5.rank == Rank.QUEEN,
+            sameSuit() == false,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.STRAIGHT}
+end
+
+rule "STRAIGHT_16"
+    lock-on-active true
+    agenda-group "possibility"
+	when
+        $possibility: Possibility(
+            $card1: card1.rank == Rank.R7,
+            $card2: card2.rank == Rank.R8,
+            $card3: card3.rank == Rank.R9,
+            $card4: card4.rank == Rank.R10,
+            $card5: card5.rank == Rank.JACK,
+            sameSuit() == false,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.STRAIGHT}
+end
+
+rule "STRAIGHT_15"
+    lock-on-active true
+    agenda-group "possibility"
+	when
+        $possibility: Possibility(
+            $card1: card1.rank == Rank.R6,
+            $card2: card2.rank == Rank.R7,
+            $card3: card3.rank == Rank.R8,
+            $card4: card4.rank == Rank.R9,
+            $card5: card5.rank == Rank.R10,
+            sameSuit() == false,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.STRAIGHT}
+end
+
+rule "STRAIGHT_14"
+    lock-on-active true
+    agenda-group "possibility"
+	when
+        $possibility: Possibility(
+            $card1: card1.rank == Rank.R5,
+            $card2: card2.rank == Rank.R6,
+            $card3: card3.rank == Rank.R7,
+            $card4: card4.rank == Rank.R8,
+            $card5: card5.rank == Rank.R9,
+            sameSuit() == false,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.STRAIGHT}
+end
+
+rule "STRAIGHT_13"
+    lock-on-active true
+    agenda-group "possibility"
+	when
+        $possibility: Possibility(
+            $card1: card1.rank == Rank.R4,
+            $card2: card2.rank == Rank.R5,
+            $card3: card3.rank == Rank.R6,
+            $card4: card4.rank == Rank.R7,
+            $card5: card5.rank == Rank.R8,
+            sameSuit() == false,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.STRAIGHT}
+end
+
+rule "STRAIGHT_12"
+    lock-on-active true
+    agenda-group "possibility"
+	when
+        $possibility: Possibility(
+            $card1: card1.rank == Rank.R3,
+            $card2: card2.rank == Rank.R4,
+            $card3: card3.rank == Rank.R5,
+            $card4: card4.rank == Rank.R6,
+            $card5: card5.rank == Rank.R7,
+            sameSuit() == false,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.STRAIGHT}
+end
+
+rule "STRAIGHT_11"
+    lock-on-active true
+    agenda-group "possibility"
+	when
+        $possibility: Possibility(
+            $card1: card1.rank == Rank.R2,
+            $card2: card2.rank == Rank.R3,
+            $card3: card3.rank == Rank.R4,
+            $card4: card4.rank == Rank.R5,
+            $card5: card5.rank == Rank.R6,
+            sameSuit() == false,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.STRAIGHT}
+end
+
+rule "STRAIGHT_10"
+    lock-on-active true
+    agenda-group "possibility"
+	when
+        $possibility: Possibility(
+            $card1: card1.rank == Rank.R2,
+            $card2: card2.rank == Rank.R3,
+            $card3: card3.rank == Rank.R4,
+            $card4: card4.rank == Rank.R5,
+            $card5: card5.rank == Rank.ACE,
+            sameSuit() == false,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.STRAIGHT}
+end
+
+rule "STRAIGHT_FLUSH_9"
+    lock-on-active true
+    agenda-group "possibility"
+	when
+        $possibility: Possibility(
+            $card1: card1.rank == Rank.R9,
+            $card2: card2.rank == Rank.R10,
+            $card3: card3.rank == Rank.JACK,
+            $card4: card4.rank == Rank.QUEEN,
+            $card5: card5.rank == Rank.KING,
+            sameSuit() == true,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+end
+
+rule "STRAIGHT_FLUSH_8"
+    lock-on-active true
+    agenda-group "possibility"
+	when
+        $possibility: Possibility(
+            $card1: card1.rank == Rank.R8,
+            $card2: card2.rank == Rank.R9,
+            $card3: card3.rank == Rank.R10,
+            $card4: card4.rank == Rank.JACK,
+            $card5: card5.rank == Rank.QUEEN,
+            sameSuit() == true,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+end
+
+rule "STRAIGHT_FLUSH_7"
+    lock-on-active true
+    agenda-group "possibility"
+	when
+        $possibility: Possibility(
+            $card1: card1.rank == Rank.R7,
+            $card2: card2.rank == Rank.R8,
+            $card3: card3.rank == Rank.R9,
+            $card4: card4.rank == Rank.R10,
+            $card5: card5.rank == Rank.JACK,
+            sameSuit() == true,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+end
+
+rule "STRAIGHT_FLUSH_6"
+    lock-on-active true
+    agenda-group "possibility"
+	when
+        $possibility: Possibility(
+            $card1: card1.rank == Rank.R6,
+            $card2: card2.rank == Rank.R7,
+            $card3: card3.rank == Rank.R8,
+            $card4: card4.rank == Rank.R9,
+            $card5: card5.rank == Rank.R10,
+            sameSuit() == true,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+end
+
+rule "STRAIGHT_FLUSH_5"
+    lock-on-active true
+    agenda-group "possibility"
+	when
+        $possibility: Possibility(
+            $card1: card1.rank == Rank.R5,
+            $card2: card2.rank == Rank.R6,
+            $card3: card3.rank == Rank.R7,
+            $card4: card4.rank == Rank.R8,
+            $card5: card5.rank == Rank.R9,
+            sameSuit() == true,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+end
+
+rule "STRAIGHT_FLUSH_4"
+    lock-on-active true
+    agenda-group "possibility"
+	when
+        $possibility: Possibility(
+            $card1: card1.rank == Rank.R4,
+            $card2: card2.rank == Rank.R5,
+            $card3: card3.rank == Rank.R6,
+            $card4: card4.rank == Rank.R7,
+            $card5: card5.rank == Rank.R8,
+            sameSuit() == true,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+end
+
+rule "STRAIGHT_FLUSH_3"
+    lock-on-active true
+    agenda-group "possibility"
+	when
+        $possibility: Possibility(
+            $card1: card1.rank == Rank.R3,
+            $card2: card2.rank == Rank.R4,
+            $card3: card3.rank == Rank.R5,
+            $card4: card4.rank == Rank.R6,
+            $card5: card5.rank == Rank.R7,
+            sameSuit() == true,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+end
+
+rule "STRAIGHT_FLUSH_2"
+    lock-on-active true
+    agenda-group "possibility"
+	when
+        $possibility: Possibility(
+            $card1: card1.rank == Rank.R2,
+            $card2: card2.rank == Rank.R3,
+            $card3: card3.rank == Rank.R4,
+            $card4: card4.rank == Rank.R5,
+            $card5: card5.rank == Rank.R6,
+            sameSuit() == true,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+end
+
+rule "STRAIGHT_FLUSH_1"
+    lock-on-active true
+    agenda-group "possibility"
+	when
+        $possibility: Possibility(
+            $card1: card1.rank == Rank.R2,
+            $card2: card2.rank == Rank.R3,
+            $card3: card3.rank == Rank.R4,
+            $card4: card4.rank == Rank.R5,
+            $card5: card5.rank == Rank.ACE,
+            sameSuit() == true,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+end
+
+rule "ROYAL_FLUSH_0"
+    lock-on-active true
+    agenda-group "possibility"
+	when
+        $possibility: Possibility(
+            $card1: card1.rank == Rank.R10,
+            $card2: card2.rank == Rank.JACK,
+            $card3: card3.rank == Rank.QUEEN,
+            $card4: card4.rank == Rank.KING,
+            $card5: card5.rank == Rank.ACE,
+            sameSuit() == true,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.ROYAL_FLUSH}
+end
+
+
+rule "FLUSH"
+    lock-on-active true
+    agenda-group "possibility"
+	when
+        $possibility: Possibility(
+            pokerHand == PokerHand.UNKNOWN,
+            sameSuit() == true,
+            $pokerHand: pokerHand
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.FLUSH}
+end

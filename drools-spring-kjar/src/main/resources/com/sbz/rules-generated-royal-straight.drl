@@ -4,7 +4,8 @@ global java.util.logging.Logger LOGGER
 
 rule "STRAIGHT_19"
     lock-on-active true
-    when
+    agenda-group "possibility"
+	when
         $possibility: Possibility(
             $card1: card1.rank == Rank.R10,
             $card2: card2.rank == Rank.JACK,
@@ -15,12 +16,13 @@ rule "STRAIGHT_19"
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.STRAIGHT}
+        modify($possibility){pokerHand = PokerHand.STRAIGHT}		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
 end
 
 rule "STRAIGHT_18"
     lock-on-active true
-    when
+    agenda-group "possibility"
+	when
         $possibility: Possibility(
             $card1: card1.rank == Rank.R9,
             $card2: card2.rank == Rank.R10,
@@ -31,12 +33,13 @@ rule "STRAIGHT_18"
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.STRAIGHT}
+        modify($possibility){pokerHand = PokerHand.STRAIGHT}		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
 end
 
 rule "STRAIGHT_17"
     lock-on-active true
-    when
+    agenda-group "possibility"
+	when
         $possibility: Possibility(
             $card1: card1.rank == Rank.R8,
             $card2: card2.rank == Rank.R9,
@@ -47,12 +50,13 @@ rule "STRAIGHT_17"
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.STRAIGHT}
+        modify($possibility){pokerHand = PokerHand.STRAIGHT}		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
 end
 
 rule "STRAIGHT_16"
     lock-on-active true
-    when
+    agenda-group "possibility"
+	when
         $possibility: Possibility(
             $card1: card1.rank == Rank.R7,
             $card2: card2.rank == Rank.R8,
@@ -63,12 +67,13 @@ rule "STRAIGHT_16"
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.STRAIGHT}
+        modify($possibility){pokerHand = PokerHand.STRAIGHT}		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
 end
 
 rule "STRAIGHT_15"
     lock-on-active true
-    when
+    agenda-group "possibility"
+	when
         $possibility: Possibility(
             $card1: card1.rank == Rank.R6,
             $card2: card2.rank == Rank.R7,
@@ -79,12 +84,13 @@ rule "STRAIGHT_15"
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.STRAIGHT}
+        modify($possibility){pokerHand = PokerHand.STRAIGHT}		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
 end
 
 rule "STRAIGHT_14"
     lock-on-active true
-    when
+    agenda-group "possibility"
+	when
         $possibility: Possibility(
             $card1: card1.rank == Rank.R5,
             $card2: card2.rank == Rank.R6,
@@ -95,12 +101,13 @@ rule "STRAIGHT_14"
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.STRAIGHT}
+        modify($possibility){pokerHand = PokerHand.STRAIGHT}		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
 end
 
 rule "STRAIGHT_13"
     lock-on-active true
-    when
+    agenda-group "possibility"
+	when
         $possibility: Possibility(
             $card1: card1.rank == Rank.R4,
             $card2: card2.rank == Rank.R5,
@@ -111,12 +118,13 @@ rule "STRAIGHT_13"
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.STRAIGHT}
+        modify($possibility){pokerHand = PokerHand.STRAIGHT}		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
 end
 
 rule "STRAIGHT_12"
     lock-on-active true
-    when
+    agenda-group "possibility"
+	when
         $possibility: Possibility(
             $card1: card1.rank == Rank.R3,
             $card2: card2.rank == Rank.R4,
@@ -127,12 +135,13 @@ rule "STRAIGHT_12"
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.STRAIGHT}
+        modify($possibility){pokerHand = PokerHand.STRAIGHT}		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
 end
 
 rule "STRAIGHT_11"
     lock-on-active true
-    when
+    agenda-group "possibility"
+	when
         $possibility: Possibility(
             $card1: card1.rank == Rank.R2,
             $card2: card2.rank == Rank.R3,
@@ -143,12 +152,13 @@ rule "STRAIGHT_11"
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.STRAIGHT}
+        modify($possibility){pokerHand = PokerHand.STRAIGHT}		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
 end
 
 rule "STRAIGHT_10"
     lock-on-active true
-    when
+    agenda-group "possibility"
+	when
         $possibility: Possibility(
             $card1: card1.rank == Rank.R2,
             $card2: card2.rank == Rank.R3,
@@ -159,12 +169,13 @@ rule "STRAIGHT_10"
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.STRAIGHT}
+        modify($possibility){pokerHand = PokerHand.STRAIGHT}		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
 end
 
 rule "STRAIGHT_FLUSH_9"
     lock-on-active true
-    when
+    agenda-group "possibility"
+	when
         $possibility: Possibility(
             $card1: card1.rank == Rank.R9,
             $card2: card2.rank == Rank.R10,
@@ -175,12 +186,13 @@ rule "STRAIGHT_FLUSH_9"
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
 end
 
 rule "STRAIGHT_FLUSH_8"
     lock-on-active true
-    when
+    agenda-group "possibility"
+	when
         $possibility: Possibility(
             $card1: card1.rank == Rank.R8,
             $card2: card2.rank == Rank.R9,
@@ -191,12 +203,13 @@ rule "STRAIGHT_FLUSH_8"
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
 end
 
 rule "STRAIGHT_FLUSH_7"
     lock-on-active true
-    when
+    agenda-group "possibility"
+	when
         $possibility: Possibility(
             $card1: card1.rank == Rank.R7,
             $card2: card2.rank == Rank.R8,
@@ -207,12 +220,13 @@ rule "STRAIGHT_FLUSH_7"
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
 end
 
 rule "STRAIGHT_FLUSH_6"
     lock-on-active true
-    when
+    agenda-group "possibility"
+	when
         $possibility: Possibility(
             $card1: card1.rank == Rank.R6,
             $card2: card2.rank == Rank.R7,
@@ -223,12 +237,13 @@ rule "STRAIGHT_FLUSH_6"
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
 end
 
 rule "STRAIGHT_FLUSH_5"
     lock-on-active true
-    when
+    agenda-group "possibility"
+	when
         $possibility: Possibility(
             $card1: card1.rank == Rank.R5,
             $card2: card2.rank == Rank.R6,
@@ -239,12 +254,13 @@ rule "STRAIGHT_FLUSH_5"
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
 end
 
 rule "STRAIGHT_FLUSH_4"
     lock-on-active true
-    when
+    agenda-group "possibility"
+	when
         $possibility: Possibility(
             $card1: card1.rank == Rank.R4,
             $card2: card2.rank == Rank.R5,
@@ -255,12 +271,13 @@ rule "STRAIGHT_FLUSH_4"
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
 end
 
 rule "STRAIGHT_FLUSH_3"
     lock-on-active true
-    when
+    agenda-group "possibility"
+	when
         $possibility: Possibility(
             $card1: card1.rank == Rank.R3,
             $card2: card2.rank == Rank.R4,
@@ -271,12 +288,13 @@ rule "STRAIGHT_FLUSH_3"
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
 end
 
 rule "STRAIGHT_FLUSH_2"
     lock-on-active true
-    when
+    agenda-group "possibility"
+	when
         $possibility: Possibility(
             $card1: card1.rank == Rank.R2,
             $card2: card2.rank == Rank.R3,
@@ -287,12 +305,13 @@ rule "STRAIGHT_FLUSH_2"
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
 end
 
 rule "STRAIGHT_FLUSH_1"
     lock-on-active true
-    when
+    agenda-group "possibility"
+	when
         $possibility: Possibility(
             $card1: card1.rank == Rank.R2,
             $card2: card2.rank == Rank.R3,
@@ -303,12 +322,13 @@ rule "STRAIGHT_FLUSH_1"
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+        modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
 end
 
 rule "ROYAL_FLUSH_0"
     lock-on-active true
-    when
+    agenda-group "possibility"
+	when
         $possibility: Possibility(
             $card1: card1.rank == Rank.R10,
             $card2: card2.rank == Rank.JACK,
@@ -319,18 +339,19 @@ rule "ROYAL_FLUSH_0"
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.ROYAL_FLUSH}
+        modify($possibility){pokerHand = PokerHand.ROYAL_FLUSH}		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
 end
 
 
 rule "FLUSH"
     lock-on-active true
-    when
+    agenda-group "possibility"
+	when
         $possibility: Possibility(
             pokerHand == PokerHand.UNKNOWN,
             sameSuit() == true,
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.FLUSH}
+        modify($possibility){pokerHand = PokerHand.FLUSH}		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
 end
