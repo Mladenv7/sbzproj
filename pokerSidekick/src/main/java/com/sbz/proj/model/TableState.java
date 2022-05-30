@@ -13,9 +13,9 @@ import java.util.List;
 @AllArgsConstructor
 public class TableState {
 
-    private List<Player> players;
-    private StageName currentStage;
+    public List<Player> players;
+    public StageName currentStage;
 
-    private List<Card> board;
+    public List<Card> board;
 
 }

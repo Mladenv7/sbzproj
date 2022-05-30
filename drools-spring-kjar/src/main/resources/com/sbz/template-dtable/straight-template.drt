@@ -13,10 +13,10 @@ import com.sbz.proj.model.*;
 
 global java.util.logging.Logger LOGGER
 
-template "classification-rules"
+template "straight-royal-rules"
 
-rule "Categorize @{hand}_@{row.rowNumber}"
-no-loop
+rule "@{hand}_@{row.rowNumber}"
+    lock-on-active true
     when
         $possibility: Possibility(
             $card1: card1.rank == Rank.@{card_1_rank},

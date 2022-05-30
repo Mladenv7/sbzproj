@@ -5,7 +5,7 @@ import com.sbz.proj.model.*;
 global java.util.logging.Logger LOGGER
 
 rule "FULL_HOUSE_1_4"
-    no-loop
+    lock-on-active true
     when
         $possibility: Possibility(
             card1.rank == card2.rank,
@@ -16,11 +16,15 @@ rule "FULL_HOUSE_1_4"
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.FULL_HOUSE}
+        modify($possibility){
+            pokerHand = PokerHand.FULL_HOUSE,
+            additionalInfo.put("trips-index", 0),
+            additionalInfo.put("pair-index", 3)
+        }
 end
 
 rule "FULL_HOUSE_1_3"
-    no-loop
+    lock-on-active true
     when
         $possibility: Possibility(
             card1.rank == card2.rank,
@@ -31,5 +35,9 @@ rule "FULL_HOUSE_1_3"
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.FULL_HOUSE}
+        modify($possibility){
+            pokerHand = PokerHand.FULL_HOUSE,
+            additionalInfo.put("trips-index", 2),
+            additionalInfo.put("pair-index", 0)
+        }
 end
