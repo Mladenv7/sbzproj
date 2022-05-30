@@ -13,7 +13,7 @@ public class DebugAgendaEventListener extends DefaultAgendaEventListener {
    @Override
    public void afterMatchFired(AfterMatchFiredEvent event) {
       Rule rule = event.getMatch().getRule();
-      LOGGER.info("Rule fired: " + rule.getName());
+      LOGGER.info("Rule fired: " + "\u001B[31m" + rule.getName() + "\u001B[0m");
       LOGGER.info("----------------------------------------------------------------------------");
    }
 }

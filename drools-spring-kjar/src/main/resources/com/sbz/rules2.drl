@@ -7,6 +7,7 @@ global java.util.logging.Logger LOGGER
 rule "HIGH_CARD"
     lock-on-active true
     agenda-group "possibility"
+    salience -20
 	when
         $possibility: Possibility(
             pokerHand == PokerHand.UNKNOWN,
@@ -20,5 +21,5 @@ rule "HIGH_CARD"
         )
     then
         modify($possibility){pokerHand = PokerHand.HIGH_CARD}
-		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
+        kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
 end

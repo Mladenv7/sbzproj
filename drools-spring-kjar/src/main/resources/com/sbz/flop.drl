@@ -4,11 +4,15 @@ import com.sbz.proj.model.*;
 
 global java.util.logging.Logger LOGGER
 
-rule "Raise because you have royal flush"
+rule "Raise when you have royal flush"
     lock-on-active true
     agenda-group "flop"
 	when
-        $state: TableState($currentStage: currentStage == StageName.FLOP)
+        $state: TableState(
+            $players: players,
+            $player: players.get(0),
+            $player.getAction().get(0) == Action.NONE
+        )
         $possibility: Possibility(
             $pokerHand: pokerHand == PokerHand.ROYAL_FLUSH
         )
@@ -18,11 +22,15 @@ rule "Raise because you have royal flush"
         }
 end
 
-rule "Raise because you have good combination"
+rule "Raise when you have good combination"
     lock-on-active true
     agenda-group "flop"
 	when
-        $state: TableState($currentStage: currentStage == StageName.FLOP)
+        $state: TableState(
+            $players: players,
+            $player: players.get(0),
+            $player.getAction().get(0) == Action.NONE
+        )
         $possibility: Possibility(
             pokerHand != PokerHand.ROYAL_FLUSH,
             $pokerHand: pokerHand,
@@ -35,18 +43,96 @@ rule "Raise because you have good combination"
         LOGGER.info("You have " + $pokerHand.name());
 end
 
-rule "Call because you have somewhat combination"
-    no-loop
+rule "Call when you have ok combination"
+    lock-on-active true
     agenda-group "flop"
 	when
-        $state: TableState($currentStage: currentStage == StageName.FLOP)
+        $state: TableState(
+            $players: players,
+            $player: players.get(0),
+            $player.getAction().get(0) == Action.NONE
+        )
         $possibility: Possibility(
             $pokerHand: pokerHand,
-            pokerHand.strength < 5
+            pokerHand.strength < 5,
+            pokerHand.strength > 1
         )
+        Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players
+        accumulate( Player($pot : getMoney()) from $players, $maxMoney : max($pot))
     then
         modify($state){
             getPlayers().get(0).getAction().set(0, Action.CALL);
+        }
+        LOGGER.info("You have " + $pokerHand.name());
+        LOGGER.info("You should call to "+ $maxMoney);
+end
+
+rule "Call when you have only strong pocket pair"
+    lock-on-active true
+    agenda-group "flop"
+	when
+        $state: TableState(
+            $players: players,
+            $player: players.get(0),
+            $player.getAction().get(0) == Action.NONE,
+            $player.getCard1().rank.rank == $player.getCard2().rank.rank,
+            $player.getCard1().rank.rank + $player.getCard2().rank.rank >= 18
+        )
+        $possibility: Possibility(
+            $pokerHand: pokerHand,
+            pokerHand == PokerHand.PAIR
+        )
+        Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players
+        accumulate( Player($pot : getMoney()) from $players, $maxMoney : max($pot))
+        Player(moneyRatio($maxMoney) <= 2) from $player
+    then
+        modify($state){
+            getPlayers().get(0).getAction().set(0, Action.CALL);
+        }
+        LOGGER.info("You have " + $pokerHand.name());
+        LOGGER.info("You should call to "+ $maxMoney);
+end
+
+rule "Call when you have nothing and someone's pot is not 2 times bigger than yours"
+    lock-on-active true
+    agenda-group "flop"
+	when
+        $state: TableState(
+            $players: players,
+            $player: players.get(0),
+            $player.getAction().get(0) == Action.NONE
+        )
+        $possibility: Possibility(
+            $pokerHand: pokerHand,
+            pokerHand.strength <= 1
+        )
+        Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players
+        accumulate( Player($pot : getMoney()) from $players, $maxMoney : max($pot))
+        Player(moneyRatio($maxMoney) <= 2) from $player
+    then
+        modify($state){
+            getPlayers().get(0).getAction().set(0, Action.CALL);
+        }
+        LOGGER.info("You have " + $pokerHand.name());
+        LOGGER.info("You should call to "+ $maxMoney);
+end
+
+rule "Fold when you have nothing"
+    no-loop
+    agenda-group "flop"
+	when
+        $state: TableState(
+            $players: players,
+            $player: players.get(0),
+            $player.getAction().get(0) == Action.NONE
+        )
+        $possibility: Possibility(
+            $pokerHand: pokerHand,
+            pokerHand.strength <= 1
+        )
+    then
+        modify($state){
+            getPlayers().get(0).getAction().set(0, Action.FOLD);
         }
         LOGGER.info("You have " + $pokerHand.name());
 end

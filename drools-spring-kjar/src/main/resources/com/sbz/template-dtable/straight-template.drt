@@ -20,7 +20,7 @@ rule "@{hand}_@{row.rowNumber}"
     agenda-group "possibility"
     when
         $possibility: Possibility(
-            pokerHand != PokerHand.UNKNOWN,
+            pokerHand == PokerHand.UNKNOWN,
             $card1: card1.rank == Rank.@{card_1_rank},
             $card2: card2.rank == Rank.@{card_2_rank},
             $card3: card3.rank == Rank.@{card_3_rank},
@@ -31,6 +31,7 @@ rule "@{hand}_@{row.rowNumber}"
         )
     then
         modify($possibility){pokerHand = PokerHand.@{hand}}
+        kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
 end
 
 end template
