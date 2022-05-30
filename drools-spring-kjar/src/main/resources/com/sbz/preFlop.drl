@@ -1,0 +1,84 @@
+package com.sbz;
+import com.sbz.proj.model.*;
+
+import java.util.List;
+
+global java.util.logging.Logger LOGGER
+
+
+
+rule "Call with high cards"
+	no-loop
+	agenda-group "pre-flop"
+	when
+        $state : TableState(
+							$player : players.get(0),
+							$player.getCard1().rank.rank != $player.getCard2().rank.rank,
+							$player.getCard1().rank.rank + $player.getCard2().rank.rank >= 25,
+							$players : players
+							)
+		Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players
+		accumulate( Player($pot : getMoney()) from $players, $maxMoney : max($pot))
+		
+    then
+        modify($state) { getPlayers().get(0).getAction().add(Action.CALL) }
+        System.out.println("You should call to "+ $maxMoney);
+		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("possibility").setFocus();
+end
+
+
+
+rule "Raise with high cards"
+    no-loop
+	agenda-group "pre-flop"
+	when
+        $state : TableState(
+							$player : players.get(0),
+							$player.getCard1().rank.rank != $player.getCard2().rank.rank,
+							$player.getCard1().rank.rank + $player.getCard2().rank.rank >= 25,
+							$players : players
+							)
+		not(Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players)
+    then
+        modify($state) { getPlayers().get(0).getAction().add(Action.RAISE) }
+        System.out.println("You should raise");
+		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("possibility").setFocus();
+end
+
+
+
+
+rule "Raising with good pocket pair"
+	no-loop
+	agenda-group "pre-flop"
+    when
+		$state : TableState(
+							$player : players.get(0),
+							$player.getCard1().rank.rank == $player.getCard2().rank.rank,
+							$player.getCard1().rank.rank + $player.getCard2().rank.rank >= 18
+							)
+	then
+		modify($state) { getPlayers().get(0).getAction().add(Action.RAISE) }
+        System.out.println("You should raise");
+		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("possibility").setFocus();
+end
+
+
+rule "Raising with lower pocket pair"
+	no-loop
+	agenda-group "pre-flop"
+    when
+		$state : TableState(
+							$player : players.get(0),
+							$player.getCard1().rank.rank == $player.getCard2().rank.rank,
+							$player.getCard1().rank.rank + $player.getCard2().rank.rank < 18,
+							$players : players
+							)
+		not(Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players)
+	then
+		modify($state) { getPlayers().get(0).getAction().add(Action.RAISE) }
+        System.out.println("You should raise");
+		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("possibility").setFocus();
+end
+
+

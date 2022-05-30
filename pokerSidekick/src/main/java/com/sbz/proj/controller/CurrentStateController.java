@@ -48,7 +48,7 @@ public class CurrentStateController {
                         "CHECK"
                     ],
                     "money": 10000,
-                    "blind": "DEALER"
+                    "blind": "SMALL_BLIND"
                 },
                 {
                     "card1": null,
@@ -57,7 +57,7 @@ public class CurrentStateController {
                         "CHECK"
                     ],
                     "money": 10000,
-                    "blind": "SMALL_BLIND"
+                    "blind": "DEALER"
                 },
                 {
                     "card1": null,
@@ -69,7 +69,7 @@ public class CurrentStateController {
                     "blind": "NONE"
                 }
             ],
-            "currentStage": "RIVER",
+            "currentStage": "FLOP",
             "board": [
                 {"rank": "KING", "suit": "DIAMONDS"},
                 {"rank": "R10", "suit": "CLUBS"},
@@ -79,9 +79,10 @@ public class CurrentStateController {
     * */
 
     @PostMapping("")
-    public ResponseEntity<Action> sendCurrentState(@RequestBody TableState currentState){
+    public ResponseEntity<?> sendCurrentState(@RequestBody TableState currentState){
+        if(currentState.getPlayers().size() < 2)
+            return new ResponseEntity<String>("Table state needs a least two players with cards", HttpStatus.BAD_REQUEST);
+
         return new ResponseEntity<Action>(currentStateService.consult(currentState), HttpStatus.OK);
     }
-
-
 }
