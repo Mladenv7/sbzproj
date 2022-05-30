@@ -62,30 +62,6 @@ public class TestService {
 
     }
 
-    public void poredimo2Karte(boolean daProdje) {
-        KieSession kieSession = KnowledgeSessionHelper.getStatefulKnowledgeSession(kieContainer, "test-session");
-        Card card1 = new Card(Rank.R10, Suit.SPADES);
-        Card card2 = new Card(Rank.JACK, Suit.CLUBS);
-
-        if (daProdje){
-            kieSession.insert(card2);
-            kieSession.insert(card1);
-        }
-        else {
-            kieSession.insert(card1);
-            kieSession.insert(card2);
-        }
-
-        int fired = kieSession.fireAllRules();
-        //kieSession.dispose();
-
-        int res = card1.compareTo(card2);
-        if (res == 1) System.out.println("veca je prva");
-        else if (res == -1) System.out.println("veca je druga");
-
-        LOGGER.info("Number of fired rules: " + fired);
-    }
-
     public void checkRoyalFlush() {
         KieSession kieSession = KnowledgeSessionHelper.getStatefulKnowledgeSession(kieContainer, "test-session");
         Card card1 = new Card(Rank.ACE, Suit.SPADES);
@@ -101,41 +77,14 @@ public class TestService {
         p.cards.add(card4);
         p.cards.add(card5);
         p.weKnow = false;
-        //p.cards.sort(Card::compareTo);
 
         p.setupCards();
-
-        //p.cards.stream().filter(c -> c.getSuit() == p.cards.get(0).getSuit()).collect(Collectors.toList()).size() == 5
 
         kieSession.insert(p);
         kieSession.setGlobal("LOGGER", LOGGER);
         int fired = kieSession.fireAllRules();
         LOGGER.info("Number of fired rules: " + fired);
     }
-
-    public void checkStraigthFlush() throws IOException {
-        InputStream template = new FileInputStream("C:\\Users\\isido\\OneDrive\\Desktop\\SBZ_Proj\\sbzproj\\drools-spring-kjar\\src\\main\\resources\\com\\sbz\\template-dtable\\customer-classification-simple.drt");
-
-        List<ClassificationTemplateModel> data = new ArrayList<>();
-
-        data.add(new ClassificationTemplateModel(PokerHand.STRAIGHT_FLUSH, Rank.ACE, Rank.R2, Rank.R3, Rank.R4, Rank.R5, true));
-        data.add(new ClassificationTemplateModel(PokerHand.STRAIGHT_FLUSH, Rank.R2, Rank.R3, Rank.R4, Rank.R5, Rank.R6, true));
-
-        ObjectDataCompiler converter = new ObjectDataCompiler();
-        String drl = converter.compile(data, template);
-
-        System.out.println(drl);
-
-        BufferedWriter writer = new BufferedWriter(new FileWriter("rules.drl"));
-        writer.write(drl);
-
-        writer.close();
-
-        KieSession ksession = createKieSessionFromDRL(drl);
-
-        doTest(ksession);
-    }
-
 
     private void doTest(KieSession ksession){
         Card card1 = new Card(Rank.ACE, Suit.SPADES);
@@ -146,14 +95,13 @@ public class TestService {
 
         Possibility p = new Possibility();
 
-        p.cards = new ArrayList<>();
         p.cards.add(card1);
         p.cards.add(card2);
         p.cards.add(card3);
         p.cards.add(card4);
         p.cards.add(card5);
-        p.cards.sort(Card::compareTo);
-        p.weKnow = false;
+
+        p.setupCards();
 
         ksession.insert(p);
 
@@ -197,18 +145,15 @@ public class TestService {
         Card card4 = fiveCardsDTO.card4;
         Card card5 = fiveCardsDTO.card5;
         Possibility p = new Possibility();
-        p.cards = new ArrayList<>();
         p.cards.add(card1);
         p.cards.add(card2);
         p.cards.add(card3);
         p.cards.add(card4);
         p.cards.add(card5);
-        //p.cards.sort(Card::compareTo);
 
         p.setupCards();
 
         kieSession.insert(p);
-        //kieSession.setGlobal("LOGGER", LOGGER);
 
         int fired = kieSession.fireAllRules();
         LOGGER.info("Number of fired rules: " + fired);

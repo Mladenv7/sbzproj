@@ -11,7 +11,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @AllArgsConstructor
-@NoArgsConstructor
 @Getter
 @Setter
 public class Possibility implements Comparable<Possibility>{
@@ -32,6 +31,12 @@ public class Possibility implements Comparable<Possibility>{
         this.pokerHand = pokerHand;
         this.weKnow = true;
     }
+     public Possibility() {
+         this.cards = new ArrayList<>();
+         this.pokerHand = PokerHand.UNKNOWN;
+         this.additionalInfo = new HashMap<>();
+         this.weKnow = false;
+     }
 
     public boolean sameSuit() {
         return cards.stream().filter(c -> c.getSuit() != cards.get(0).getSuit()).count() == 0;

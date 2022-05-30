@@ -26,41 +26,13 @@ end
 
 
 
-rule "FOUR_OF_A_KIND_1_2_3_4"
-    no-loop
-    when
-        $possibility: Possibility(
-            card1.rank == card2.rank,
-            card2.rank == card3.rank,
-            card3.rank == card4.rank,
-            sameSuit() == false,
-            $pokerHand: pokerHand
-        )
-    then
-        modify($possibility){pokerHand = PokerHand.FOUR_OF_A_KIND}
-        //LOGGER.info("Imas royal flush");
-end
 
-rule "FOUR_OF_A_KIND_2_3_4_5"
-    no-loop
-    when
-        $possibility: Possibility(
-            card2.rank == card3.rank,
-            card3.rank == card4.rank,
-            card4.rank == card5.rank,
-            sameSuit() == false,
-            $pokerHand: pokerHand
-        )
-    then
-        modify($possibility){pokerHand = PokerHand.FOUR_OF_A_KIND}
-        //LOGGER.info("Imas royal flush");
-end
 
 rule "HIGH_CARD"
-    no-loop
+    lock-on-active true
     when
         $possibility: Possibility(
-            weKnow == false,
+            pokerHand == PokerHand.UNKNOWN,
             howManyWithRank(card1.rank) == 1,
             howManyWithRank(card2.rank) == 1,
             howManyWithRank(card3.rank) == 1,
@@ -70,6 +42,5 @@ rule "HIGH_CARD"
             $pokerHand: pokerHand != PokerHand.STRAIGHT
         )
     then
-        modify($possibility){pokerHand = PokerHand.HIGH_CARD, weKnow = true}
-        //LOGGER.info("Imas royal flush");
+        modify($possibility){pokerHand = PokerHand.HIGH_CARD}
 end

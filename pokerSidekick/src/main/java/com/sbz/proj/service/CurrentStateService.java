@@ -61,14 +61,13 @@ public class CurrentStateService {
         KieSession kieSession = KnowledgeSessionHelper.getStatefulKnowledgeSession(kieContainer, "test-session");
 
         Possibility p = new Possibility();
-        p.cards = new ArrayList<>();
         p.cards.add(ts.getPlayers().get(0).getCard1());
         p.cards.add(ts.getPlayers().get(0).getCard2());
         p.cards.addAll(ts.getBoard());
 
-        p.additionalInfo = new HashMap<>();
-
         p.setupCards();
+
+        LOGGER.info("CARDS: " + p.getCards().toString());
 
         kieSession.insert(ts);
         kieSession.insert(p);

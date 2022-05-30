@@ -61,4 +61,13 @@ public class Card implements Comparable<Card>{
         else
             return list1.get(4).compareTo(list2.get(4));
     }
+
+    @Override
+    public String toString() {
+        String rank;
+        if (this.rank.getRank() > 10) rank = String.valueOf(this.rank.name().charAt(0));
+        else rank = this.rank.name().split("R")[1];
+        String suit = String.valueOf(this.suit.name().charAt(0));
+        return rank + suit;
+    }
 }

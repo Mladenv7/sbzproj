@@ -28,7 +28,7 @@ rule "@{hand}_@{row.rowNumber}"
             $pokerHand: pokerHand
         )
     then
-        modify($possibility){pokerHand = PokerHand.@{hand}, weKnow = true}
+        modify($possibility){pokerHand = PokerHand.@{hand}}
 end
 
 end template

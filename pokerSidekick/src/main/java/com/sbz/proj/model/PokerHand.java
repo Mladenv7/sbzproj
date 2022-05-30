@@ -11,7 +11,7 @@ public enum PokerHand {
     TWO_PAIRS(3),
     PAIR(2),
     HIGH_CARD(1),
-    NOTHING(0);
+    UNKNOWN(0);
 
     public Integer strength;
 
