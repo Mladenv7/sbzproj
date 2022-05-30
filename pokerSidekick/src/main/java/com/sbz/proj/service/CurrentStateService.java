@@ -44,30 +44,30 @@ public class CurrentStateService {
         return Action.CHECK;
     }
 
-    public void parseCurrentState(HashMap<String, String> currentStateMap){
-        // boilerpalte
-        System.out.println("Pravimo novi kieSession");
-        KieSession kieSession = kieContainer.newKieSession();
-
-        // actual code
-        StageName.valueOf(currentStateMap.get("stageName"));
-
-        Player p1 = new Player();
-
-        System.out.println(this.kieContainer);
-
-        //p1.setCard1(new Card(1, Suit.SPADES));
-        //p1.setCard2(new Card(1, Suit.HEARTS));
-
-        // insert data for rules
-        kieSession.insert(p1);
-
-        // boilerpalte
-        kieSession.fireAllRules();
+    private void destroySession(KieSession kieSession) {
         kieSession.dispose();
-
         System.out.println("Gasimo kieSession");
-        System.out.println(p1.getMoney());
+    }
 
+
+    public Action flopConslut(TableState ts) {
+        KieSession kieSession = KnowledgeSessionHelper.getStatefulKnowledgeSession(kieContainer, "test-session");
+
+        Possibility p = new Possibility();
+        p.cards.add(ts.getPlayers().get(0).getCard1());
+        p.cards.add(ts.getPlayers().get(0).getCard2());
+        p.cards.addAll(ts.getBoard());
+
+        p.setupCards();
+
+        LOGGER.info("CARDS: " + p.getCards().toString());
+
+        kieSession.insert(ts);
+        kieSession.insert(p);
+
+        int fired = kieSession.fireAllRules();
+        LOGGER.info("Number of fired rules: " + fired);
+
+        return ts.getPlayers().get(0).getAction().get(ts.getPlayers().get(0).getAction().size() - 1); // vraca poslednju akciju koju smo ubacili u pravilu
     }
 }
