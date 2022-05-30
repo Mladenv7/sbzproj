@@ -49,6 +49,7 @@ public class CurrentStateService {
                 kieSession.getAgenda().getAgendaGroup("possibility").setFocus();
                 break;
             case TURN:
+            case RIVER:
                 List<Card> allCards = new ArrayList<>(ts.board);
                 allCards.add(ts.getPlayers().get(0).getCard1());
                 allCards.add(ts.getPlayers().get(0).getCard2());
@@ -60,8 +61,6 @@ public class CurrentStateService {
                 }
 
                 kieSession.getAgenda().getAgendaGroup("possibility").setFocus();
-                break;
-            case RIVER:
                 break;
         }
 

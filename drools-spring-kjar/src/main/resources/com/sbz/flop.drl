@@ -59,6 +59,7 @@ rule "Call when you have ok combination"
         )
         Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players
         accumulate( Player($pot : getMoney()) from $players, $maxMoney : max($pot))
+        Player(moneyRatio($maxMoney) <= 2) from $player
     then
         modify($state){
             getPlayers().get(0).getAction().set(0, Action.CALL);
@@ -93,6 +94,31 @@ rule "Call when you have only strong pocket pair"
         LOGGER.info("You should call to "+ $maxMoney);
 end
 
+rule "Call when you have only weak pocket pair and someone's pot is not 2 times bigger than yours"
+    lock-on-active true
+    agenda-group "flop"
+	when
+        $state: TableState(
+            $players: players,
+            $player: players.get(0),
+            $player.getAction().get(0) == Action.NONE,
+            $player.getCard1().rank.rank == $player.getCard2().rank.rank
+        )
+        $possibility: Possibility(
+            $pokerHand: pokerHand,
+            pokerHand == PokerHand.PAIR
+        )
+        Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players
+        accumulate( Player($pot : getMoney()) from $players, $maxMoney : max($pot))
+        Player(moneyRatio($maxMoney) <= 2) from $player
+    then
+        modify($state){
+            getPlayers().get(0).getAction().set(0, Action.CALL);
+        }
+        LOGGER.info("You have " + $pokerHand.name());
+        LOGGER.info("You should call to "+ $maxMoney);
+end
+
 rule "Call when you have nothing and someone's pot is not 2 times bigger than yours"
     lock-on-active true
     agenda-group "flop"
@@ -100,6 +126,7 @@ rule "Call when you have nothing and someone's pot is not 2 times bigger than yo
         $state: TableState(
             $players: players,
             $player: players.get(0),
+            players.get(0).getCard1().rank.rank >= 12 || players.get(0).getCard2().rank.rank >= 12,
             $player.getAction().get(0) == Action.NONE
         )
         $possibility: Possibility(
@@ -118,7 +145,6 @@ rule "Call when you have nothing and someone's pot is not 2 times bigger than yo
 end
 
 rule "Fold when you have nothing"
-    no-loop
     agenda-group "flop"
 	when
         $state: TableState(
@@ -127,12 +153,22 @@ rule "Fold when you have nothing"
             $player.getAction().get(0) == Action.NONE
         )
         $possibility: Possibility(
-            $pokerHand: pokerHand,
-            pokerHand.strength <= 1
+            $pokerHand: pokerHand
         )
     then
         modify($state){
             getPlayers().get(0).getAction().set(0, Action.FOLD);
         }
         LOGGER.info("You have " + $pokerHand.name());
+end
+
+rule "I activate always"
+    agenda-group "flop"
+    when
+        $state: TableState($players: players,
+           $player: players.get(0),
+           $player.getAction().get(0) == Action.NONE
+        )
+    then
+        System.out.println("Hello");
 end

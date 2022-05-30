@@ -18,7 +18,7 @@ rule "STRAIGHT_19"
         )
     then
         modify($possibility){pokerHand = PokerHand.STRAIGHT}
-        kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
+
 end
 
 rule "STRAIGHT_18"
@@ -37,7 +37,7 @@ rule "STRAIGHT_18"
         )
     then
         modify($possibility){pokerHand = PokerHand.STRAIGHT}
-        kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
+
 end
 
 rule "STRAIGHT_17"
@@ -56,7 +56,7 @@ rule "STRAIGHT_17"
         )
     then
         modify($possibility){pokerHand = PokerHand.STRAIGHT}
-        kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
+
 end
 
 rule "STRAIGHT_16"
@@ -75,7 +75,7 @@ rule "STRAIGHT_16"
         )
     then
         modify($possibility){pokerHand = PokerHand.STRAIGHT}
-        kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
+
 end
 
 rule "STRAIGHT_15"
@@ -94,7 +94,7 @@ rule "STRAIGHT_15"
         )
     then
         modify($possibility){pokerHand = PokerHand.STRAIGHT}
-        kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
+
 end
 
 rule "STRAIGHT_14"
@@ -113,7 +113,7 @@ rule "STRAIGHT_14"
         )
     then
         modify($possibility){pokerHand = PokerHand.STRAIGHT}
-        kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
+
 end
 
 rule "STRAIGHT_13"
@@ -132,7 +132,7 @@ rule "STRAIGHT_13"
         )
     then
         modify($possibility){pokerHand = PokerHand.STRAIGHT}
-        kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
+
 end
 
 rule "STRAIGHT_12"
@@ -151,7 +151,7 @@ rule "STRAIGHT_12"
         )
     then
         modify($possibility){pokerHand = PokerHand.STRAIGHT}
-        kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
+
 end
 
 rule "STRAIGHT_11"
@@ -170,7 +170,7 @@ rule "STRAIGHT_11"
         )
     then
         modify($possibility){pokerHand = PokerHand.STRAIGHT}
-        kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
+
 end
 
 rule "STRAIGHT_10"
@@ -189,7 +189,7 @@ rule "STRAIGHT_10"
         )
     then
         modify($possibility){pokerHand = PokerHand.STRAIGHT}
-        kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
+
 end
 
 rule "STRAIGHT_FLUSH_9"
@@ -208,7 +208,7 @@ rule "STRAIGHT_FLUSH_9"
         )
     then
         modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
-        kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
+
 end
 
 rule "STRAIGHT_FLUSH_8"
@@ -227,7 +227,7 @@ rule "STRAIGHT_FLUSH_8"
         )
     then
         modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
-        kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
+
 end
 
 rule "STRAIGHT_FLUSH_7"
@@ -246,7 +246,7 @@ rule "STRAIGHT_FLUSH_7"
         )
     then
         modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
-        kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
+
 end
 
 rule "STRAIGHT_FLUSH_6"
@@ -265,7 +265,7 @@ rule "STRAIGHT_FLUSH_6"
         )
     then
         modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
-        kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
+
 end
 
 rule "STRAIGHT_FLUSH_5"
@@ -284,7 +284,7 @@ rule "STRAIGHT_FLUSH_5"
         )
     then
         modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
-        kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
+
 end
 
 rule "STRAIGHT_FLUSH_4"
@@ -303,7 +303,7 @@ rule "STRAIGHT_FLUSH_4"
         )
     then
         modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
-        kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
+
 end
 
 rule "STRAIGHT_FLUSH_3"
@@ -322,7 +322,7 @@ rule "STRAIGHT_FLUSH_3"
         )
     then
         modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
-        kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
+
 end
 
 rule "STRAIGHT_FLUSH_2"
@@ -341,7 +341,7 @@ rule "STRAIGHT_FLUSH_2"
         )
     then
         modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
-        kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
+
 end
 
 rule "STRAIGHT_FLUSH_1"
@@ -360,7 +360,7 @@ rule "STRAIGHT_FLUSH_1"
         )
     then
         modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
-        kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
+
 end
 
 rule "ROYAL_FLUSH_0"
@@ -379,7 +379,7 @@ rule "ROYAL_FLUSH_0"
         )
     then
         modify($possibility){pokerHand = PokerHand.ROYAL_FLUSH}
-        kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
+
 end
 
 

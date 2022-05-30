@@ -73,7 +73,7 @@ public class Card implements Comparable<Card>{
     }
 
     public static void logCards(Logger LOGGER, List<Card> cards) {
-        LOGGER.info("\u001B[33m==========================================");
+        LOGGER.info("\u001B[33m==========================================\u001B[0m");
         LOGGER.info("CARDS: " + cards.toString());
         LOGGER.info("-  -   -   -   -   -   -   -   -   -   -");
     }

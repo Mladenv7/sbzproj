@@ -1,6 +1,7 @@
 package com.sbz;
 
 import com.sbz.proj.model.*;
+import java.util.ArrayList;
 
 global java.util.logging.Logger LOGGER
 
@@ -21,5 +22,67 @@ rule "HIGH_CARD"
         )
     then
         modify($possibility){pokerHand = PokerHand.HIGH_CARD}
+end
+
+rule "All possibilities classified - jump to river"
+    no-loop
+    agenda-group "possibility"
+	when
+	    $state: TableState($stage: currentStage == StageName.RIVER)
+        $possibilities: ArrayList(size == 21) from collect(Possibility(pokerHand != PokerHand.UNKNOWN))
+        accumulate(Possibility($strength : pokerHand.strength, $cards: getCards()), $bestHand : max($strength))
+        $best: Possibility(pokerHand.strength == $bestHand)
+    then
+        for (Object p : $possibilities){
+            delete(p);
+        }
+
+        System.out.println($possibilities.size());
+
+        System.out.println($best.getCards());
+
+        insert($best);
+        kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("river").setFocus();
+end
+
+rule "All possibilities classified - jump to turn"
+    no-loop
+    agenda-group "possibility"
+	when
+	    $state: TableState($stage: currentStage == StageName.TURN)
+        $possibilities: ArrayList(size == 6) from collect(Possibility(pokerHand != PokerHand.UNKNOWN))
+        accumulate(Possibility($strength : pokerHand.strength, $cards: getCards()), $bestHand : max($strength))
+        $best: Possibility(pokerHand.strength == $bestHand)
+    then
+        for (Object p : $possibilities){
+            delete(p);
+        }
+
+        System.out.println($possibilities.size());
+
+        System.out.println($best.getCards());
+
+        insert($best);
+        kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("turn").setFocus();
+end
+
+rule "Possibility classified - jump to flop"
+    no-loop
+    agenda-group "possibility"
+	when
+	    $state: TableState($stage: currentStage == StageName.FLOP)
+        $possibilities: ArrayList(size == 1) from collect(Possibility(pokerHand != PokerHand.UNKNOWN))
+        accumulate(Possibility($strength : pokerHand.strength, $cards: getCards()), $bestHand : max($strength))
+        $best: Possibility(pokerHand.strength == $bestHand)
+    then
+        for (Object p : $possibilities){
+            delete(p);
+        }
+
+        System.out.println($possibilities.size());
+
+        System.out.println($best.getCards());
+
+        insert($best);
         kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
 end
