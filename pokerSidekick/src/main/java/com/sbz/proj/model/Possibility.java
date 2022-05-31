@@ -212,4 +212,47 @@ public class Possibility implements Comparable<Possibility>{
             return Card.compareLists(this.cards, o.cards);
     }
 
+    public static List<Possibility> makeAllPossibilities(List<Card> cards) {
+        List<Possibility> possibilities = new ArrayList<>();
+        List<int[]> combinationsOfIndexes = generateAllIndexCombinations(cards.size(), 5);
+        for (int[] combination : combinationsOfIndexes) {
+            List<Card> cardList = new ArrayList<>();
+            for (int i = 0; i < combination.length; i++){
+                cardList.add(cards.get(combination[i]));
+            }
+            Possibility p = new Possibility();
+            p.cards = cardList;
+            p.setupCards();
+            possibilities.add(p);
+            //System.out.println(cardList);
+        }
+        return possibilities;
+    }
+
+    public static List<int[]> generateAllIndexCombinations(int n, int r) {
+        List<int[]> combinations = new ArrayList<>();
+        int[] combination = new int[r];
+
+        // initialize with lowest lexicographic combination
+        for (int i = 0; i < r; i++) {
+            combination[i] = i;
+        }
+
+        while (combination[r - 1] < n) {
+            combinations.add(combination.clone());
+
+            // generate next combination in lexicographic order
+            int t = r - 1;
+            while (t != 0 && combination[t] == n - r + t) {
+                t--;
+            }
+            combination[t]++;
+            for (int i = t + 1; i < r; i++) {
+                combination[i] = combination[i - 1] + 1;
+            }
+        }
+
+        return combinations;
+    }
+
 }
