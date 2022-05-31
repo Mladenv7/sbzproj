@@ -101,7 +101,7 @@ public class CurrentStateController {
 
     @PostMapping("/flop")
     public ResponseEntity<Action> sendCurrentStateFlop(@RequestBody TableState currentState){
-        return new ResponseEntity<Action>(currentStateService.flopConslut(currentState), HttpStatus.OK);
+        return new ResponseEntity<Action>(currentStateService.flopConsult(currentState), HttpStatus.OK);
     }
 
 }

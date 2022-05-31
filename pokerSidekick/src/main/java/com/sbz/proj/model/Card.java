@@ -7,6 +7,7 @@ import lombok.Setter;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.logging.Logger;
 import java.util.stream.Collectors;
 
 @Getter
@@ -69,5 +70,11 @@ public class Card implements Comparable<Card>{
         else rank = this.rank.name().split("R")[1];
         String suit = String.valueOf(this.suit.name().charAt(0));
         return rank + suit;
+    }
+
+    public static void logCards(Logger LOGGER, List<Card> cards) {
+        LOGGER.info("\u001B[33m==========================================\u001B[0m");
+        LOGGER.info("CARDS: " + cards.toString());
+        LOGGER.info("-  -   -   -   -   -   -   -   -   -   -");
     }
 }

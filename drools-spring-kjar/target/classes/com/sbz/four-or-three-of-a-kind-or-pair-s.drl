@@ -18,7 +18,7 @@ rule "FOUR_OF_A_KIND_1_2_3_4"
         )
     then
         modify($possibility){pokerHand = PokerHand.FOUR_OF_A_KIND}
-		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
+
 end
 
 rule "FOUR_OF_A_KIND_2_3_4_5"
@@ -35,7 +35,7 @@ rule "FOUR_OF_A_KIND_2_3_4_5"
         )
     then
         modify($possibility){pokerHand = PokerHand.FOUR_OF_A_KIND}
-		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
+
 end
 
 rule "TWO_PAIRS_1_3"
@@ -58,7 +58,7 @@ rule "TWO_PAIRS_1_3"
             additionalInfo.put("pair2-index", 2),
             additionalInfo.put("kicker-index", 4)
         }
-		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
+
 end
 
 rule "TWO_PAIRS_1_4"
@@ -81,7 +81,7 @@ rule "TWO_PAIRS_1_4"
             additionalInfo.put("kicker-index", 2),
             additionalInfo.put("pair2-index", 3)
         }
-		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
+
 end
 
 rule "TWO_PAIRS_2_4"
@@ -104,7 +104,7 @@ rule "TWO_PAIRS_2_4"
             additionalInfo.put("pair1-index", 1),
             additionalInfo.put("pair2-index", 3)
         }
-		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
+
 end
 
 rule "THREE_OF_A_KIND_1_2_3"
@@ -123,7 +123,7 @@ rule "THREE_OF_A_KIND_1_2_3"
             pokerHand = PokerHand.THREE_OF_A_KIND,
             additionalInfo.put("trips-index", 0)
         }
-		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
+
 end
 
 rule "THREE_OF_A_KIND_2_3_4"
@@ -142,7 +142,7 @@ rule "THREE_OF_A_KIND_2_3_4"
             pokerHand = PokerHand.THREE_OF_A_KIND,
             additionalInfo.put("trips-index", 1)
         }
-		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
+
 end
 
 rule "THREE_OF_A_KIND_3_4_5"
@@ -161,7 +161,7 @@ rule "THREE_OF_A_KIND_3_4_5"
             pokerHand = PokerHand.THREE_OF_A_KIND,
             additionalInfo.put("trips-index", 2)
         }
-		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
+
 end
 
 rule "PAIR_1_2"
@@ -180,7 +180,7 @@ rule "PAIR_1_2"
             pokerHand = PokerHand.PAIR,
             additionalInfo.put("pair-index", 0)
         }
-		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
+
 end
 
 rule "PAIR_2_3"
@@ -199,7 +199,7 @@ rule "PAIR_2_3"
             pokerHand = PokerHand.PAIR,
             additionalInfo.put("pair-index", 1)
         }
-		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
+
 end
 
 rule "PAIR_3_4"
@@ -218,7 +218,7 @@ rule "PAIR_3_4"
             pokerHand = PokerHand.PAIR,
             additionalInfo.put("pair-index", 2)
         }
-		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
+
 end
 
 rule "PAIR_4_5"
@@ -237,5 +237,5 @@ rule "PAIR_4_5"
             pokerHand = PokerHand.PAIR,
             additionalInfo.put("pair-index", 3)
         }
-		kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
+
 end

@@ -7,7 +7,7 @@ rule "STRAIGHT_19"
     agenda-group "possibility"
     when
         $possibility: Possibility(
-            pokerHand != PokerHand.UNKNOWN,
+            pokerHand == PokerHand.UNKNOWN,
             $card1: card1.rank == Rank.R10,
             $card2: card2.rank == Rank.JACK,
             $card3: card3.rank == Rank.QUEEN,
@@ -18,6 +18,7 @@ rule "STRAIGHT_19"
         )
     then
         modify($possibility){pokerHand = PokerHand.STRAIGHT}
+
 end
 
 rule "STRAIGHT_18"
@@ -25,7 +26,7 @@ rule "STRAIGHT_18"
     agenda-group "possibility"
     when
         $possibility: Possibility(
-            pokerHand != PokerHand.UNKNOWN,
+            pokerHand == PokerHand.UNKNOWN,
             $card1: card1.rank == Rank.R9,
             $card2: card2.rank == Rank.R10,
             $card3: card3.rank == Rank.JACK,
@@ -36,6 +37,7 @@ rule "STRAIGHT_18"
         )
     then
         modify($possibility){pokerHand = PokerHand.STRAIGHT}
+
 end
 
 rule "STRAIGHT_17"
@@ -43,7 +45,7 @@ rule "STRAIGHT_17"
     agenda-group "possibility"
     when
         $possibility: Possibility(
-            pokerHand != PokerHand.UNKNOWN,
+            pokerHand == PokerHand.UNKNOWN,
             $card1: card1.rank == Rank.R8,
             $card2: card2.rank == Rank.R9,
             $card3: card3.rank == Rank.R10,
@@ -54,6 +56,7 @@ rule "STRAIGHT_17"
         )
     then
         modify($possibility){pokerHand = PokerHand.STRAIGHT}
+
 end
 
 rule "STRAIGHT_16"
@@ -61,7 +64,7 @@ rule "STRAIGHT_16"
     agenda-group "possibility"
     when
         $possibility: Possibility(
-            pokerHand != PokerHand.UNKNOWN,
+            pokerHand == PokerHand.UNKNOWN,
             $card1: card1.rank == Rank.R7,
             $card2: card2.rank == Rank.R8,
             $card3: card3.rank == Rank.R9,
@@ -72,6 +75,7 @@ rule "STRAIGHT_16"
         )
     then
         modify($possibility){pokerHand = PokerHand.STRAIGHT}
+
 end
 
 rule "STRAIGHT_15"
@@ -79,7 +83,7 @@ rule "STRAIGHT_15"
     agenda-group "possibility"
     when
         $possibility: Possibility(
-            pokerHand != PokerHand.UNKNOWN,
+            pokerHand == PokerHand.UNKNOWN,
             $card1: card1.rank == Rank.R6,
             $card2: card2.rank == Rank.R7,
             $card3: card3.rank == Rank.R8,
@@ -90,6 +94,7 @@ rule "STRAIGHT_15"
         )
     then
         modify($possibility){pokerHand = PokerHand.STRAIGHT}
+
 end
 
 rule "STRAIGHT_14"
@@ -97,7 +102,7 @@ rule "STRAIGHT_14"
     agenda-group "possibility"
     when
         $possibility: Possibility(
-            pokerHand != PokerHand.UNKNOWN,
+            pokerHand == PokerHand.UNKNOWN,
             $card1: card1.rank == Rank.R5,
             $card2: card2.rank == Rank.R6,
             $card3: card3.rank == Rank.R7,
@@ -108,6 +113,7 @@ rule "STRAIGHT_14"
         )
     then
         modify($possibility){pokerHand = PokerHand.STRAIGHT}
+
 end
 
 rule "STRAIGHT_13"
@@ -115,7 +121,7 @@ rule "STRAIGHT_13"
     agenda-group "possibility"
     when
         $possibility: Possibility(
-            pokerHand != PokerHand.UNKNOWN,
+            pokerHand == PokerHand.UNKNOWN,
             $card1: card1.rank == Rank.R4,
             $card2: card2.rank == Rank.R5,
             $card3: card3.rank == Rank.R6,
@@ -126,6 +132,7 @@ rule "STRAIGHT_13"
         )
     then
         modify($possibility){pokerHand = PokerHand.STRAIGHT}
+
 end
 
 rule "STRAIGHT_12"
@@ -133,7 +140,7 @@ rule "STRAIGHT_12"
     agenda-group "possibility"
     when
         $possibility: Possibility(
-            pokerHand != PokerHand.UNKNOWN,
+            pokerHand == PokerHand.UNKNOWN,
             $card1: card1.rank == Rank.R3,
             $card2: card2.rank == Rank.R4,
             $card3: card3.rank == Rank.R5,
@@ -144,6 +151,7 @@ rule "STRAIGHT_12"
         )
     then
         modify($possibility){pokerHand = PokerHand.STRAIGHT}
+
 end
 
 rule "STRAIGHT_11"
@@ -151,7 +159,7 @@ rule "STRAIGHT_11"
     agenda-group "possibility"
     when
         $possibility: Possibility(
-            pokerHand != PokerHand.UNKNOWN,
+            pokerHand == PokerHand.UNKNOWN,
             $card1: card1.rank == Rank.R2,
             $card2: card2.rank == Rank.R3,
             $card3: card3.rank == Rank.R4,
@@ -162,6 +170,7 @@ rule "STRAIGHT_11"
         )
     then
         modify($possibility){pokerHand = PokerHand.STRAIGHT}
+
 end
 
 rule "STRAIGHT_10"
@@ -169,7 +178,7 @@ rule "STRAIGHT_10"
     agenda-group "possibility"
     when
         $possibility: Possibility(
-            pokerHand != PokerHand.UNKNOWN,
+            pokerHand == PokerHand.UNKNOWN,
             $card1: card1.rank == Rank.R2,
             $card2: card2.rank == Rank.R3,
             $card3: card3.rank == Rank.R4,
@@ -180,6 +189,7 @@ rule "STRAIGHT_10"
         )
     then
         modify($possibility){pokerHand = PokerHand.STRAIGHT}
+
 end
 
 rule "STRAIGHT_FLUSH_9"
@@ -187,7 +197,7 @@ rule "STRAIGHT_FLUSH_9"
     agenda-group "possibility"
     when
         $possibility: Possibility(
-            pokerHand != PokerHand.UNKNOWN,
+            pokerHand == PokerHand.UNKNOWN,
             $card1: card1.rank == Rank.R9,
             $card2: card2.rank == Rank.R10,
             $card3: card3.rank == Rank.JACK,
@@ -198,6 +208,7 @@ rule "STRAIGHT_FLUSH_9"
         )
     then
         modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+
 end
 
 rule "STRAIGHT_FLUSH_8"
@@ -205,7 +216,7 @@ rule "STRAIGHT_FLUSH_8"
     agenda-group "possibility"
     when
         $possibility: Possibility(
-            pokerHand != PokerHand.UNKNOWN,
+            pokerHand == PokerHand.UNKNOWN,
             $card1: card1.rank == Rank.R8,
             $card2: card2.rank == Rank.R9,
             $card3: card3.rank == Rank.R10,
@@ -216,6 +227,7 @@ rule "STRAIGHT_FLUSH_8"
         )
     then
         modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+
 end
 
 rule "STRAIGHT_FLUSH_7"
@@ -223,7 +235,7 @@ rule "STRAIGHT_FLUSH_7"
     agenda-group "possibility"
     when
         $possibility: Possibility(
-            pokerHand != PokerHand.UNKNOWN,
+            pokerHand == PokerHand.UNKNOWN,
             $card1: card1.rank == Rank.R7,
             $card2: card2.rank == Rank.R8,
             $card3: card3.rank == Rank.R9,
@@ -234,6 +246,7 @@ rule "STRAIGHT_FLUSH_7"
         )
     then
         modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+
 end
 
 rule "STRAIGHT_FLUSH_6"
@@ -241,7 +254,7 @@ rule "STRAIGHT_FLUSH_6"
     agenda-group "possibility"
     when
         $possibility: Possibility(
-            pokerHand != PokerHand.UNKNOWN,
+            pokerHand == PokerHand.UNKNOWN,
             $card1: card1.rank == Rank.R6,
             $card2: card2.rank == Rank.R7,
             $card3: card3.rank == Rank.R8,
@@ -252,6 +265,7 @@ rule "STRAIGHT_FLUSH_6"
         )
     then
         modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+
 end
 
 rule "STRAIGHT_FLUSH_5"
@@ -259,7 +273,7 @@ rule "STRAIGHT_FLUSH_5"
     agenda-group "possibility"
     when
         $possibility: Possibility(
-            pokerHand != PokerHand.UNKNOWN,
+            pokerHand == PokerHand.UNKNOWN,
             $card1: card1.rank == Rank.R5,
             $card2: card2.rank == Rank.R6,
             $card3: card3.rank == Rank.R7,
@@ -270,6 +284,7 @@ rule "STRAIGHT_FLUSH_5"
         )
     then
         modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+
 end
 
 rule "STRAIGHT_FLUSH_4"
@@ -277,7 +292,7 @@ rule "STRAIGHT_FLUSH_4"
     agenda-group "possibility"
     when
         $possibility: Possibility(
-            pokerHand != PokerHand.UNKNOWN,
+            pokerHand == PokerHand.UNKNOWN,
             $card1: card1.rank == Rank.R4,
             $card2: card2.rank == Rank.R5,
             $card3: card3.rank == Rank.R6,
@@ -288,6 +303,7 @@ rule "STRAIGHT_FLUSH_4"
         )
     then
         modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+
 end
 
 rule "STRAIGHT_FLUSH_3"
@@ -295,7 +311,7 @@ rule "STRAIGHT_FLUSH_3"
     agenda-group "possibility"
     when
         $possibility: Possibility(
-            pokerHand != PokerHand.UNKNOWN,
+            pokerHand == PokerHand.UNKNOWN,
             $card1: card1.rank == Rank.R3,
             $card2: card2.rank == Rank.R4,
             $card3: card3.rank == Rank.R5,
@@ -306,6 +322,7 @@ rule "STRAIGHT_FLUSH_3"
         )
     then
         modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+
 end
 
 rule "STRAIGHT_FLUSH_2"
@@ -313,7 +330,7 @@ rule "STRAIGHT_FLUSH_2"
     agenda-group "possibility"
     when
         $possibility: Possibility(
-            pokerHand != PokerHand.UNKNOWN,
+            pokerHand == PokerHand.UNKNOWN,
             $card1: card1.rank == Rank.R2,
             $card2: card2.rank == Rank.R3,
             $card3: card3.rank == Rank.R4,
@@ -324,6 +341,7 @@ rule "STRAIGHT_FLUSH_2"
         )
     then
         modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+
 end
 
 rule "STRAIGHT_FLUSH_1"
@@ -331,7 +349,7 @@ rule "STRAIGHT_FLUSH_1"
     agenda-group "possibility"
     when
         $possibility: Possibility(
-            pokerHand != PokerHand.UNKNOWN,
+            pokerHand == PokerHand.UNKNOWN,
             $card1: card1.rank == Rank.R2,
             $card2: card2.rank == Rank.R3,
             $card3: card3.rank == Rank.R4,
@@ -342,6 +360,7 @@ rule "STRAIGHT_FLUSH_1"
         )
     then
         modify($possibility){pokerHand = PokerHand.STRAIGHT_FLUSH}
+
 end
 
 rule "ROYAL_FLUSH_0"
@@ -349,7 +368,7 @@ rule "ROYAL_FLUSH_0"
     agenda-group "possibility"
     when
         $possibility: Possibility(
-            pokerHand != PokerHand.UNKNOWN,
+            pokerHand == PokerHand.UNKNOWN,
             $card1: card1.rank == Rank.R10,
             $card2: card2.rank == Rank.JACK,
             $card3: card3.rank == Rank.QUEEN,
@@ -360,6 +379,7 @@ rule "ROYAL_FLUSH_0"
         )
     then
         modify($possibility){pokerHand = PokerHand.ROYAL_FLUSH}
+
 end
 
 
