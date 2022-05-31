@@ -59,7 +59,7 @@ rule "Call in turn when you have an ok combination"
         )
         Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players
         accumulate( Player($pot : getMoney()) from $players, $maxMoney : max($pot))
-        Player(moneyRatio($maxMoney) <= 2) from $player
+        Player(moneyRatio($maxMoney.doubleValue()) <= 2) from $player
     then
         modify($state){
             getPlayers().get(0).getAction().set(0, Action.CALL);
@@ -85,7 +85,7 @@ rule "Call in turn when you have only strong pocket pair"
         )
         Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players
         accumulate( Player($pot : getMoney()) from $players, $maxMoney : max($pot))
-        Player(moneyRatio($maxMoney) <= 1.3) from $player
+        Player(moneyRatio($maxMoney.doubleValue()) <= 1.3) from $player
     then
         modify($state){
             getPlayers().get(0).getAction().set(0, Action.CALL);
@@ -111,7 +111,7 @@ rule "Fold in turn when you have weak pair and someone raised over 2 times your 
         )
         Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players
         accumulate( Player($pot : getMoney()) from $players, $maxMoney : max($pot))
-        Player(moneyRatio($maxMoney) > 2) from $player
+        Player(moneyRatio($maxMoney.doubleValue()) > 2) from $player
     then
         modify($state){
             getPlayers().get(0).getAction().set(0, Action.FOLD);
@@ -136,7 +136,7 @@ rule "Call in turn when you have nothing and someone's pot is not 1.3 times bigg
         )
         Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players
         accumulate( Player($pot : getMoney()) from $players, $maxMoney : max($pot))
-        Player(moneyRatio($maxMoney) <= 1.3) from $player
+        Player(moneyRatio($maxMoney.doubleValue()) <= 1.3) from $player
     then
         modify($state){
             getPlayers().get(0).getAction().set(0, Action.CALL);

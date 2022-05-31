@@ -20,7 +20,7 @@ rule "Call with high cards"
 							)
 		Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players
 		accumulate( Player($pot : getMoney()) from $players, $maxMoney : max($pot))
-		Player(moneyRatio($maxMoney) <= 2) from $player
+		Player(moneyRatio($maxMoney.doubleValue()) <= 2) from $player
     then
         modify($state) { getPlayers().get(0).getAction().set(0, Action.CALL) }
         System.out.println("You should call to "+ $maxMoney);
@@ -39,7 +39,7 @@ rule "Backing off from raise with high cards"
 							)
 		Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players
 		accumulate( Player($pot : getMoney()) from $players, $maxMoney : max($pot))
-		Player(moneyRatio($maxMoney) > 2) from $player		
+		Player(moneyRatio($maxMoney.doubleValue()) > 2) from $player
 	then
 		modify($state) { getPlayers().get(0).getAction().set(0, Action.FOLD) }
         System.out.println("You should fold");

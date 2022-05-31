@@ -58,7 +58,7 @@ rule "Call in river when you have 2 pairs and opponents haven't raised more than
         )
         Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players
         accumulate( Player($pot : getMoney()) from $players, $maxMoney : max($pot))
-        Player(moneyRatio($maxMoney) <= 1.5) from $player
+        Player(moneyRatio($maxMoney.doubleValue()) <= 1.5) from $player
     then
         modify($state){
             getPlayers().get(0).getAction().set(0, Action.CALL);
@@ -84,7 +84,7 @@ rule "Call in river when you have only strong pocket pair"
         )
         Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players
         accumulate( Player($pot : getMoney()) from $players, $maxMoney : max($pot))
-        Player(moneyRatio($maxMoney) <= 1.3) from $player
+        Player(moneyRatio($maxMoney.doubleValue()) <= 1.3) from $player
     then
         modify($state){
             getPlayers().get(0).getAction().set(0, Action.CALL);
@@ -110,7 +110,7 @@ rule "Fold in river when you have weak pair and someone raised over 1.3 times yo
         )
         Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players
         accumulate( Player($pot : getMoney()) from $players, $maxMoney : max($pot))
-        Player(moneyRatio($maxMoney) > 1.3) from $player
+        Player(moneyRatio($maxMoney.doubleValue()) > 1.3) from $player
     then
         modify($state){
             getPlayers().get(0).getAction().set(0, Action.FOLD);

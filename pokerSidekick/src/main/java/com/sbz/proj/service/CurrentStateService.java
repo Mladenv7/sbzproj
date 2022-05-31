@@ -46,6 +46,7 @@ public class CurrentStateService {
 
                 kieSession.insert(p);
 
+                kieSession.getAgenda().getAgendaGroup("possibility").setFocus();
 
                 break;
             case TURN:
@@ -69,14 +70,17 @@ public class CurrentStateService {
                     Card.logCards(LOGGER, po.getCards());
                     kieSession.insert(po);
                 }
+
+
+                kieSession.getAgenda().getAgendaGroup("possibility").setFocus();
+
                 break;
         }
 
-        kieSession.getAgenda().getAgendaGroup("possibility").setFocus();
         int fired = kieSession.fireAllRules();
         LOGGER.info("Number of fired rules: " + fired);
 
-        return Action.CHECK;
+        return ts.getPlayers().get(0).getAction().get(0);
     }
 
     private void destroySession(KieSession kieSession) {
