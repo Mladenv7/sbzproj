@@ -6,5 +6,6 @@ public enum Action {
     FOLD,
     BET,
     CALL,
+    ALL_IN,
     NONE
 }

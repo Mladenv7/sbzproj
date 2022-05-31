@@ -46,10 +46,9 @@ public class CurrentStateService {
 
                 kieSession.insert(p);
 
-                kieSession.getAgenda().getAgendaGroup("possibility").setFocus();
+
                 break;
             case TURN:
-            case RIVER:
                 List<Card> allCards = new ArrayList<>(ts.board);
                 allCards.add(ts.getPlayers().get(0).getCard1());
                 allCards.add(ts.getPlayers().get(0).getCard2());
@@ -59,11 +58,21 @@ public class CurrentStateService {
                     Card.logCards(LOGGER, po.getCards());
                     kieSession.insert(po);
                 }
+                break;
+            case RIVER:
+                allCards = new ArrayList<>(ts.board);
+                allCards.add(ts.getPlayers().get(0).getCard1());
+                allCards.add(ts.getPlayers().get(0).getCard2());
+                possibilities = Possibility.makeAllPossibilities(allCards);
 
-                kieSession.getAgenda().getAgendaGroup("possibility").setFocus();
+                for (Possibility po : possibilities) {
+                    Card.logCards(LOGGER, po.getCards());
+                    kieSession.insert(po);
+                }
                 break;
         }
 
+        kieSession.getAgenda().getAgendaGroup("possibility").setFocus();
         int fired = kieSession.fireAllRules();
         LOGGER.info("Number of fired rules: " + fired);
 

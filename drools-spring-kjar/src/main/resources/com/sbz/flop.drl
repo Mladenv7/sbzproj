@@ -34,7 +34,7 @@ rule "Raise when you have good combination"
         $possibility: Possibility(
             pokerHand != PokerHand.ROYAL_FLUSH,
             $pokerHand: pokerHand,
-            pokerHand.strength >= 5
+            pokerHand.strength >= 4
         )
     then
         modify($state){
@@ -54,7 +54,7 @@ rule "Call when you have ok combination"
         )
         $possibility: Possibility(
             $pokerHand: pokerHand,
-            pokerHand.strength < 5,
+            pokerHand.strength < 4,
             pokerHand.strength > 1
         )
         Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players
@@ -153,13 +153,55 @@ rule "Fold when you have nothing"
             $player.getAction().get(0) == Action.NONE
         )
         $possibility: Possibility(
-            $pokerHand: pokerHand
+            $pokerHand: pokerHand,
+			$pokerHand == PokerHand.HIGH_CARD || $pokerHand == PokerHand.UNKNOWN
         )
     then
         modify($state){
             getPlayers().get(0).getAction().set(0, Action.FOLD);
         }
         LOGGER.info("You have " + $pokerHand.name());
+end
+
+rule "No one raised, check with an ok hand"
+	agenda-group "flop"
+	when
+		$state : TableState(
+			$players: players,
+            $player: players.get(0),
+            $player.getAction().get(0) == Action.NONE
+		)
+		$possibility: Possibility(
+            $pokerHand: pokerHand,
+			$pokerHand.strength <= 4
+        )
+		not(Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players) 
+	then
+		modify($state){
+            getPlayers().get(0).getAction().set(0, Action.CHECK);
+        }
+        LOGGER.info("You have " + $pokerHand.name()+ " on flop, you should check");
+end
+
+
+rule "No one raised, raise with a good hand"
+	agenda-group "flop"
+	when
+		$state : TableState(
+			$players: players,
+            $player: players.get(0),
+            $player.getAction().get(0) == Action.NONE
+		)
+		$possibility: Possibility(
+            $pokerHand: pokerHand,
+			$pokerHand.strength > 4
+        )
+		not(Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players) 
+	then
+		modify($state){
+            getPlayers().get(0).getAction().set(0, Action.RAISE);
+        }
+        LOGGER.info("You have " + $pokerHand.name()+ " on flop, you should raise");
 end
 
 rule "I activate always"
@@ -172,3 +214,4 @@ rule "I activate always"
     then
         System.out.println("Hello");
 end
+
