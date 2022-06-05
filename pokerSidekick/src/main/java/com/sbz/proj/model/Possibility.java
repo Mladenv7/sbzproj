@@ -17,7 +17,7 @@ public class Possibility implements Comparable<Possibility>{
     public List<Card> cards; // 5 karata
     public Card card1, card2, card3, card4, card5;
     public PokerHand pokerHand; // sta imamo
-    public boolean weKnow;
+    public boolean best; // da li je najbolja kombinacija
     public HashMap<String, Integer> additionalInfo;
 
     public Possibility(List<Card> cards, PokerHand pokerHand) {
@@ -29,13 +29,13 @@ public class Possibility implements Comparable<Possibility>{
         this.card5 = cards.get(4);
 
         this.pokerHand = pokerHand;
-        this.weKnow = true;
+        this.best = false;
     }
      public Possibility() {
          this.cards = new ArrayList<>();
          this.pokerHand = PokerHand.UNKNOWN;
          this.additionalInfo = new HashMap<>();
-         this.weKnow = false;
+         this.best = false;
      }
 
     public boolean sameSuit() {

@@ -59,6 +59,9 @@ public class CurrentStateService {
                     Card.logCards(LOGGER, po.getCards());
                     kieSession.insert(po);
                 }
+
+                kieSession.getAgenda().getAgendaGroup("possibility").setFocus();
+
                 break;
             case RIVER:
                 allCards = new ArrayList<>(ts.board);
