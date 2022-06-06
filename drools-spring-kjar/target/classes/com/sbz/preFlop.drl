@@ -23,6 +23,8 @@ rule "Call with high cards"
 		Player(moneyRatio($maxMoney.doubleValue()) <= 2) from $player
     then
         modify($state) { getPlayers().get(0).getAction().set(0, Action.CALL) }
+		insert(Action.CALL);
+		delete($state);
         System.out.println("You should call to "+ $maxMoney);
 end
 
@@ -42,6 +44,8 @@ rule "Backing off from raise with high cards"
 		Player(moneyRatio($maxMoney.doubleValue()) > 2) from $player
 	then
 		modify($state) { getPlayers().get(0).getAction().set(0, Action.FOLD) }
+		insert(Action.FOLD);
+		delete($state);
         System.out.println("You should fold");
 end
 
@@ -59,6 +63,8 @@ rule "Raise with high cards"
 		not(Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players)
     then
         modify($state) { getPlayers().get(0).getAction().set(0, Action.RAISE) }
+		insert(Action.RAISE);
+		delete($state);
         System.out.println("You should raise");
 end
 
@@ -78,6 +84,8 @@ rule "Backing off from raise with low cards"
 		Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players		
 	then
 		modify($state) { getPlayers().get(0).getAction().set(0, Action.FOLD) }
+		insert(Action.FOLD);
+		delete($state);
         System.out.println("You should fold");
 end
 
@@ -93,6 +101,8 @@ rule "Raising with good pocket pair"
 							)
 	then
 		modify($state) { getPlayers().get(0).getAction().set(0, Action.RAISE) }
+		insert(Action.RAISE);
+		delete($state);
         System.out.println("You should raise");
 end
 
@@ -110,6 +120,8 @@ rule "Raising with lower pocket pair"
 		not(Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players)
 	then
 		modify($state) { getPlayers().get(0).getAction().set(0, Action.RAISE) }
+		insert(Action.RAISE);
+		delete($state);
         System.out.println("You should raise");
 end
 
@@ -126,5 +138,7 @@ rule "Call with mediocre cards"
 		not(Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players)
 	then
 		modify($state) { getPlayers().get(0).getAction().set(0, Action.CALL) }
+		insert(Action.CALL);
+		delete($state);
         System.out.println("You should call to big blind");
 end

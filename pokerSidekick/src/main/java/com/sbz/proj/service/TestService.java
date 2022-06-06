@@ -76,7 +76,7 @@ public class TestService {
         p.cards.add(card3);
         p.cards.add(card4);
         p.cards.add(card5);
-        p.weKnow = false;
+        //p.weKnow = false;
 
         p.setupCards();
 

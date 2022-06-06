@@ -1,0 +1,14 @@
+package com.sbz;
+import com.sbz.proj.model.*;
+
+import java.util.List;
+
+global java.util.logging.Logger LOGGER
+
+
+rule "Count states"
+	when
+		$allStates : List() from collect(TableState())
+	then
+		System.out.println("There are currently "+ $allStates.size()+ " states in session");
+end

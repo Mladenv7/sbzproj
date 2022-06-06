@@ -379,7 +379,6 @@ rule "ROYAL_FLUSH_0"
         )
     then
         modify($possibility){pokerHand = PokerHand.ROYAL_FLUSH}
-
 end
 
 

@@ -21,13 +21,16 @@ public class CurrentStateService {
 
     private final KieContainer kieContainer;
 
+    private final KieSession kieSession;
+
     @Autowired
     public CurrentStateService(KieContainer kieContainer) {
         this.kieContainer = kieContainer;
+        this.kieSession = KnowledgeSessionHelper.getStatefulKnowledgeSession(kieContainer, "test-session");
     }
 
     public Action consult(TableState ts) {
-        KieSession kieSession = KnowledgeSessionHelper.getStatefulKnowledgeSession(kieContainer, "test-session");
+
         kieSession.insert(ts);
 
         switch(ts.getCurrentStage()){
@@ -82,6 +85,8 @@ public class CurrentStateService {
 
         int fired = kieSession.fireAllRules();
         LOGGER.info("Number of fired rules: " + fired);
+        kieSession.getAgenda().getAgendaGroup("MAIN").setFocus();
+
 
         return ts.getPlayers().get(0).getAction().get(0);
     }
