@@ -10,8 +10,7 @@ rule "Raise when you have royal flush"
 	when
         $state: TableState(
             $players: players,
-            $player: players.get(0),
-            $player.getAction().get(0) == Action.NONE
+            $player: players.get(0)
         )
         $possibility: Possibility(
             $pokerHand: pokerHand == PokerHand.ROYAL_FLUSH, best == true
@@ -31,8 +30,7 @@ rule "Raise when you have good combination"
 	when
         $state: TableState(
             $players: players,
-            $player: players.get(0),
-            $player.getAction().get(0) == Action.NONE
+            $player: players.get(0)
         )
         $possibility: Possibility(
             pokerHand != PokerHand.ROYAL_FLUSH,
@@ -56,8 +54,7 @@ rule "Call when you have ok combination"
 	when
         $state: TableState(
             $players: players,
-            $player: players.get(0),
-            $player.getAction().get(0) == Action.NONE
+            $player: players.get(0)
         )
         $possibility: Possibility(
             $pokerHand: pokerHand,
@@ -86,7 +83,6 @@ rule "Call when you have only strong pocket pair"
         $state: TableState(
             $players: players,
             $player: players.get(0),
-            $player.getAction().get(0) == Action.NONE,
             $player.getCard1().rank.rank == $player.getCard2().rank.rank,
             $player.getCard1().rank.rank + $player.getCard2().rank.rank >= 18
         )
@@ -116,7 +112,6 @@ rule "Call when you have only weak pocket pair and someone's pot is not 2 times 
         $state: TableState(
             $players: players,
             $player: players.get(0),
-            $player.getAction().get(0) == Action.NONE,
             $player.getCard1().rank.rank == $player.getCard2().rank.rank
         )
         $possibility: Possibility(
@@ -145,8 +140,7 @@ rule "Call when you have nothing and someone's pot is not 2 times bigger than yo
         $state: TableState(
             $players: players,
             $player: players.get(0),
-            players.get(0).getCard1().rank.rank >= 12 || players.get(0).getCard2().rank.rank >= 12,
-            $player.getAction().get(0) == Action.NONE
+            players.get(0).getCard1().rank.rank >= 12 || players.get(0).getCard2().rank.rank >= 12
         )
         $possibility: Possibility(
             $pokerHand: pokerHand,
@@ -172,8 +166,7 @@ rule "Fold when you have nothing"
 	when
         $state: TableState(
             $players: players,
-            $player: players.get(0),
-            $player.getAction().get(0) == Action.NONE
+            $player: players.get(0)
         )
         $possibility: Possibility(
             $pokerHand: pokerHand,
@@ -185,6 +178,7 @@ rule "Fold when you have nothing"
             getPlayers().get(0).getAction().set(0, Action.FOLD);
         }
 		insert(Action.FOLD);
+		insert(new ActionInsertEvent(new Date(), Action.FOLD));
 		LOGGER.info("You have " + $pokerHand.name());
 		delete($possibility);
 		delete($state);
@@ -196,8 +190,7 @@ rule "No one raised, check with an ok hand"
 	when
 		$state : TableState(
 			$players: players,
-            $player: players.get(0),
-            $player.getAction().get(0) == Action.NONE
+            $player: players.get(0)
 		)
 		$possibility: Possibility(
             $pokerHand: pokerHand,
@@ -210,6 +203,7 @@ rule "No one raised, check with an ok hand"
             getPlayers().get(0).getAction().set(0, Action.CHECK);
         }
 		insert(Action.CHECK);
+		insert(new ActionInsertEvent(new Date(), Action.CHECK));
 		LOGGER.info("You have " + $pokerHand.name()+ " on flop, you should check");
 		delete($possibility);
 		delete($state);
@@ -221,8 +215,7 @@ rule "No one raised, raise with a good hand"
 	when
 		$state : TableState(
 			$players: players,
-            $player: players.get(0),
-            $player.getAction().get(0) == Action.NONE
+            $player: players.get(0)
 		)
 		$possibility: Possibility(
             $pokerHand: pokerHand,
@@ -238,4 +231,28 @@ rule "No one raised, raise with a good hand"
 		LOGGER.info("You have " + $pokerHand.name()+ " on flop, you should raise");
 		delete($possibility);
 		delete($state);  
+end
+
+
+rule "Bluffing in flop"
+	no-loop 
+	agenda-group "flop"
+	when
+		$a1: ActionInsertEvent()
+        Number(intValue >= 3) from accumulate(
+            $a2: ActionInsertEvent(
+                this != $a1, 
+                action == Action.FOLD || action == Action.CHECK, 
+                this meets[10m] $a1
+            ),
+            count($a2)
+        )
+		$actions: List() from collect(ActionInsertEvent())
+	then
+		System.out.println("You were playing defensively often, you should try to bluff now.");
+		insert(Action.RAISE);
+		delete($actions.get(0));
+		delete($actions.get(1));
+		delete($actions.get(2));
+		delete($actions.get(3));
 end

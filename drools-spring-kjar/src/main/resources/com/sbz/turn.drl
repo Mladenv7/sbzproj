@@ -159,6 +159,7 @@ rule "Fold in turn when you have weak pair and someone raised over 2 times your 
             getPlayers().get(0).getAction().set(0, Action.FOLD);
         }
 		insert(Action.FOLD);
+		insert(new ActionInsertEvent(new Date(), Action.FOLD));
         LOGGER.info("You have " + $pokerHand.name()+ ", a weak one, you should fold.");
 		delete($possibilities.get(0));
 		delete($possibilities.get(1));
@@ -223,6 +224,7 @@ rule "Fold in turn when you have nothing"
            getPlayers().get(0).getAction().set(0, Action.FOLD);
         }
 		insert(Action.FOLD);
+		insert(new ActionInsertEvent(new Date(), Action.FOLD));
 		LOGGER.info("You have " + $pokerHand.name()+ " in turn, you should fold");
 		delete($possibilities.get(0));
 		delete($possibilities.get(1));
@@ -292,4 +294,28 @@ rule "No one in turn raised, raise with a good hand"
 		delete($possibilities.get(4));
 		delete($possibilities.get(5));
 		delete($state);
+end
+
+
+rule "Bluffing in turn"
+	no-loop 
+	agenda-group "turn"
+	when
+		$a1: ActionInsertEvent()
+        Number(intValue >= 3) from accumulate(
+            $a2: ActionInsertEvent(
+                this != $a1, 
+                action == Action.FOLD || action == Action.CHECK, 
+                this meets[10m] $a1
+            ),
+            count($a2)
+        )
+		$actions: List() from collect(ActionInsertEvent())
+	then
+		System.out.println("You were playing defensively often, you should try to bluff now.");
+		insert(Action.RAISE);
+		delete($actions.get(0));
+		delete($actions.get(1));
+		delete($actions.get(2));
+		delete($actions.get(3));
 end

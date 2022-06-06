@@ -218,6 +218,7 @@ rule "Fold in river when you have weak pair and someone raised over 1.3 times yo
             getPlayers().get(0).getAction().set(0, Action.FOLD);
         }
 		insert(Action.FOLD);
+		insert(new ActionInsertEvent(new Date(), Action.FOLD));
 		LOGGER.info("You have " + $pokerHand.name());
         LOGGER.info(", a weak one, you should fold.");
 		delete($possibilities.get(0));
@@ -266,6 +267,7 @@ rule "Fold in river when you have nothing and someone raised"
             getPlayers().get(0).getAction().set(0, Action.FOLD);
         }
 		insert(Action.FOLD);
+		insert(new ActionInsertEvent(new Date(), Action.FOLD));
 		LOGGER.info("You have " + $pokerHand.name());
         LOGGER.info("You should fold.");
 		delete($possibilities.get(0));
@@ -311,6 +313,7 @@ rule "Fold in river when you have nothing"
             getPlayers().get(0).getAction().set(0, Action.FOLD);
         }
 		insert(Action.FOLD);
+		insert(new ActionInsertEvent(new Date(), Action.FOLD));
 		LOGGER.info("You have " + $pokerHand.name());
 		delete($possibilities.get(0));
 		delete($possibilities.get(1));
@@ -356,6 +359,7 @@ rule "No one in river raised, check with an ok hand"
             getPlayers().get(0).getAction().set(0, Action.CHECK);
         }
 		insert(Action.CHECK);
+		insert(new ActionInsertEvent(new Date(), Action.CHECK));
 		LOGGER.info("You have " + $pokerHand.name()+ " on river, you should check");
 		delete($possibilities.get(0));
 		delete($possibilities.get(1));
@@ -425,4 +429,28 @@ rule "No one in river raised, raise with a good hand"
 		delete($possibilities.get(19));
 		delete($possibilities.get(20));
 		delete($state);
+end
+
+
+rule "Bluffing in river"
+	no-loop 
+	agenda-group "river"
+	when
+		$a1: ActionInsertEvent()
+        Number(intValue >= 3) from accumulate(
+            $a2: ActionInsertEvent(
+                this != $a1, 
+                action == Action.FOLD || action == Action.CHECK, 
+                this meets[10m] $a1
+            ),
+            count($a2)
+        )
+		$actions: List() from collect(ActionInsertEvent())
+	then
+		System.out.println("You were playing defensively often, you should try to bluff now.");
+		insert(Action.ALL_IN);
+		delete($actions.get(0));
+		delete($actions.get(1));
+		delete($actions.get(2));
+		delete($actions.get(3));
 end
