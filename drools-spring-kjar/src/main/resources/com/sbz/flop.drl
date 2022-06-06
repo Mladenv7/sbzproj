@@ -10,16 +10,18 @@ rule "Raise when you have royal flush"
 	when
         $state: TableState(
             $players: players,
-            $player: players.get(0),
-            $player.getAction().get(0) == Action.NONE
+            $player: players.get(0)
         )
         $possibility: Possibility(
-            $pokerHand: pokerHand == PokerHand.ROYAL_FLUSH
+            $pokerHand: pokerHand == PokerHand.ROYAL_FLUSH, best == true
         )
     then
         modify($state){
             getPlayers().get(0).getAction().set(0, Action.RAISE);
         }
+		insert(Action.RAISE);
+		delete($possibility);
+		delete($state);
 end
 
 rule "Raise when you have good combination"
@@ -28,19 +30,22 @@ rule "Raise when you have good combination"
 	when
         $state: TableState(
             $players: players,
-            $player: players.get(0),
-            $player.getAction().get(0) == Action.NONE
+            $player: players.get(0)
         )
         $possibility: Possibility(
             pokerHand != PokerHand.ROYAL_FLUSH,
             $pokerHand: pokerHand,
-            pokerHand.strength >= 4
+            pokerHand.strength >= 4,
+			best == true
         )
     then
         modify($state){
             getPlayers().get(0).getAction().set(0, Action.RAISE);
         }
-        LOGGER.info("You have " + $pokerHand.name());
+		insert(Action.RAISE);
+		LOGGER.info("You have " + $pokerHand.name());
+		delete($possibility);
+		delete($state); 
 end
 
 rule "Call when you have ok combination"
@@ -49,11 +54,11 @@ rule "Call when you have ok combination"
 	when
         $state: TableState(
             $players: players,
-            $player: players.get(0),
-            $player.getAction().get(0) == Action.NONE
+            $player: players.get(0)
         )
         $possibility: Possibility(
             $pokerHand: pokerHand,
+			best == true,
             pokerHand.strength < 4,
             pokerHand.strength > 1
         )
@@ -64,8 +69,11 @@ rule "Call when you have ok combination"
         modify($state){
             getPlayers().get(0).getAction().set(0, Action.CALL);
         }
-        LOGGER.info("You have " + $pokerHand.name());
+		insert(Action.CALL);
+		LOGGER.info("You have " + $pokerHand.name());
         LOGGER.info("You should call to "+ $maxMoney);
+		delete($possibility);
+		delete($state);
 end
 
 rule "Call when you have only strong pocket pair"
@@ -75,12 +83,12 @@ rule "Call when you have only strong pocket pair"
         $state: TableState(
             $players: players,
             $player: players.get(0),
-            $player.getAction().get(0) == Action.NONE,
             $player.getCard1().rank.rank == $player.getCard2().rank.rank,
             $player.getCard1().rank.rank + $player.getCard2().rank.rank >= 18
         )
         $possibility: Possibility(
             $pokerHand: pokerHand,
+			best == true,
             pokerHand == PokerHand.PAIR
         )
         Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players
@@ -90,8 +98,11 @@ rule "Call when you have only strong pocket pair"
         modify($state){
             getPlayers().get(0).getAction().set(0, Action.CALL);
         }
-        LOGGER.info("You have " + $pokerHand.name());
+		insert(Action.CALL);
+		LOGGER.info("You have " + $pokerHand.name());
         LOGGER.info("You should call to "+ $maxMoney);
+		delete($possibility);
+		delete($state);
 end
 
 rule "Call when you have only weak pocket pair and someone's pot is not 2 times bigger than yours"
@@ -101,11 +112,11 @@ rule "Call when you have only weak pocket pair and someone's pot is not 2 times 
         $state: TableState(
             $players: players,
             $player: players.get(0),
-            $player.getAction().get(0) == Action.NONE,
             $player.getCard1().rank.rank == $player.getCard2().rank.rank
         )
         $possibility: Possibility(
             $pokerHand: pokerHand,
+			best == true,
             pokerHand == PokerHand.PAIR
         )
         Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players
@@ -115,8 +126,11 @@ rule "Call when you have only weak pocket pair and someone's pot is not 2 times 
         modify($state){
             getPlayers().get(0).getAction().set(0, Action.CALL);
         }
-        LOGGER.info("You have " + $pokerHand.name());
+		insert(Action.CALL);
+		LOGGER.info("You have " + $pokerHand.name());
         LOGGER.info("You should call to "+ $maxMoney);
+		delete($possibility);
+		delete($state);
 end
 
 rule "Call when you have nothing and someone's pot is not 2 times bigger than yours"
@@ -126,11 +140,11 @@ rule "Call when you have nothing and someone's pot is not 2 times bigger than yo
         $state: TableState(
             $players: players,
             $player: players.get(0),
-            players.get(0).getCard1().rank.rank >= 12 || players.get(0).getCard2().rank.rank >= 12,
-            $player.getAction().get(0) == Action.NONE
+            players.get(0).getCard1().rank.rank >= 12 || players.get(0).getCard2().rank.rank >= 12
         )
         $possibility: Possibility(
             $pokerHand: pokerHand,
+			best == true,
             pokerHand.strength <= 1
         )
         Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players
@@ -140,8 +154,11 @@ rule "Call when you have nothing and someone's pot is not 2 times bigger than yo
         modify($state){
             getPlayers().get(0).getAction().set(0, Action.CALL);
         }
-        LOGGER.info("You have " + $pokerHand.name());
+		insert(Action.CALL);
+		LOGGER.info("You have " + $pokerHand.name());
         LOGGER.info("You should call to "+ $maxMoney);
+		delete($possibility);
+		delete($state);   
 end
 
 rule "Fold when you have nothing"
@@ -149,18 +166,23 @@ rule "Fold when you have nothing"
 	when
         $state: TableState(
             $players: players,
-            $player: players.get(0),
-            $player.getAction().get(0) == Action.NONE
+            $player: players.get(0)
         )
         $possibility: Possibility(
             $pokerHand: pokerHand,
+			best == true,
 			$pokerHand == PokerHand.HIGH_CARD || $pokerHand == PokerHand.UNKNOWN
         )
     then
         modify($state){
             getPlayers().get(0).getAction().set(0, Action.FOLD);
         }
-        LOGGER.info("You have " + $pokerHand.name());
+		insert(Action.FOLD);
+		insert(new ActionInsertEvent(new Date(), Action.FOLD));
+		LOGGER.info("You have " + $pokerHand.name());
+		delete($possibility);
+		delete($state);
+        
 end
 
 rule "No one raised, check with an ok hand"
@@ -168,11 +190,11 @@ rule "No one raised, check with an ok hand"
 	when
 		$state : TableState(
 			$players: players,
-            $player: players.get(0),
-            $player.getAction().get(0) == Action.NONE
+            $player: players.get(0)
 		)
 		$possibility: Possibility(
             $pokerHand: pokerHand,
+			best == true,
 			$pokerHand.strength <= 4
         )
 		not(Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players) 
@@ -180,7 +202,11 @@ rule "No one raised, check with an ok hand"
 		modify($state){
             getPlayers().get(0).getAction().set(0, Action.CHECK);
         }
-        LOGGER.info("You have " + $pokerHand.name()+ " on flop, you should check");
+		insert(Action.CHECK);
+		insert(new ActionInsertEvent(new Date(), Action.CHECK));
+		LOGGER.info("You have " + $pokerHand.name()+ " on flop, you should check");
+		delete($possibility);
+		delete($state);
 end
 
 
@@ -189,11 +215,11 @@ rule "No one raised, raise with a good hand"
 	when
 		$state : TableState(
 			$players: players,
-            $player: players.get(0),
-            $player.getAction().get(0) == Action.NONE
+            $player: players.get(0)
 		)
 		$possibility: Possibility(
             $pokerHand: pokerHand,
+			best == true,
 			$pokerHand.strength > 4
         )
 		not(Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players) 
@@ -201,17 +227,32 @@ rule "No one raised, raise with a good hand"
 		modify($state){
             getPlayers().get(0).getAction().set(0, Action.RAISE);
         }
-        LOGGER.info("You have " + $pokerHand.name()+ " on flop, you should raise");
+		insert(Action.RAISE);
+		LOGGER.info("You have " + $pokerHand.name()+ " on flop, you should raise");
+		delete($possibility);
+		delete($state);  
 end
 
-rule "I activate always"
-    agenda-group "flop"
-    when
-        $state: TableState($players: players,
-           $player: players.get(0),
-           $player.getAction().get(0) == Action.NONE
+
+rule "Bluffing in flop"
+	no-loop 
+	agenda-group "flop"
+	when
+		$a1: ActionInsertEvent()
+        Number(intValue >= 3) from accumulate(
+            $a2: ActionInsertEvent(
+                this != $a1, 
+                action == Action.FOLD || action == Action.CHECK, 
+                this meets[10m] $a1
+            ),
+            count($a2)
         )
-    then
-        System.out.println("Hello");
+		$actions: List() from collect(ActionInsertEvent())
+	then
+		System.out.println("You were playing defensively often, you should try to bluff now.");
+		insert(Action.RAISE);
+		delete($actions.get(0));
+		delete($actions.get(1));
+		delete($actions.get(2));
+		delete($actions.get(3));
 end
-

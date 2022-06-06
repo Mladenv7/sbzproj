@@ -1,10 +1,11 @@
 package com.sbz;
 import com.sbz.proj.model.*;
+import com.sbz.proj.model.events.*;
 
 import java.util.List;
+import java.util.Date;
 
 global java.util.logging.Logger LOGGER
-
 
 
 rule "Call with high cards"
@@ -15,7 +16,6 @@ rule "Call with high cards"
 							$player : players.get(0),
 							$player.getCard1().rank.rank != $player.getCard2().rank.rank,
 							$player.getCard1().rank.rank + $player.getCard2().rank.rank >= 25,
-							$player.getAction.get(0) == Action.NONE,
 							$players : players
 							)
 		Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players
@@ -23,7 +23,28 @@ rule "Call with high cards"
 		Player(moneyRatio($maxMoney.doubleValue()) <= 2) from $player
     then
         modify($state) { getPlayers().get(0).getAction().set(0, Action.CALL) }
-        System.out.println("You should call to "+ $maxMoney);
+		insert(Action.CALL);
+		System.out.println("You should call to "+ $maxMoney);
+		delete($state);  
+end
+
+rule "Backing off from raise with low cards"
+	lock-on-active true
+	agenda-group "pre-flop"
+	when
+		$state : TableState(
+							$player : players.get(0),
+							$player.getCard1().rank.rank != $player.getCard2().rank.rank,
+							$player.getCard1().suit.rank != $player.getCard2().suit.rank,
+							$player.getCard1().rank.rank + $player.getCard2().rank.rank < 11,
+							$players : players
+							)
+		Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players		
+	then
+		modify($state) { getPlayers().get(0).getAction().set(0, Action.FOLD) }
+		insert(Action.FOLD);
+		delete($state);
+        System.out.println("You should fold");
 end
 
 
@@ -42,6 +63,9 @@ rule "Backing off from raise with high cards"
 		Player(moneyRatio($maxMoney.doubleValue()) > 2) from $player
 	then
 		modify($state) { getPlayers().get(0).getAction().set(0, Action.FOLD) }
+		insert(Action.FOLD);
+		insert(new ActionInsertEvent(new Date(), Action.FOLD));
+		delete($state);
         System.out.println("You should fold");
 end
 
@@ -59,26 +83,9 @@ rule "Raise with high cards"
 		not(Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players)
     then
         modify($state) { getPlayers().get(0).getAction().set(0, Action.RAISE) }
+		insert(Action.RAISE);
+		delete($state);
         System.out.println("You should raise");
-end
-
-
-rule "Backing off from raise with low cards"
-	lock-on-active true
-	agenda-group "pre-flop"
-	when
-		$state : TableState(
-							$player : players.get(0),
-							$player.getCard1().rank.rank != $player.getCard2().rank.rank,
-							$player.getCard1().rank.rank + 5 < $player.getCard2().rank.rank,
-							$player.getCard1().suit.rank != $player.getCard2().suit.rank,
-							$player.getCard1().rank.rank + $player.getCard2().rank.rank < 11,
-							$players : players
-							)
-		Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players		
-	then
-		modify($state) { getPlayers().get(0).getAction().set(0, Action.FOLD) }
-        System.out.println("You should fold");
 end
 
 
@@ -93,6 +100,8 @@ rule "Raising with good pocket pair"
 							)
 	then
 		modify($state) { getPlayers().get(0).getAction().set(0, Action.RAISE) }
+		insert(Action.RAISE);
+		delete($state);
         System.out.println("You should raise");
 end
 
@@ -110,21 +119,67 @@ rule "Raising with lower pocket pair"
 		not(Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players)
 	then
 		modify($state) { getPlayers().get(0).getAction().set(0, Action.RAISE) }
+		insert(Action.RAISE);
+		delete($state);
         System.out.println("You should raise");
 end
 
-rule "Call with mediocre cards"
+rule "Check with mediocre cards"
 	lock-on-active true
 	agenda-group "pre-flop"
 	when
 		$state : TableState(
 							$player : players.get(0),
 							$player.getCard1().rank.rank != $player.getCard2().rank.rank,
-							$player.getCard1().rank.rank + $player.getCard2().rank.rank < 12,
+							$player.getCard1().rank.rank + $player.getCard2().rank.rank < 16,
 							$players : players
 							)
 		not(Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players)
 	then
-		modify($state) { getPlayers().get(0).getAction().set(0, Action.CALL) }
-        System.out.println("You should call to big blind");
+		modify($state) { getPlayers().get(0).getAction().set(0, Action.CHECK) }
+		insert(Action.CHECK);
+		delete($state);
+        System.out.println("You should check");
 end
+
+
+rule "Check when no one else raised"
+	lock-on-active true
+	agenda-group "pre-flop"
+	when
+		$state : TableState(
+							$player : players.get(0),
+							$players : players
+							)
+		not(Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players)
+	then
+		modify($state) { getPlayers().get(0).getAction().set(0, Action.CHECK) }
+		insert(Action.CHECK);
+		delete($state);
+        System.out.println("You should check");
+end
+
+
+rule "Bluffing"
+	no-loop 
+	agenda-group "pre-flop"
+	when
+		$a1: ActionInsertEvent()
+        Number(intValue >= 3) from accumulate(
+            $a2: ActionInsertEvent(
+                this != $a1, 
+                action == Action.FOLD, 
+                this meets[10m] $a1
+            ),
+            count($a2)
+        )
+		$actions: List() from collect(ActionInsertEvent())
+	then
+		System.out.println("You were folding often, you should try to bluff now.");
+		insert(Action.RAISE);
+		delete($actions.get(0));
+		delete($actions.get(1));
+		delete($actions.get(2));
+		delete($actions.get(3));
+end
+

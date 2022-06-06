@@ -9,7 +9,7 @@ rule "FULL_HOUSE_1_4"
     agenda-group "possibility"
 	when
         $possibility: Possibility(
-            pokerHand == PokerHand.UNKNOWN,
+            //pokerHand == PokerHand.UNKNOWN,
             card1.rank == card2.rank,
             card2.rank == card3.rank,
 
@@ -31,7 +31,7 @@ rule "FULL_HOUSE_1_3"
     agenda-group "possibility"
 	when
         $possibility: Possibility(
-            pokerHand == PokerHand.UNKNOWN,
+            //pokerHand == PokerHand.UNKNOWN,
             card1.rank == card2.rank,
 
             card3.rank == card4.rank,

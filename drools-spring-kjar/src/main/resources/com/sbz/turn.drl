@@ -14,12 +14,22 @@ rule "Raise in turn when you have royal flush"
             $player.getAction().get(0) == Action.NONE
         )
         $possibility: Possibility(
-            $pokerHand: pokerHand == PokerHand.ROYAL_FLUSH
+            $pokerHand: pokerHand == PokerHand.ROYAL_FLUSH,
+			best == true
         )
+		$possibilities : List() from collect(Possibility())
     then
         modify($state){
             getPlayers().get(0).getAction().set(0, Action.RAISE);
         }
+		insert(Action.RAISE);
+		delete($possibilities.get(0));
+		delete($possibilities.get(1));
+		delete($possibilities.get(2));
+		delete($possibilities.get(3));
+		delete($possibilities.get(4));
+		delete($possibilities.get(5));
+		delete($state);
 end
 
 rule "Raise in turn when you have a good combination"
@@ -34,13 +44,23 @@ rule "Raise in turn when you have a good combination"
         $possibility: Possibility(
             pokerHand != PokerHand.ROYAL_FLUSH,
             $pokerHand: pokerHand,
+			best == true,
             pokerHand.strength >= 4
         )
+		$possibilities : List() from collect(Possibility())
     then
         modify($state){
             getPlayers().get(0).getAction().set(0, Action.RAISE);
-        }
-        LOGGER.info("You have " + $pokerHand.name());
+       }
+		insert(Action.RAISE);
+		LOGGER.info("You have " + $pokerHand.name() + " on turn, you should raise");
+		delete($possibilities.get(0));
+		delete($possibilities.get(1));
+		delete($possibilities.get(2));
+		delete($possibilities.get(3));
+		delete($possibilities.get(4));
+		delete($possibilities.get(5));
+		delete($state);     
 end
 
 rule "Call in turn when you have an ok combination"
@@ -54,9 +74,11 @@ rule "Call in turn when you have an ok combination"
         )
         $possibility: Possibility(
             $pokerHand: pokerHand,
+			best == true,
             pokerHand.strength < 4,
             pokerHand.strength > 1
         )
+		$possibilities : List() from collect(Possibility())
         Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players
         accumulate( Player($pot : getMoney()) from $players, $maxMoney : max($pot))
         Player(moneyRatio($maxMoney.doubleValue()) <= 2) from $player
@@ -64,8 +86,16 @@ rule "Call in turn when you have an ok combination"
         modify($state){
             getPlayers().get(0).getAction().set(0, Action.CALL);
         }
-        LOGGER.info("You have " + $pokerHand.name());
+		insert(Action.CALL);
+		LOGGER.info("You have " + $pokerHand.name());
         LOGGER.info("You should call to "+ $maxMoney);
+		delete($possibilities.get(0));
+		delete($possibilities.get(1));
+		delete($possibilities.get(2));
+		delete($possibilities.get(3));
+		delete($possibilities.get(4));
+		delete($possibilities.get(5));
+		delete($state);
 end
 
 rule "Call in turn when you have only strong pocket pair"
@@ -81,8 +111,10 @@ rule "Call in turn when you have only strong pocket pair"
         )
         $possibility: Possibility(
             $pokerHand: pokerHand,
+			best == true,
             pokerHand == PokerHand.PAIR
         )
+		$possibilities : List() from collect(Possibility())
         Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players
         accumulate( Player($pot : getMoney()) from $players, $maxMoney : max($pot))
         Player(moneyRatio($maxMoney.doubleValue()) <= 1.3) from $player
@@ -90,8 +122,16 @@ rule "Call in turn when you have only strong pocket pair"
         modify($state){
             getPlayers().get(0).getAction().set(0, Action.CALL);
         }
-        LOGGER.info("You have " + $pokerHand.name());
+		insert(Action.CALL);
+		LOGGER.info("You have " + $pokerHand.name());
         LOGGER.info("You should call to "+ $maxMoney);
+		delete($possibilities.get(0));
+		delete($possibilities.get(1));
+		delete($possibilities.get(2));
+		delete($possibilities.get(3));
+		delete($possibilities.get(4));
+		delete($possibilities.get(5));
+		delete($state);
 end
 
 rule "Fold in turn when you have weak pair and someone raised over 2 times your own pot"
@@ -107,8 +147,10 @@ rule "Fold in turn when you have weak pair and someone raised over 2 times your 
         )
         $possibility: Possibility(
             $pokerHand: pokerHand,
+			best == true,
             pokerHand == PokerHand.PAIR
         )
+		$possibilities : List() from collect(Possibility())
         Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players
         accumulate( Player($pot : getMoney()) from $players, $maxMoney : max($pot))
         Player(moneyRatio($maxMoney.doubleValue()) > 2) from $player
@@ -116,8 +158,16 @@ rule "Fold in turn when you have weak pair and someone raised over 2 times your 
         modify($state){
             getPlayers().get(0).getAction().set(0, Action.FOLD);
         }
-        LOGGER.info("You have " + $pokerHand.name());
-        LOGGER.info(", a weak one, you should fold.");
+		insert(Action.FOLD);
+		insert(new ActionInsertEvent(new Date(), Action.FOLD));
+        LOGGER.info("You have " + $pokerHand.name()+ ", a weak one, you should fold.");
+		delete($possibilities.get(0));
+		delete($possibilities.get(1));
+		delete($possibilities.get(2));
+		delete($possibilities.get(3));
+		delete($possibilities.get(4));
+		delete($possibilities.get(5));
+		delete($state);
 end
 
 rule "Call in turn when you have nothing and someone's pot is not 1.3 times bigger than yours"
@@ -132,17 +182,27 @@ rule "Call in turn when you have nothing and someone's pot is not 1.3 times bigg
         )
         $possibility: Possibility(
             $pokerHand: pokerHand,
+			best == true,
             pokerHand.strength <= 1
         )
+		$possibilities : List() from collect(Possibility())
         Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players
         accumulate( Player($pot : getMoney()) from $players, $maxMoney : max($pot))
         Player(moneyRatio($maxMoney.doubleValue()) <= 1.3) from $player
     then
-        modify($state){
+       modify($state){
             getPlayers().get(0).getAction().set(0, Action.CALL);
-        }
-        LOGGER.info("You have " + $pokerHand.name());
+       }
+		insert(Action.CALL);
+		LOGGER.info("You have " + $pokerHand.name());
         LOGGER.info("You should call to "+ $maxMoney);
+		delete($possibilities.get(0));
+		delete($possibilities.get(1));
+		delete($possibilities.get(2));
+		delete($possibilities.get(3));
+		delete($possibilities.get(4));
+		delete($possibilities.get(5));
+		delete($state);   
 end
 
 rule "Fold in turn when you have nothing"
@@ -155,13 +215,24 @@ rule "Fold in turn when you have nothing"
         )
         $possibility: Possibility(
             $pokerHand: pokerHand,
-			$pokerHand == PokerHand.HIGH_CARD || $pokerHand == PokerHand.UNKNOWN
+			best == true,
+			$pokerHand == PokerHand.HIGH_CARD 
         )
+		$possibilities : List() from collect(Possibility())
     then
         modify($state){
-            getPlayers().get(0).getAction().set(0, Action.FOLD);
+           getPlayers().get(0).getAction().set(0, Action.FOLD);
         }
-        LOGGER.info("You have " + $pokerHand.name());
+		insert(Action.FOLD);
+		insert(new ActionInsertEvent(new Date(), Action.FOLD));
+		LOGGER.info("You have " + $pokerHand.name()+ " in turn, you should fold");
+		delete($possibilities.get(0));
+		delete($possibilities.get(1));
+		delete($possibilities.get(2));
+		delete($possibilities.get(3));
+		delete($possibilities.get(4));
+		delete($possibilities.get(5));
+		delete($state);     
 end
 
 rule "No one in turn raised, check with an ok hand"
@@ -174,14 +245,24 @@ rule "No one in turn raised, check with an ok hand"
 		)
 		$possibility: Possibility(
             $pokerHand: pokerHand,
+			best == true,
 			$pokerHand.strength <= 4
         )
+		$possibilities : List() from collect(Possibility())
 		not(Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players) 
 	then
 		modify($state){
             getPlayers().get(0).getAction().set(0, Action.CHECK);
         }
-        LOGGER.info("You have " + $pokerHand.name()+ " on turn, you should check");
+		insert(Action.CHECK);
+		LOGGER.info("You have " + $pokerHand.name() + " on turn, you should check");
+		delete($possibilities.get(0));
+		delete($possibilities.get(1));
+		delete($possibilities.get(2));
+		delete($possibilities.get(3));
+		delete($possibilities.get(4));
+		delete($possibilities.get(5));
+		delete($state);      
 end
 
 
@@ -195,12 +276,46 @@ rule "No one in turn raised, raise with a good hand"
 		)
 		$possibility: Possibility(
             $pokerHand: pokerHand,
+			best == true,
 			$pokerHand.strength > 4
         )
+		$possibilities : List() from collect(Possibility())
 		not(Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players) 
 	then
 		modify($state){
             getPlayers().get(0).getAction().set(0, Action.RAISE);
         }
-        LOGGER.info("You have " + $pokerHand.name()+ " on turn, you should raise");
+		insert(Action.RAISE);
+		LOGGER.info("You have " + $pokerHand.name()+ " on turn, you should raise");
+		delete($possibilities.get(0));
+		delete($possibilities.get(1));
+		delete($possibilities.get(2));
+		delete($possibilities.get(3));
+		delete($possibilities.get(4));
+		delete($possibilities.get(5));
+		delete($state);
+end
+
+
+rule "Bluffing in turn"
+	no-loop 
+	agenda-group "turn"
+	when
+		$a1: ActionInsertEvent()
+        Number(intValue >= 3) from accumulate(
+            $a2: ActionInsertEvent(
+                this != $a1, 
+                action == Action.FOLD || action == Action.CHECK, 
+                this meets[10m] $a1
+            ),
+            count($a2)
+        )
+		$actions: List() from collect(ActionInsertEvent())
+	then
+		System.out.println("You were playing defensively often, you should try to bluff now.");
+		insert(Action.RAISE);
+		delete($actions.get(0));
+		delete($actions.get(1));
+		delete($actions.get(2));
+		delete($actions.get(3));
 end

@@ -33,20 +33,14 @@ rule "All possibilities classified - jump to river"
         accumulate(Possibility($strength : pokerHand.strength, $cards: getCards()), $bestHand : max($strength))
         $best: Possibility(pokerHand.strength == $bestHand)
     then
-        for (Object p : $possibilities){
-            delete(p);
-        }
-
-        System.out.println($possibilities.size());
+        $best.best = true;
+        update($best);
 
         System.out.println($best.getCards());
-
-        insert($best);
         kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("river").setFocus();
 end
 
 rule "All possibilities classified - jump to turn"
-    no-loop
     agenda-group "possibility"
 	when
 	    $state: TableState($stage: currentStage == StageName.TURN)
@@ -54,15 +48,16 @@ rule "All possibilities classified - jump to turn"
         accumulate(Possibility($strength : pokerHand.strength, $cards: getCards()), $bestHand : max($strength))
         $best: Possibility(pokerHand.strength == $bestHand)
     then
-        for (Object p : $possibilities){
-            delete(p);
-        }
+        //for (Object p : $possibilities){
+           //           delete(p);
+         //         }
 
-        System.out.println($possibilities.size());
+        $best.best = true;
+        update($best);
 
         System.out.println($best.getCards());
 
-        insert($best);
+        //insert($best);
         kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("turn").setFocus();
 end
 
@@ -75,14 +70,9 @@ rule "Possibility classified - jump to flop"
         accumulate(Possibility($strength : pokerHand.strength, $cards: getCards()), $bestHand : max($strength))
         $best: Possibility(pokerHand.strength == $bestHand)
     then
-        for (Object p : $possibilities){
-            delete(p);
-        }
-
-        System.out.println($possibilities.size());
+        $best.best = true;
+        update($best);
 
         System.out.println($best.getCards());
-
-        insert($best);
         kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("flop").setFocus();
 end

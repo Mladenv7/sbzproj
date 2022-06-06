@@ -36,13 +36,11 @@ rule "All possibilities classified - jump to river"
         $best.best = true;
         update($best);
 
-        System.out.println($possibilities.size());
         System.out.println($best.getCards());
         kcontext.getKnowledgeRuntime().getAgenda().getAgendaGroup("river").setFocus();
 end
 
 rule "All possibilities classified - jump to turn"
-    no-loop
     agenda-group "possibility"
 	when
 	    $state: TableState($stage: currentStage == StageName.TURN)
@@ -57,7 +55,6 @@ rule "All possibilities classified - jump to turn"
         $best.best = true;
         update($best);
 
-        System.out.println($possibilities.size());
         System.out.println($best.getCards());
 
         //insert($best);

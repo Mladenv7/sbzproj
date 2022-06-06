@@ -14,12 +14,37 @@ rule "All in when you have royal flush"
             $player.getAction().get(0) == Action.NONE
         )
         $possibility: Possibility(
+			best == true,
             $pokerHand: pokerHand == PokerHand.ROYAL_FLUSH
         )
+		$possibilities : List() from collect(Possibility())
     then
         modify($state){
             getPlayers().get(0).getAction().set(0, Action.ALL_IN);
         }
+		insert(Action.ALL_IN);
+		delete($possibilities.get(0));
+		delete($possibilities.get(1));
+		delete($possibilities.get(2));
+		delete($possibilities.get(3));
+		delete($possibilities.get(4));
+		delete($possibilities.get(5));
+		delete($possibilities.get(6));
+		delete($possibilities.get(7));
+		delete($possibilities.get(8));
+		delete($possibilities.get(9));
+		delete($possibilities.get(10));
+		delete($possibilities.get(11));
+		delete($possibilities.get(12));
+		delete($possibilities.get(13));
+		delete($possibilities.get(14));
+		delete($possibilities.get(15));
+		delete($possibilities.get(16));
+		delete($possibilities.get(17));
+		delete($possibilities.get(18));
+		delete($possibilities.get(19));
+		delete($possibilities.get(20));
+		delete($state);
 end
 
 rule "All in when you have a good combination"
@@ -33,14 +58,39 @@ rule "All in when you have a good combination"
         )
         $possibility: Possibility(
             pokerHand != PokerHand.ROYAL_FLUSH,
+			best == true,
             $pokerHand: pokerHand,
             pokerHand.strength >= 4
         )
+		$possibilities : List() from collect(Possibility())
     then
         modify($state){
             getPlayers().get(0).getAction().set(0, Action.ALL_IN);
         }
-        LOGGER.info("You have " + $pokerHand.name());
+		insert(Action.ALL_IN);
+		LOGGER.info("You have " + $pokerHand.name());
+		delete($possibilities.get(0));
+		delete($possibilities.get(1));
+		delete($possibilities.get(2));
+		delete($possibilities.get(3));
+		delete($possibilities.get(4));
+		delete($possibilities.get(5));
+		delete($possibilities.get(6));
+		delete($possibilities.get(7));
+		delete($possibilities.get(8));
+		delete($possibilities.get(9));
+		delete($possibilities.get(10));
+		delete($possibilities.get(11));
+		delete($possibilities.get(12));
+		delete($possibilities.get(13));
+		delete($possibilities.get(14));
+		delete($possibilities.get(15));
+		delete($possibilities.get(16));
+		delete($possibilities.get(17));
+		delete($possibilities.get(18));
+		delete($possibilities.get(19));
+		delete($possibilities.get(20));
+		delete($state);
 end
 
 rule "Call in river when you have 2 pairs and opponents haven't raised more than 1.5 times your pot"
@@ -54,8 +104,10 @@ rule "Call in river when you have 2 pairs and opponents haven't raised more than
         )
         $possibility: Possibility(
             $pokerHand: pokerHand,
+			best == true,
             $pokerHand == PokerHand.TWO_PAIRS
         )
+		$possibilities : List() from collect(Possibility())
         Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players
         accumulate( Player($pot : getMoney()) from $players, $maxMoney : max($pot))
         Player(moneyRatio($maxMoney.doubleValue()) <= 1.5) from $player
@@ -63,8 +115,31 @@ rule "Call in river when you have 2 pairs and opponents haven't raised more than
         modify($state){
             getPlayers().get(0).getAction().set(0, Action.CALL);
         }
-        LOGGER.info("You have " + $pokerHand.name());
+		insert(Action.CALL);
+		LOGGER.info("You have " + $pokerHand.name());
         LOGGER.info("You should call to "+ $maxMoney);
+		delete($possibilities.get(0));
+		delete($possibilities.get(1));
+		delete($possibilities.get(2));
+		delete($possibilities.get(3));
+		delete($possibilities.get(4));
+		delete($possibilities.get(5));
+		delete($possibilities.get(6));
+		delete($possibilities.get(7));
+		delete($possibilities.get(8));
+		delete($possibilities.get(9));
+		delete($possibilities.get(10));
+		delete($possibilities.get(11));
+		delete($possibilities.get(12));
+		delete($possibilities.get(13));
+		delete($possibilities.get(14));
+		delete($possibilities.get(15));
+		delete($possibilities.get(16));
+		delete($possibilities.get(17));
+		delete($possibilities.get(18));
+		delete($possibilities.get(19));
+		delete($possibilities.get(20));
+		delete($state);  
 end
 
 rule "Call in river when you have only strong pocket pair"
@@ -80,8 +155,10 @@ rule "Call in river when you have only strong pocket pair"
         )
         $possibility: Possibility(
             $pokerHand: pokerHand,
+			best == true,
             pokerHand == PokerHand.PAIR
         )
+		$possibilities : List() from collect(Possibility())
         Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players
         accumulate( Player($pot : getMoney()) from $players, $maxMoney : max($pot))
         Player(moneyRatio($maxMoney.doubleValue()) <= 1.3) from $player
@@ -89,8 +166,31 @@ rule "Call in river when you have only strong pocket pair"
         modify($state){
             getPlayers().get(0).getAction().set(0, Action.CALL);
         }
-        LOGGER.info("You have " + $pokerHand.name());
+		insert(Action.CALL);
+		LOGGER.info("You have " + $pokerHand.name());
         LOGGER.info("You should call to "+ $maxMoney);
+		delete($possibilities.get(0));
+		delete($possibilities.get(1));
+		delete($possibilities.get(2));
+		delete($possibilities.get(3));
+		delete($possibilities.get(4));
+		delete($possibilities.get(5));
+		delete($possibilities.get(6));
+		delete($possibilities.get(7));
+		delete($possibilities.get(8));
+		delete($possibilities.get(9));
+		delete($possibilities.get(10));
+		delete($possibilities.get(11));
+		delete($possibilities.get(12));
+		delete($possibilities.get(13));
+		delete($possibilities.get(14));
+		delete($possibilities.get(15));
+		delete($possibilities.get(16));
+		delete($possibilities.get(17));
+		delete($possibilities.get(18));
+		delete($possibilities.get(19));
+		delete($possibilities.get(20));
+		delete($state);
 end
 
 rule "Fold in river when you have weak pair and someone raised over 1.3 times your own pot"
@@ -106,8 +206,10 @@ rule "Fold in river when you have weak pair and someone raised over 1.3 times yo
         )
         $possibility: Possibility(
             $pokerHand: pokerHand,
+			best == true,
             pokerHand == PokerHand.PAIR
         )
+		$possibilities : List() from collect(Possibility())
         Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players
         accumulate( Player($pot : getMoney()) from $players, $maxMoney : max($pot))
         Player(moneyRatio($maxMoney.doubleValue()) > 1.3) from $player
@@ -115,8 +217,32 @@ rule "Fold in river when you have weak pair and someone raised over 1.3 times yo
         modify($state){
             getPlayers().get(0).getAction().set(0, Action.FOLD);
         }
-        LOGGER.info("You have " + $pokerHand.name());
+		insert(Action.FOLD);
+		insert(new ActionInsertEvent(new Date(), Action.FOLD));
+		LOGGER.info("You have " + $pokerHand.name());
         LOGGER.info(", a weak one, you should fold.");
+		delete($possibilities.get(0));
+		delete($possibilities.get(1));
+		delete($possibilities.get(2));
+		delete($possibilities.get(3));
+		delete($possibilities.get(4));
+		delete($possibilities.get(5));
+		delete($possibilities.get(6));
+		delete($possibilities.get(7));
+		delete($possibilities.get(8));
+		delete($possibilities.get(9));
+		delete($possibilities.get(10));
+		delete($possibilities.get(11));
+		delete($possibilities.get(12));
+		delete($possibilities.get(13));
+		delete($possibilities.get(14));
+		delete($possibilities.get(15));
+		delete($possibilities.get(16));
+		delete($possibilities.get(17));
+		delete($possibilities.get(18));
+		delete($possibilities.get(19));
+		delete($possibilities.get(20));
+		delete($state);
 end
 
 rule "Fold in river when you have nothing and someone raised"
@@ -131,15 +257,41 @@ rule "Fold in river when you have nothing and someone raised"
         )
         $possibility: Possibility(
             $pokerHand: pokerHand,
+			best == true,
             pokerHand.strength <= 1
         )
+		$possibilities : List() from collect(Possibility())
         Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players
     then
         modify($state){
             getPlayers().get(0).getAction().set(0, Action.FOLD);
         }
-        LOGGER.info("You have " + $pokerHand.name());
+		insert(Action.FOLD);
+		insert(new ActionInsertEvent(new Date(), Action.FOLD));
+		LOGGER.info("You have " + $pokerHand.name());
         LOGGER.info("You should fold.");
+		delete($possibilities.get(0));
+		delete($possibilities.get(1));
+		delete($possibilities.get(2));
+		delete($possibilities.get(3));
+		delete($possibilities.get(4));
+		delete($possibilities.get(5));
+		delete($possibilities.get(6));
+		delete($possibilities.get(7));
+		delete($possibilities.get(8));
+		delete($possibilities.get(9));
+		delete($possibilities.get(10));
+		delete($possibilities.get(11));
+		delete($possibilities.get(12));
+		delete($possibilities.get(13));
+		delete($possibilities.get(14));
+		delete($possibilities.get(15));
+		delete($possibilities.get(16));
+		delete($possibilities.get(17));
+		delete($possibilities.get(18));
+		delete($possibilities.get(19));
+		delete($possibilities.get(20));
+		delete($state);
 end
 
 rule "Fold in river when you have nothing"
@@ -152,13 +304,39 @@ rule "Fold in river when you have nothing"
         )
         $possibility: Possibility(
             $pokerHand: pokerHand,
+			best == true,
 			$pokerHand == PokerHand.HIGH_CARD || $pokerHand == PokerHand.UNKNOWN
         )
+		$possibilities : List() from collect(Possibility())
     then
         modify($state){
             getPlayers().get(0).getAction().set(0, Action.FOLD);
         }
-        LOGGER.info("You have " + $pokerHand.name());
+		insert(Action.FOLD);
+		insert(new ActionInsertEvent(new Date(), Action.FOLD));
+		LOGGER.info("You have " + $pokerHand.name());
+		delete($possibilities.get(0));
+		delete($possibilities.get(1));
+		delete($possibilities.get(2));
+		delete($possibilities.get(3));
+		delete($possibilities.get(4));
+		delete($possibilities.get(5));
+		delete($possibilities.get(6));
+		delete($possibilities.get(7));
+		delete($possibilities.get(8));
+		delete($possibilities.get(9));
+		delete($possibilities.get(10));
+		delete($possibilities.get(11));
+		delete($possibilities.get(12));
+		delete($possibilities.get(13));
+		delete($possibilities.get(14));
+		delete($possibilities.get(15));
+		delete($possibilities.get(16));
+		delete($possibilities.get(17));
+		delete($possibilities.get(18));
+		delete($possibilities.get(19));
+		delete($possibilities.get(20));
+		delete($state);
 end
 
 rule "No one in river raised, check with an ok hand"
@@ -171,14 +349,40 @@ rule "No one in river raised, check with an ok hand"
 		)
 		$possibility: Possibility(
             $pokerHand: pokerHand,
+			best == true,
 			$pokerHand.strength <= 4
         )
+		$possibilities : List() from collect(Possibility())
 		not(Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players) 
 	then
 		modify($state){
             getPlayers().get(0).getAction().set(0, Action.CHECK);
         }
-        LOGGER.info("You have " + $pokerHand.name()+ " on river, you should check");
+		insert(Action.CHECK);
+		insert(new ActionInsertEvent(new Date(), Action.CHECK));
+		LOGGER.info("You have " + $pokerHand.name()+ " on river, you should check");
+		delete($possibilities.get(0));
+		delete($possibilities.get(1));
+		delete($possibilities.get(2));
+		delete($possibilities.get(3));
+		delete($possibilities.get(4));
+		delete($possibilities.get(5));
+		delete($possibilities.get(6));
+		delete($possibilities.get(7));
+		delete($possibilities.get(8));
+		delete($possibilities.get(9));
+		delete($possibilities.get(10));
+		delete($possibilities.get(11));
+		delete($possibilities.get(12));
+		delete($possibilities.get(13));
+		delete($possibilities.get(14));
+		delete($possibilities.get(15));
+		delete($possibilities.get(16));
+		delete($possibilities.get(17));
+		delete($possibilities.get(18));
+		delete($possibilities.get(19));
+		delete($possibilities.get(20));
+		delete($state);  
 end
 
 
@@ -192,12 +396,61 @@ rule "No one in river raised, raise with a good hand"
 		)
 		$possibility: Possibility(
             $pokerHand: pokerHand,
+			best == true,
 			$pokerHand.strength > 4
         )
+		$possibilities : List() from collect(Possibility())
 		not(Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players) 
 	then
 		modify($state){
             getPlayers().get(0).getAction().set(0, Action.RAISE);
         }
-        LOGGER.info("You have " + $pokerHand.name()+ " on river, you should raise");
+		insert(Action.RAISE);
+		LOGGER.info("You have " + $pokerHand.name()+ " on river, you should raise");
+		delete($possibilities.get(0));
+		delete($possibilities.get(1));
+		delete($possibilities.get(2));
+		delete($possibilities.get(3));
+		delete($possibilities.get(4));
+		delete($possibilities.get(5));
+		delete($possibilities.get(6));
+		delete($possibilities.get(7));
+		delete($possibilities.get(8));
+		delete($possibilities.get(9));
+		delete($possibilities.get(10));
+		delete($possibilities.get(11));
+		delete($possibilities.get(12));
+		delete($possibilities.get(13));
+		delete($possibilities.get(14));
+		delete($possibilities.get(15));
+		delete($possibilities.get(16));
+		delete($possibilities.get(17));
+		delete($possibilities.get(18));
+		delete($possibilities.get(19));
+		delete($possibilities.get(20));
+		delete($state);
+end
+
+
+rule "Bluffing in river"
+	no-loop 
+	agenda-group "river"
+	when
+		$a1: ActionInsertEvent()
+        Number(intValue >= 3) from accumulate(
+            $a2: ActionInsertEvent(
+                this != $a1, 
+                action == Action.FOLD || action == Action.CHECK, 
+                this meets[10m] $a1
+            ),
+            count($a2)
+        )
+		$actions: List() from collect(ActionInsertEvent())
+	then
+		System.out.println("You were playing defensively often, you should try to bluff now.");
+		insert(Action.ALL_IN);
+		delete($actions.get(0));
+		delete($actions.get(1));
+		delete($actions.get(2));
+		delete($actions.get(3));
 end
