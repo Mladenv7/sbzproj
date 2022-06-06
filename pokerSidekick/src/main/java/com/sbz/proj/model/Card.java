@@ -15,8 +15,8 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 @NoArgsConstructor
 public class Card implements Comparable<Card>{
-    private Rank rank;
-    private Suit suit;
+    public Rank rank;
+    public Suit suit;
 
 
     @Override
