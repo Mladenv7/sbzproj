@@ -38,6 +38,7 @@ function NewTableStatePage() {
         });
       });
       await new Promise(r => setTimeout(r, 10000));
+      //window.location.reload()
   }
 
   function validationErrorHandler(message) {

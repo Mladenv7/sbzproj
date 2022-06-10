@@ -1,7 +1,6 @@
 import ReactSelect from "react-select";
 import { useContext, useRef, useState } from "react";
 import AlowedCardsContext from "../store/cards-context";
-import context from "react-bootstrap/esm/AccordionContext";
 
 function CardInput(props) {
   const [state, setState] = useState([]);
@@ -26,7 +25,9 @@ function CardInput(props) {
       }
 
       console.log("Karta je dozvoljena ", event);
+
       props.changeCard(event.value, props.card);
+
       setState(event);
       alowedCardsCtx.removeAlowedCard(event.value);
     } else {
@@ -40,6 +41,7 @@ function CardInput(props) {
       ref={reference}
       options={alowedCardsCtx.alowedCards}
       value={state}
+      id={props.card}
       onChange={changeHandler}
       formatOptionLabel={(card) => (
         <div className="country-option">

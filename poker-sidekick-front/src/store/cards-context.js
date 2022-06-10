@@ -285,7 +285,7 @@ export function AlowedCardsContextProvider(props) {
   const [alowedCardsState, setAlowedCards] = useState(gen_cards);
 
   function addAlowedCardHandler(alowedCard) {
-      console.log(alowedCard)
+      //console.log(alowedCard)
     const cards = gen_cards.filter(
       (c) => c.value.rank === alowedCard.rank && c.value.suit === alowedCard.suit
     );
@@ -297,9 +297,9 @@ export function AlowedCardsContextProvider(props) {
 
   function removeAlowedCardHandler(notAlowedCard) {
 
-    console.log("trying to remove card");
+    //console.log("trying to remove card");
     setAlowedCards((prevAlowedCards) => {
-      console.log(prevAlowedCards);
+      //console.log(prevAlowedCards);
 
       const nes = prevAlowedCards.filter(
         (c) =>
@@ -309,7 +309,7 @@ export function AlowedCardsContextProvider(props) {
           )
       );
 
-      console.log(nes)
+      //console.log(nes)
 
       return prevAlowedCards.filter(
         (c) =>
@@ -322,8 +322,8 @@ export function AlowedCardsContextProvider(props) {
   }
 
   function cardIsAlowedHandler(card) {
-    console.log(card);
-    console.log(context.alowedCards);
+    //console.log(card);
+    //console.log(context.alowedCards);
     return context.alowedCards.some(
       (c) => c.value.rank === card.rank && c.value.suit === card.suit
     );
