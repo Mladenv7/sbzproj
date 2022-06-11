@@ -84,8 +84,8 @@ rule "Call in turn when you have an ok combination"
             pokerHand.strength > 1
         )
 		$possibilities : List() from collect(Possibility())
-        Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players
-        accumulate( Player($pot : getMoney()) from $players, $maxMoney : max($pot))
+       accumulate( Player($pot : getMoney(), $action : getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players, 
+			$maxMoney : max($pot), $raiseCount : count($action); $raiseCount > 0)
         Player(moneyRatio($maxMoney.doubleValue()) <= 2) from $player
     then
         modify($state){
@@ -120,8 +120,8 @@ rule "Call in turn when you have only strong pocket pair"
             pokerHand == PokerHand.PAIR
         )
 		$possibilities : List() from collect(Possibility())
-        Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players
-        accumulate( Player($pot : getMoney()) from $players, $maxMoney : max($pot))
+        accumulate( Player($pot : getMoney(), $action : getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players, 
+			$maxMoney : max($pot), $raiseCount : count($action); $raiseCount > 0)
         Player(moneyRatio($maxMoney.doubleValue()) <= 1.3) from $player
     then
         modify($state){
@@ -156,8 +156,8 @@ rule "Fold in turn when you have weak pair and someone raised over 2 times your 
             pokerHand == PokerHand.PAIR
         )
 		$possibilities : List() from collect(Possibility())
-        Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players
-        accumulate( Player($pot : getMoney()) from $players, $maxMoney : max($pot))
+        accumulate( Player($pot : getMoney(), $action : getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players, 
+			$maxMoney : max($pot), $raiseCount : count($action); $raiseCount > 0)
         Player(moneyRatio($maxMoney.doubleValue()) > 2) from $player
     then
         modify($state){
@@ -191,8 +191,8 @@ rule "Call in turn when you have nothing and someone's pot is not 1.3 times bigg
             pokerHand.strength <= 1
         )
 		$possibilities : List() from collect(Possibility())
-        Player(getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players
-        accumulate( Player($pot : getMoney()) from $players, $maxMoney : max($pot))
+        accumulate( Player($pot : getMoney(), $action : getAction().get(0) == Action.RAISE || getAction().get(0) == Action.BET) from $players, 
+			$maxMoney : max($pot), $raiseCount : count($action); $raiseCount > 0)
         Player(moneyRatio($maxMoney.doubleValue()) <= 1.3) from $player
     then
        modify($state){

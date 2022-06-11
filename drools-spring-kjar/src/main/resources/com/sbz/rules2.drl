@@ -24,6 +24,25 @@ rule "HIGH_CARD"
         modify($possibility){pokerHand = PokerHand.HIGH_CARD}
 end
 
+rule "FLUSH"
+    lock-on-active true
+    agenda-group "possibility"
+    salience -20
+    when
+        $possibility: Possibility(
+            pokerHand == PokerHand.UNKNOWN,
+            howManyWithRank(card1.rank) == 1,
+            howManyWithRank(card2.rank) == 1,
+            howManyWithRank(card3.rank) == 1,
+            howManyWithRank(card4.rank) == 1,
+            howManyWithRank(card5.rank) == 1,
+            sameSuit() == true,
+            $pokerHand: pokerHand != PokerHand.ROYAL_FLUSH
+        )
+    then
+        modify($possibility){pokerHand = PokerHand.FLUSH}
+end
+
 rule "All possibilities classified - jump to river"
     no-loop
     agenda-group "possibility"

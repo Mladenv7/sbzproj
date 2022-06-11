@@ -2,6 +2,7 @@ package com.sbz.proj.service;
 
 import com.sbz.proj.model.*;
 import com.sbz.proj.model.events.StageEvent;
+import com.sbz.proj.util.DebugAgendaEventListener;
 import com.sbz.proj.util.KnowledgeSessionHelper;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
@@ -30,7 +31,7 @@ public class CurrentStateService {
         this.kieSession = KnowledgeSessionHelper.getStatefulKnowledgeSession(kieContainer, "test-session");
     }
 
-    public Action consult(TableState ts) {
+    public ConsultResultDTO consult(TableState ts) {
 
         kieSession.insert(ts);
 
@@ -90,7 +91,22 @@ public class CurrentStateService {
         kieSession.getAgenda().getAgendaGroup("MAIN").setFocus();
 
 
-        return ts.getPlayers().get(0).getAction().get(0);
+
+        if (fired > 0) {
+            String rulesFired = ((DebugAgendaEventListener) kieSession.getAgendaEventListeners().toArray()[0]).rulesFired;
+            System.out.println(rulesFired);
+            String[] all = rulesFired.split("\n");
+            String lastRule = all[all.length - 1];
+            ((DebugAgendaEventListener) kieSession.getAgendaEventListeners().toArray()[0]).rulesFired = "";
+            if (lastRule.startsWith("Bluffing")) {
+                if (ts.getCurrentStage().name().equals("RIVER"))
+                    return new ConsultResultDTO(Action.ALL_IN.name(), lastRule);
+                return new ConsultResultDTO(Action.RAISE.name(), lastRule);
+            }
+
+            return new ConsultResultDTO(ts.getPlayers().get(0).getAction().get(0).name(), lastRule);
+        }
+        return new ConsultResultDTO(ts.getPlayers().get(0).getAction().get(0).name(), "No explanation");
     }
 
     private void destroySession(KieSession kieSession) {

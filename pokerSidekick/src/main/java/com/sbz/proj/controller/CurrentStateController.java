@@ -1,9 +1,6 @@
 package com.sbz.proj.controller;
 
-import com.sbz.proj.model.Action;
-import com.sbz.proj.model.FiveCardsDTO;
-import com.sbz.proj.model.Possibility;
-import com.sbz.proj.model.TableState;
+import com.sbz.proj.model.*;
 import com.sbz.proj.service.CurrentStateService;
 import com.sbz.proj.service.TestService;
 import org.kie.api.runtime.KieContainer;
@@ -90,7 +87,7 @@ public class CurrentStateController {
         if(currentState.getPlayers().size() < 2)
             return new ResponseEntity<String>("Table state needs a least two players with cards", HttpStatus.BAD_REQUEST);
 
-        return new ResponseEntity<Action>(currentStateService.consult(currentState), HttpStatus.OK);
+        return new ResponseEntity<ConsultResultDTO>(currentStateService.consult(currentState), HttpStatus.OK);
     }
 
     @PostMapping("sort-pos")
