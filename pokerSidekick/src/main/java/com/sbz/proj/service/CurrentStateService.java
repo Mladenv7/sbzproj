@@ -1,6 +1,7 @@
 package com.sbz.proj.service;
 
 import com.sbz.proj.model.*;
+import com.sbz.proj.model.events.StageEvent;
 import com.sbz.proj.util.KnowledgeSessionHelper;
 import org.kie.api.runtime.KieContainer;
 import org.kie.api.runtime.KieSession;
@@ -35,6 +36,7 @@ public class CurrentStateService {
 
         switch(ts.getCurrentStage()){
             case PRE_FLOP:
+                kieSession.insert(new StageEvent(StageName.PRE_FLOP));
                 kieSession.getAgenda().getAgendaGroup("pre-flop").setFocus();
                 break;
             case FLOP:
@@ -48,7 +50,7 @@ public class CurrentStateService {
                 Card.logCards(LOGGER, p.getCards());
 
                 kieSession.insert(p);
-
+                kieSession.insert(new StageEvent(StageName.FLOP));
                 kieSession.getAgenda().getAgendaGroup("possibility").setFocus();
 
                 break;
@@ -62,7 +64,7 @@ public class CurrentStateService {
                     Card.logCards(LOGGER, po.getCards());
                     kieSession.insert(po);
                 }
-
+                kieSession.insert(new StageEvent(StageName.TURN));
                 kieSession.getAgenda().getAgendaGroup("possibility").setFocus();
 
                 break;
@@ -77,7 +79,7 @@ public class CurrentStateService {
                     kieSession.insert(po);
                 }
 
-
+                kieSession.insert(new StageEvent(StageName.RIVER));
                 kieSession.getAgenda().getAgendaGroup("possibility").setFocus();
 
                 break;

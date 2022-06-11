@@ -4,6 +4,11 @@ import com.sbz.proj.model.*;
 
 global java.util.logging.Logger LOGGER
 
+declare BluffingEvent
+    @role(event)
+    action : Action
+end
+
 rule "All in when you have royal flush"
     lock-on-active true
     agenda-group "river"
@@ -436,6 +441,7 @@ rule "Bluffing in river"
 	no-loop 
 	agenda-group "river"
 	when
+		$riverEvent : StageEvent(stageName == StageName.RIVER)
 		$a1: ActionInsertEvent()
         Number(intValue >= 3) from accumulate(
             $a2: ActionInsertEvent(
@@ -446,11 +452,17 @@ rule "Bluffing in river"
             count($a2)
         )
 		$actions: List() from collect(ActionInsertEvent())
+		$otherRiverEvents: List() from collect(StageEvent(stageName == StageName.RIVER))
 	then
 		System.out.println("You were playing defensively often, you should try to bluff now.");
 		insert(Action.ALL_IN);
+		insert(new BluffingEvent(Action.ALL_IN));
 		delete($actions.get(0));
 		delete($actions.get(1));
 		delete($actions.get(2));
 		delete($actions.get(3));
+		delete($otherRiverEvents.get(0));
+		delete($otherRiverEvents.get(1));
+		delete($otherRiverEvents.get(2));
+		delete($otherRiverEvents.get(3));
 end

@@ -8,6 +8,11 @@ import java.util.Date;
 global java.util.logging.Logger LOGGER
 
 
+declare BluffingEvent
+    @role(event)
+    action : Action
+end
+
 rule "Call with high cards"
 	lock-on-active true
 	agenda-group "pre-flop"
@@ -164,6 +169,7 @@ rule "Bluffing"
 	no-loop 
 	agenda-group "pre-flop"
 	when
+		$pflopEvent : StageEvent(stageName == StageName.PRE_FLOP)
 		$a1: ActionInsertEvent()
         Number(intValue >= 3) from accumulate(
             $a2: ActionInsertEvent(
@@ -174,12 +180,18 @@ rule "Bluffing"
             count($a2)
         )
 		$actions: List() from collect(ActionInsertEvent())
+		$otherPFlopEvents: List() from collect(StageEvent(stageName == StageName.PRE_FLOP))
 	then
 		System.out.println("You were folding often, you should try to bluff now.");
 		insert(Action.RAISE);
+		insert(new BluffingEvent(Action.RAISE));
 		delete($actions.get(0));
 		delete($actions.get(1));
 		delete($actions.get(2));
 		delete($actions.get(3));
+		delete($otherPFlopEvents.get(0));
+		delete($otherPFlopEvents.get(1));
+		delete($otherPFlopEvents.get(2));
+		delete($otherPFlopEvents.get(3));
 end
 

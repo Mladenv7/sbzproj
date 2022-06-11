@@ -4,6 +4,11 @@ import com.sbz.proj.model.*;
 
 global java.util.logging.Logger LOGGER
 
+declare BluffingEvent
+    @role(event)
+    action : Action
+end
+
 rule "Raise in turn when you have royal flush"
     lock-on-active true
     agenda-group "turn"
@@ -301,6 +306,7 @@ rule "Bluffing in turn"
 	no-loop 
 	agenda-group "turn"
 	when
+		$turnEvent : StageEvent(stageName == StageName.TURN)
 		$a1: ActionInsertEvent()
         Number(intValue >= 3) from accumulate(
             $a2: ActionInsertEvent(
@@ -311,11 +317,17 @@ rule "Bluffing in turn"
             count($a2)
         )
 		$actions: List() from collect(ActionInsertEvent())
+		$otherTurnEvents: List() from collect(StageEvent(stageName == StageName.TURN))
 	then
 		System.out.println("You were playing defensively often, you should try to bluff now.");
 		insert(Action.RAISE);
+		insert(new BluffingEvent(Action.RAISE));
 		delete($actions.get(0));
 		delete($actions.get(1));
 		delete($actions.get(2));
 		delete($actions.get(3));
+		delete($otherTurnEvents.get(0));
+		delete($otherTurnEvents.get(1));
+		delete($otherTurnEvents.get(2));
+		delete($otherTurnEvents.get(3));
 end
