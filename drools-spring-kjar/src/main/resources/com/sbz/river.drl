@@ -10,12 +10,10 @@ global java.util.logging.Logger LOGGER
 
 declare BluffingEvent
     @role(event)
-    action : Action
 end
 
 declare BluffingPreventEvent
     @role(event)
-    action : Action
 end
 
 rule "All in when you have royal flush"
@@ -465,7 +463,7 @@ rule "Bluffing in river"
 	then
 		System.out.println("You were playing defensively often, you should try to bluff now.");
 		insert(Action.ALL_IN);
-		insert(new BluffingEvent(Action.ALL_IN));
+		insert(new BluffingEvent());
 		delete($actions.get(0));
 		delete($actions.get(1));
 		delete($actions.get(2));
@@ -480,12 +478,24 @@ rule "Bluff prevent river"
 	no-loop
 	agenda-group "river"
 	when
-		$b1 : BluffingEvent($bluffAction : action)
+		$b1 : BluffingEvent()
 		$b2 : BluffingEvent(this != $b1, this meets[5m] $b1)
 	then
-		insert(new BluffingPreventEvent(Action.CHECK));
+		insert(new BluffingPreventEvent());
 		insert(Action.CHECK);
-		delete($bluffAction);
 		delete($b1);
 		delete($b2);
+end
+
+rule "Safety net river"
+	lock-on-active true
+	agenda-group "river"
+	salience -20
+	when
+        $state : TableState($player : players.get(0))
+    then
+        modify($state) { getPlayers().get(0).getAction().set(0, Action.CALL) }
+		insert(Action.CALL);
+		System.out.println("You should call");
+		delete($state);  
 end

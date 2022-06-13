@@ -10,12 +10,10 @@ global java.util.logging.Logger LOGGER
 
 declare BluffingEvent
     @role(event)
-    action : Action
 end
 
 declare BluffingPreventEvent
     @role(event)
-    action : Action
 end
 
 rule "Call with high cards"
@@ -192,7 +190,7 @@ rule "Bluffing"
 	then
 		System.out.println("You were folding often, you should try to bluff now.");
 		insert(Action.RAISE);
-		insert(new BluffingEvent(Action.RAISE));
+		insert(new BluffingEvent());
 		delete($actions.get(0));
 		delete($actions.get(1));
 		delete($actions.get(2));
@@ -207,12 +205,11 @@ rule "Bluff prevent"
 	no-loop
 	agenda-group "pre-flop"
 	when
-		$b1 : BluffingEvent($bluffAction : action)
-		$b2 : BluffingEvent(this != $b1, this meets[5m] $b1)
+		$b1 : BluffingEvent()
+		$b2 : BluffingEvent(this != $b1, this meets[2m] $b1)
 	then
-		insert(new BluffingPreventEvent(Action.FOLD));
+		insert(new BluffingPreventEvent());
 		insert(Action.FOLD);
-		delete($bluffAction);
 		delete($b1);
 		delete($b2);
 end
