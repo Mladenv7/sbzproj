@@ -3,6 +3,8 @@
 			xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 	<kbase name="rules2" packages="com.sbz"  eventProcessingMode="stream">
 		<ksession name="test-session"/>
+		<ksession name="pseudoClockTest" clockType="pseudo"/>
+        <ksession name="realtimeClockTest" clockType="realtime"/>
 	</kbase>
 	<kbase name="template-simple-KBase" packages="template-dtable">
 		<ksession name="templateSimpleKsession"/>

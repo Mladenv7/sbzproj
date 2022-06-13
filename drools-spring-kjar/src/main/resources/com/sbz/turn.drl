@@ -1,8 +1,12 @@
 package com.sbz;
-
 import com.sbz.proj.model.*;
+import com.sbz.proj.model.events.*;
+
+import java.util.List;
+import java.util.Date;
 
 global java.util.logging.Logger LOGGER
+
 
 declare BluffingEvent
     @role(event)
@@ -265,6 +269,7 @@ rule "No one in turn raised, check with an ok hand"
             getPlayers().get(0).getAction().set(0, Action.CHECK);
         }
 		insert(Action.CHECK);
+		insert(new ActionInsertEvent(new Date(), Action.CHECK));
 		LOGGER.info("You have " + $pokerHand.name() + " on turn, you should check");
 		delete($possibilities.get(0));
 		delete($possibilities.get(1));

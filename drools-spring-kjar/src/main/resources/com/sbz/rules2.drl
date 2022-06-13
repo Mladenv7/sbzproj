@@ -44,7 +44,7 @@ rule "FLUSH"
 end
 
 rule "All possibilities classified - jump to river"
-    no-loop
+    //no-loop
     agenda-group "possibility"
 	when
 	    $state: TableState($stage: currentStage == StageName.RIVER)
@@ -81,7 +81,7 @@ rule "All possibilities classified - jump to turn"
 end
 
 rule "Possibility classified - jump to flop"
-    no-loop
+    //no-loop
     agenda-group "possibility"
 	when
 	    $state: TableState($stage: currentStage == StageName.FLOP)

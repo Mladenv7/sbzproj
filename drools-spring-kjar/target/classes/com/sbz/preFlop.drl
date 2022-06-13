@@ -171,6 +171,8 @@ rule "Check when no one else raised"
 end
 
 
+
+
 rule "Bluffing"
 	no-loop 
 	agenda-group "pre-flop"
@@ -213,4 +215,18 @@ rule "Bluff prevent"
 		delete($bluffAction);
 		delete($b1);
 		delete($b2);
+end
+
+
+rule "Safety net pre flop"
+	lock-on-active true
+	agenda-group "pre-flop"
+	salience -20
+	when
+        $state : TableState($player : players.get(0))
+    then
+        modify($state) { getPlayers().get(0).getAction().set(0, Action.CALL) }
+		insert(Action.CALL);
+		System.out.println("You should call");
+		delete($state);  
 end
