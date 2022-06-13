@@ -10,6 +10,10 @@ declare BluffingEvent
     action : Action
 end
 
+declare BluffingPreventEvent
+    @role(event)
+    action : Action
+end
 
 rule "Raise when you have royal flush"
     lock-on-active true
@@ -270,4 +274,18 @@ rule "Bluffing in flop"
 		delete($otherFlopEvents.get(1));
 		delete($otherFlopEvents.get(2));
 		delete($otherFlopEvents.get(3));
+end
+
+rule "Bluff prevent flop"
+	no-loop
+	agenda-group "flop"
+	when
+		$b1 : BluffingEvent($bluffAction : action)
+		$b2 : BluffingEvent(this != $b1, this meets[5m] $b1)
+	then
+		insert(new BluffingPreventEvent(Action.FOLD));
+		insert(Action.FOLD);
+		delete($bluffAction);
+		delete($b1);
+		delete($b2);
 end

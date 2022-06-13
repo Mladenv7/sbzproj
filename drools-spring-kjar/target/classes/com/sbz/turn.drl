@@ -9,6 +9,11 @@ declare BluffingEvent
     action : Action
 end
 
+declare BluffingPreventEvent
+    @role(event)
+    action : Action
+end
+
 rule "Raise in turn when you have royal flush"
     lock-on-active true
     agenda-group "turn"
@@ -330,4 +335,18 @@ rule "Bluffing in turn"
 		delete($otherTurnEvents.get(1));
 		delete($otherTurnEvents.get(2));
 		delete($otherTurnEvents.get(3));
+end
+
+rule "Bluff prevent turn"
+	no-loop
+	agenda-group "turn"
+	when
+		$b1 : BluffingEvent($bluffAction : action)
+		$b2 : BluffingEvent(this != $b1, this meets[5m] $b1)
+	then
+		insert(new BluffingPreventEvent(Action.FOLD));
+		insert(Action.FOLD);
+		delete($bluffAction);
+		delete($b1);
+		delete($b2);
 end

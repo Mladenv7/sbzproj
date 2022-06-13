@@ -9,6 +9,11 @@ declare BluffingEvent
     action : Action
 end
 
+declare BluffingPreventEvent
+    @role(event)
+    action : Action
+end
+
 rule "All in when you have royal flush"
     lock-on-active true
     agenda-group "river"
@@ -465,4 +470,18 @@ rule "Bluffing in river"
 		delete($otherRiverEvents.get(1));
 		delete($otherRiverEvents.get(2));
 		delete($otherRiverEvents.get(3));
+end
+
+rule "Bluff prevent river"
+	no-loop
+	agenda-group "river"
+	when
+		$b1 : BluffingEvent($bluffAction : action)
+		$b2 : BluffingEvent(this != $b1, this meets[5m] $b1)
+	then
+		insert(new BluffingPreventEvent(Action.CHECK));
+		insert(Action.CHECK);
+		delete($bluffAction);
+		delete($b1);
+		delete($b2);
 end

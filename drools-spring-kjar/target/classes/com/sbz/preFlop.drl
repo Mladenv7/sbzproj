@@ -13,6 +13,11 @@ declare BluffingEvent
     action : Action
 end
 
+declare BluffingPreventEvent
+    @role(event)
+    action : Action
+end
+
 rule "Call with high cards"
 	lock-on-active true
 	agenda-group "pre-flop"
@@ -48,6 +53,7 @@ rule "Backing off from raise with low cards"
 	then
 		modify($state) { getPlayers().get(0).getAction().set(0, Action.FOLD) }
 		insert(Action.FOLD);
+		insert(new ActionInsertEvent(new Date(), Action.FOLD));
 		delete($state);
         System.out.println("You should fold");
 end
@@ -195,3 +201,16 @@ rule "Bluffing"
 		delete($otherPFlopEvents.get(3));
 end
 
+rule "Bluff prevent"
+	no-loop
+	agenda-group "pre-flop"
+	when
+		$b1 : BluffingEvent($bluffAction : action)
+		$b2 : BluffingEvent(this != $b1, this meets[5m] $b1)
+	then
+		insert(new BluffingPreventEvent(Action.FOLD));
+		insert(Action.FOLD);
+		delete($bluffAction);
+		delete($b1);
+		delete($b2);
+end
